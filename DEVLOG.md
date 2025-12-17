@@ -159,6 +159,9 @@ src/
 3. **3 zones to start**: Northwest, Ka'anapali, South Shore - will iterate
 4. **GeoJSON polygons**: Zone boundaries highlighted on map
 5. **No database**: All data in conditions.json, updated via GitHub commits
+6. **Landing page redesign**: Map-dominant (55%+) with collapsible zone accordions
+7. **Geolocation**: User location shown on both views with pulsing blue marker
+8. **Modals via React Portal**: All modals render to document.body for proper z-indexing
 
 ---
 
@@ -170,14 +173,14 @@ src/
 - [x] Folder structure created
 - [x] conditions.json with zone/spot data
 - [x] zoneBoundaries.json GeoJSON
-- [x] Landing view with Mapbox
+- [x] Landing view with Mapbox (map-dominant with collapsible zones)
 - [x] Interactive 3D map view
 - [x] Spot detail modals with maps links
-- [x] Report submission form
-- [x] Booking inquiry form
+- [x] Report submission form (Formspree)
+- [x] Booking inquiry form (Formspree)
 - [x] Weather overlay
-- [x] Mobile responsive (ZoneCards)
-- [ ] Test and fix any issues
+- [x] Geolocation on both views
+- [x] Mobile responsive
 - [ ] Deploy to Vercel
 
 ---
@@ -254,6 +257,35 @@ All coordinates in [longitude, latitude] format (Mapbox standard).
 | Olowalu | [-156.6103, 20.8106] |
 | Kamaole 1,2,3 | [-156.4505, 20.7217] |
 | Makena Landing | [-156.4442, 20.6636] |
+
+---
+
+## Vercel Deployment
+
+### Quick Deploy Steps
+
+1. **Go to**: https://vercel.com/new
+2. **Import** your GitHub repo: `pathfindr-app/snorkelreportmaui`
+3. **Framework Preset**: Vite (auto-detected)
+4. **Add Environment Variables**:
+   ```
+   VITE_MAPBOX_TOKEN=pk.eyJ1IjoicGF0aGZpbmRyIiwiYSI6ImNtamFneW5xZjA1NnUzZm9oMnlyajg0c2MifQ._H8PIWTPYbNVK0vHIoRuWw
+   VITE_OPENWEATHER_API_KEY=d2911ca189faa26226488b2c36cb10ca
+   VITE_FORMSPREE_REPORT_ID=xpqaazzr
+   VITE_FORMSPREE_BOOKING_ID=xkowwnnz
+   ```
+5. **Deploy** - builds automatically
+
+### Custom Domain (mauisnorkelreport.com)
+1. In Vercel project settings > Domains
+2. Add `mauisnorkelreport.com`
+3. Update DNS at your registrar:
+   - **A Record**: `76.76.21.21`
+   - **CNAME**: `cname.vercel-dns.com` (for www)
+
+### Auto-Deploy
+- Every push to `main` branch triggers a new deployment
+- Update conditions.json and push = instant update
 
 ---
 
