@@ -19,20 +19,17 @@ function SpotModal({ spot, onClose, onBooking }) {
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = '';
     };
   }, []);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}>
       {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-ocean-950/80 backdrop-blur-sm"
-        onClick={onClose}
-      />
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
 
       {/* Modal content */}
-      <div className="relative bg-ocean-900 w-full sm:w-auto sm:min-w-[400px] sm:max-w-lg sm:rounded-xl rounded-t-xl max-h-[90vh] overflow-y-auto">
+      <div className="relative bg-ocean-900 w-full max-w-lg rounded-xl shadow-2xl border border-ocean-700 max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
         {/* Close button */}
         <button
           onClick={onClose}

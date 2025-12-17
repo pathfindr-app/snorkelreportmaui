@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import Header from './components/Layout/Header';
 import LandingView from './components/Landing/LandingView';
 import MapView from './components/Map/MapView';
@@ -9,59 +10,34 @@ import { useConditions } from './hooks/useConditions';
 import { useWeather } from './hooks/useWeather';
 
 function App() {
-  // View state: 'landing' or 'map'
   const [currentView, setCurrentView] = useState('landing');
-
-  // Modal state
   const [selectedSpot, setSelectedSpot] = useState(null);
-  const [activeModal, setActiveModal] = useState(null); // null | 'report' | 'booking'
+  const [activeModal, setActiveModal] = useState(null);
 
-  // Data hooks
-  const { conditions, zones, allSpots, loading, lastUpdated, alerts, getSpot, getSpotsByZone } = useConditions();
+  const { zones, allSpots, loading, lastUpdated, alerts } = useConditions();
   const { weather } = useWeather();
 
-  // Navigation handlers
-  const handleExploreMap = useCallback(() => {
-    setCurrentView('map');
-  }, []);
-
+  const handleExploreMap = useCallback(() => setCurrentView('map'), []);
   const handleBackToLanding = useCallback(() => {
     setCurrentView('landing');
     setSelectedSpot(null);
   }, []);
-
-  // Spot selection
-  const handleSelectSpot = useCallback((spot) => {
-    setSelectedSpot(spot);
-  }, []);
-
-  const handleCloseSpotModal = useCallback(() => {
-    setSelectedSpot(null);
-  }, []);
-
-  // Modal handlers
-  const handleOpenReport = useCallback(() => {
-    setActiveModal('report');
-  }, []);
-
-  const handleOpenBooking = useCallback(() => {
-    setActiveModal('booking');
-  }, []);
-
-  const handleCloseModal = useCallback(() => {
-    setActiveModal(null);
-  }, []);
+  const handleSelectSpot = useCallback((spot) => setSelectedSpot(spot), []);
+  const handleCloseSpotModal = useCallback(() => setSelectedSpot(null), []);
+  const handleOpenReport = useCallback(() => setActiveModal('report'), []);
+  const handleOpenBooking = useCallback(() => setActiveModal('booking'), []);
+  const handleCloseModal = useCallback(() => setActiveModal(null), []);
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-ocean-950 flex items-center justify-center">
+      <div className="h-screen bg-ocean-950 flex items-center justify-center">
         <div className="text-ocean-200 text-lg">Loading conditions...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-ocean-950 flex flex-col">
+    <div className="h-screen bg-ocean-950 flex flex-col overflow-hidden">
       <Header
         lastUpdated={lastUpdated}
         onReportClick={handleOpenReport}
@@ -70,7 +46,7 @@ function App() {
         onBackClick={handleBackToLanding}
       />
 
-      <main className="flex-1 relative">
+      <main className="flex-1 overflow-hidden">
         {currentView === 'landing' ? (
           <LandingView
             zones={zones}
@@ -86,34 +62,28 @@ function App() {
             allSpots={allSpots}
             weather={weather}
             onSelectSpot={handleSelectSpot}
-            onBackToLanding={handleBackToLanding}
           />
         )}
       </main>
 
-      {/* Spot Detail Modal */}
-      {selectedSpot && (
+      {/* Modals rendered via portal */}
+      {selectedSpot && createPortal(
         <SpotModal
           spot={selectedSpot}
           onClose={handleCloseSpotModal}
           onBooking={handleOpenBooking}
-        />
+        />,
+        document.body
       )}
 
-      {/* Report Submission Modal */}
-      {activeModal === 'report' && (
-        <ReportModal
-          allSpots={allSpots}
-          onClose={handleCloseModal}
-        />
+      {activeModal === 'report' && createPortal(
+        <ReportModal allSpots={allSpots} onClose={handleCloseModal} />,
+        document.body
       )}
 
-      {/* Booking Inquiry Modal */}
-      {activeModal === 'booking' && (
-        <BookingModal
-          onClose={handleCloseModal}
-          preselectedSpot={selectedSpot}
-        />
+      {activeModal === 'booking' && createPortal(
+        <BookingModal onClose={handleCloseModal} preselectedSpot={selectedSpot} />,
+        document.body
       )}
     </div>
   );

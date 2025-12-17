@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const FORMSPREE_ENDPOINT = `https://formspree.io/f/${import.meta.env.VITE_FORMSPREE_BOOKING_ID}`;
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/' + (import.meta.env.VITE_FORMSPREE_BOOKING_ID || 'xkowwnnz');
 
 const ACTIVITY_OPTIONS = [
   { id: 'boat', label: 'Boat Snorkel Tour' },
@@ -24,26 +24,18 @@ function BookingModal({ onClose, preselectedSpot }) {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(null);
 
-  // Close on escape key
   useEffect(() => {
-    const handleEscape = (e) => {
-      if (e.key === 'Escape') onClose();
-    };
+    const handleEscape = (e) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', handleEscape);
-    return () => window.removeEventListener('keydown', handleEscape);
-  }, [onClose]);
-
-  // Prevent body scroll when modal is open
-  useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => {
-      document.body.style.overflow = 'unset';
+      window.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = '';
     };
-  }, []);
+  }, [onClose]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleActivityToggle = (activityId) => {
@@ -67,9 +59,7 @@ function BookingModal({ onClose, preselectedSpot }) {
     try {
       const response = await fetch(FORMSPREE_ENDPOINT, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           activities: selectedActivities || 'Not specified',
           partySize: formData.partySize,
@@ -79,39 +69,31 @@ function BookingModal({ onClose, preselectedSpot }) {
           email: formData.email,
           phone: formData.phone || 'Not provided',
           referredFrom: preselectedSpot ? preselectedSpot.name : 'General inquiry',
-          _subject: `Booking Inquiry: ${selectedActivities || 'Activity'}`,
+          _subject: 'Booking Inquiry: ' + (selectedActivities || 'Activity'),
         }),
       });
-
-      if (response.ok) {
-        setSubmitted(true);
-      } else {
-        throw new Error('Failed to submit inquiry');
-      }
-    } catch (err) {
-      setError('Failed to submit inquiry. Please try again.');
+      if (response.ok) setSubmitted(true);
+      else throw new Error('Failed');
+    } catch {
+      setError('Failed to submit. Please try again.');
     } finally {
       setSubmitting(false);
     }
   };
 
-  // Success state
   if (submitted) {
     return (
-      <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
-        <div className="absolute inset-0 bg-ocean-950/80 backdrop-blur-sm" onClick={onClose} />
-        <div className="relative bg-ocean-900 w-full sm:w-auto sm:min-w-[400px] sm:max-w-lg sm:rounded-xl rounded-t-xl p-6 text-center">
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}>
+        <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
+        <div className="relative bg-ocean-900 w-full max-w-md rounded-xl p-6 text-center shadow-2xl border border-ocean-700" onClick={e => e.stopPropagation()}>
           <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-score-green/20 flex items-center justify-center">
             <svg className="w-8 h-8 text-score-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-ocean-50 mb-2">Inquiry Received!</h2>
-          <p className="text-ocean-300 mb-6">We'll get back to you within 24 hours with availability and pricing.</p>
-          <button
-            onClick={onClose}
-            className="w-full py-3 bg-ocean-600 hover:bg-ocean-500 text-ocean-50 font-medium rounded-lg transition-colors"
-          >
+          <h2 className="text-xl font-semibold text-white mb-2">Inquiry Received!</h2>
+          <p className="text-ocean-300 mb-6">We'll get back to you within 24 hours.</p>
+          <button onClick={onClose} className="w-full py-3 bg-ocean-600 hover:bg-ocean-500 text-white font-medium rounded-lg">
             Close
           </button>
         </div>
@@ -120,50 +102,35 @@ function BookingModal({ onClose, preselectedSpot }) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
-      {/* Backdrop */}
-      <div className="absolute inset-0 bg-ocean-950/80 backdrop-blur-sm" onClick={onClose} />
-
-      {/* Modal content */}
-      <div className="relative bg-ocean-900 w-full sm:w-auto sm:min-w-[400px] sm:max-w-lg sm:rounded-xl rounded-t-xl max-h-[90vh] overflow-y-auto">
-        {/* Close button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-ocean-400 hover:text-ocean-200 transition-colors z-10"
-        >
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}>
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
+      <div className="relative bg-ocean-900 w-full max-w-lg rounded-xl shadow-2xl border border-ocean-700 max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+        <button onClick={onClose} className="absolute top-4 right-4 text-ocean-400 hover:text-white z-10">
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
 
-        {/* Header */}
         <div className="p-6 pb-4">
-          <h2 className="text-xl font-semibold text-ocean-50">Book an Activity</h2>
+          <h2 className="text-xl font-semibold text-white">Book an Activity</h2>
           <p className="text-sm text-ocean-400 mt-1">
-            {preselectedSpot
-              ? `Interested in ${preselectedSpot.name}? Let us help you plan!`
-              : "Tell us what you're interested in and we'll find the best options"}
+            {preselectedSpot ? 'Interested in ' + preselectedSpot.name + '?' : "Tell us what you're interested in"}
           </p>
         </div>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="px-6 pb-6">
-          {/* Activity selection */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-ocean-300 mb-2">
-              What interests you?
-            </label>
+        <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-ocean-300 mb-2">What interests you?</label>
             <div className="flex flex-wrap gap-2">
               {ACTIVITY_OPTIONS.map(activity => (
                 <button
                   key={activity.id}
                   type="button"
                   onClick={() => handleActivityToggle(activity.id)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    formData.activities.includes(activity.id)
+                  className={'px-4 py-2 rounded-lg text-sm font-medium transition-colors ' +
+                    (formData.activities.includes(activity.id)
                       ? 'bg-ocean-500 text-ocean-950'
-                      : 'bg-ocean-800 text-ocean-300 hover:bg-ocean-700'
-                  }`}
+                      : 'bg-ocean-800 text-ocean-300 hover:bg-ocean-700 border border-ocean-600')}
                 >
                   {activity.label}
                 </button>
@@ -171,108 +138,101 @@ function BookingModal({ onClose, preselectedSpot }) {
             </div>
           </div>
 
-          {/* Party size */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-ocean-300 mb-2">
-              Party Size *
-            </label>
-            <input
-              type="number"
-              name="partySize"
-              value={formData.partySize}
-              onChange={handleChange}
-              required
-              min="1"
-              placeholder="Number of people"
-              className="w-full px-4 py-3 bg-ocean-800 border border-ocean-700 rounded-lg text-ocean-100 placeholder-ocean-500 focus:outline-none focus:ring-2 focus:ring-ocean-500 focus:border-transparent"
-            />
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="partySize" className="block text-sm font-medium text-ocean-300 mb-2">Party Size *</label>
+              <input
+                id="partySize"
+                type="number"
+                name="partySize"
+                value={formData.partySize}
+                onChange={handleChange}
+                required
+                min="1"
+                placeholder="# of people"
+                autoComplete="off"
+                className="w-full px-4 py-3 bg-ocean-800 border border-ocean-600 rounded-lg text-white placeholder-ocean-500 focus:outline-none focus:ring-2 focus:ring-ocean-500"
+              />
+            </div>
+            <div>
+              <label htmlFor="ages" className="block text-sm font-medium text-ocean-300 mb-2">Ages</label>
+              <input
+                id="ages"
+                type="text"
+                name="ages"
+                value={formData.ages}
+                onChange={handleChange}
+                placeholder="e.g., 2 adults, 2 kids"
+                autoComplete="off"
+                className="w-full px-4 py-3 bg-ocean-800 border border-ocean-600 rounded-lg text-white placeholder-ocean-500 focus:outline-none focus:ring-2 focus:ring-ocean-500"
+              />
+            </div>
           </div>
 
-          {/* Ages */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-ocean-300 mb-2">
-              Ages of Participants
-            </label>
+          <div>
+            <label htmlFor="dates" className="block text-sm font-medium text-ocean-300 mb-2">Preferred Dates *</label>
             <input
-              type="text"
-              name="ages"
-              value={formData.ages}
-              onChange={handleChange}
-              placeholder="e.g., 2 adults, 2 kids (8 and 12)"
-              className="w-full px-4 py-3 bg-ocean-800 border border-ocean-700 rounded-lg text-ocean-100 placeholder-ocean-500 focus:outline-none focus:ring-2 focus:ring-ocean-500 focus:border-transparent"
-            />
-          </div>
-
-          {/* Preferred dates */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-ocean-300 mb-2">
-              Preferred Dates *
-            </label>
-            <input
+              id="dates"
               type="text"
               name="dates"
               value={formData.dates}
               onChange={handleChange}
               required
               placeholder="e.g., Dec 20-24, flexible mornings"
-              className="w-full px-4 py-3 bg-ocean-800 border border-ocean-700 rounded-lg text-ocean-100 placeholder-ocean-500 focus:outline-none focus:ring-2 focus:ring-ocean-500 focus:border-transparent"
+              autoComplete="off"
+              className="w-full px-4 py-3 bg-ocean-800 border border-ocean-600 rounded-lg text-white placeholder-ocean-500 focus:outline-none focus:ring-2 focus:ring-ocean-500"
             />
           </div>
 
-          {/* Additional notes */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-ocean-300 mb-2">
-              Additional Notes
-            </label>
+          <div>
+            <label htmlFor="notes" className="block text-sm font-medium text-ocean-300 mb-2">Additional Notes</label>
             <textarea
+              id="notes"
               name="notes"
               value={formData.notes}
               onChange={handleChange}
-              rows={3}
-              placeholder="Any special requests or questions?"
-              className="w-full px-4 py-3 bg-ocean-800 border border-ocean-700 rounded-lg text-ocean-100 placeholder-ocean-500 focus:outline-none focus:ring-2 focus:ring-ocean-500 focus:border-transparent resize-none"
+              rows={2}
+              placeholder="Any special requests?"
+              className="w-full px-4 py-3 bg-ocean-800 border border-ocean-600 rounded-lg text-white placeholder-ocean-500 focus:outline-none focus:ring-2 focus:ring-ocean-500 resize-none"
             />
           </div>
 
-          {/* Contact info */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-ocean-300 mb-2">
-                Email *
-              </label>
+              <label htmlFor="email" className="block text-sm font-medium text-ocean-300 mb-2">Email *</label>
               <input
+                id="email"
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 required
                 placeholder="your@email.com"
-                className="w-full px-4 py-3 bg-ocean-800 border border-ocean-700 rounded-lg text-ocean-100 placeholder-ocean-500 focus:outline-none focus:ring-2 focus:ring-ocean-500 focus:border-transparent"
+                autoComplete="email"
+                className="w-full px-4 py-3 bg-ocean-800 border border-ocean-600 rounded-lg text-white placeholder-ocean-500 focus:outline-none focus:ring-2 focus:ring-ocean-500"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-ocean-300 mb-2">
-                Phone (optional)
-              </label>
+              <label htmlFor="phone" className="block text-sm font-medium text-ocean-300 mb-2">Phone</label>
               <input
+                id="phone"
                 type="tel"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
                 placeholder="(555) 123-4567"
-                className="w-full px-4 py-3 bg-ocean-800 border border-ocean-700 rounded-lg text-ocean-100 placeholder-ocean-500 focus:outline-none focus:ring-2 focus:ring-ocean-500 focus:border-transparent"
+                autoComplete="tel"
+                className="w-full px-4 py-3 bg-ocean-800 border border-ocean-600 rounded-lg text-white placeholder-ocean-500 focus:outline-none focus:ring-2 focus:ring-ocean-500"
               />
             </div>
           </div>
 
-          {/* Error message */}
           {error && (
-            <div className="mb-4 p-3 bg-score-red/20 border border-score-red/50 rounded-lg text-score-red text-sm">
+            <div className="p-3 bg-score-red/20 border border-score-red/50 rounded-lg text-score-red text-sm">
               {error}
             </div>
           )}
 
-          {/* Submit button */}
           <button
             type="submit"
             disabled={submitting}

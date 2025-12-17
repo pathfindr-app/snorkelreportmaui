@@ -17,7 +17,34 @@ function MapView({ zones, allSpots, weather, onSelectSpot, onBackToLanding }) {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const markersRef = useRef([]);
+  const userMarkerRef = useRef(null);
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [userLocation, setUserLocation] = useState(null);
+  const [watchId, setWatchId] = useState(null);
+
+  // Watch user's geolocation
+  useEffect(() => {
+    if ('geolocation' in navigator) {
+      const id = navigator.geolocation.watchPosition(
+        (position) => {
+          setUserLocation({
+            lng: position.coords.longitude,
+            lat: position.coords.latitude,
+            accuracy: position.coords.accuracy,
+          });
+        },
+        (error) => {
+          console.log('Geolocation error:', error.message);
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 5000 }
+      );
+      setWatchId(id);
+
+      return () => {
+        navigator.geolocation.clearWatch(id);
+      };
+    }
+  }, []);
 
   // Initialize map
   useEffect(() => {
@@ -193,6 +220,30 @@ function MapView({ zones, allSpots, weather, onSelectSpot, onBackToLanding }) {
     });
   }, [mapLoaded, allSpots, zones, onSelectSpot]);
 
+  // Add/update user location marker
+  useEffect(() => {
+    if (!mapLoaded || !map.current || !userLocation) return;
+
+    // Remove existing marker
+    if (userMarkerRef.current) {
+      userMarkerRef.current.remove();
+    }
+
+    // Create user location marker with pulsing effect
+    const el = document.createElement('div');
+    el.className = 'user-location-marker';
+    el.innerHTML = `
+      <div style="position:relative;display:flex;align-items:center;justify-content:center;">
+        <div style="position:absolute;width:40px;height:40px;background:rgba(59,130,246,0.2);border-radius:50%;animation:pulse 2s ease-out infinite;"></div>
+        <div style="width:18px;height:18px;background:#3b82f6;border:3px solid white;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.4);position:relative;z-index:1;"></div>
+      </div>
+    `;
+
+    userMarkerRef.current = new mapboxgl.Marker({ element: el, anchor: 'center' })
+      .setLngLat([userLocation.lng, userLocation.lat])
+      .addTo(map.current);
+  }, [mapLoaded, userLocation]);
+
   // Reset view handler
   const handleResetView = () => {
     if (map.current) {
@@ -206,16 +257,42 @@ function MapView({ zones, allSpots, weather, onSelectSpot, onBackToLanding }) {
     }
   };
 
+  // Fly to user location
+  const handleFlyToUser = () => {
+    if (map.current && userLocation) {
+      map.current.flyTo({
+        center: [userLocation.lng, userLocation.lat],
+        zoom: 14,
+        pitch: 45,
+        duration: 1500,
+      });
+    }
+  };
+
   return (
-    <div className="relative h-full w-full">
+    <div className="h-full w-full relative">
       {/* Map container */}
-      <div ref={mapContainer} className="absolute inset-0" />
+      <div ref={mapContainer} className="absolute inset-0" style={{ width: '100%', height: '100%' }} />
 
       {/* Weather overlay */}
       {weather && <WeatherOverlay weather={weather} />}
 
-      {/* Reset view button */}
-      <div className="absolute bottom-24 right-4 z-10">
+      {/* Map control buttons */}
+      <div className="absolute bottom-24 right-4 z-10 flex flex-col gap-2">
+        {/* Fly to user location */}
+        {userLocation && (
+          <button
+            onClick={handleFlyToUser}
+            className="p-2 bg-ocean-900/90 hover:bg-ocean-800/90 text-ocean-200 rounded-lg backdrop-blur-sm transition-colors shadow-lg"
+            title="Go to my location"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </button>
+        )}
+        {/* Reset view */}
         <button
           onClick={handleResetView}
           className="p-2 bg-ocean-900/90 hover:bg-ocean-800/90 text-ocean-200 rounded-lg backdrop-blur-sm transition-colors shadow-lg"
