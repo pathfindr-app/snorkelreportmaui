@@ -1,0 +1,128 @@
+{
+  "lastUpdated": "2025-12-17T07:02:00-10:00",
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "High surf advisory for North Shore through Wednesday"
+    }
+  ],
+  "zones": {
+    "northwest": {
+      "id": "northwest",
+      "name": "Northwest",
+      "score": 1.5,
+      "summary": "Hazardous. Powerful waves & strong currents",
+      "details": "Passing showers & breezy southerly winds",
+      "spots": {
+        "honolua": {
+          "id": "honolua",
+          "name": "Honolua Bay",
+          "coordinates": [-156.6384, 21.0136],
+          "score": null,
+          "conditions": "Dangerous entry/exit. Not recommended today.",
+          "hazards": ["Strong current", "High surf", "Rocky entry"],
+          "webcam": null,
+          "hasProvider": false
+        },
+        "kapalua": {
+          "id": "kapalua",
+          "name": "Kapalua Bay",
+          "coordinates": [-156.6693, 21.0028],
+          "score": 2.0,
+          "conditions": "Smaller surf than Honolua but still rough. Dangerous current.",
+          "hazards": ["Dangerous current"],
+          "webcam": null,
+          "hasProvider": true
+        },
+        "napili": {
+          "id": "napili",
+          "name": "Napili Bay",
+          "coordinates": [-156.6659, 20.9972],
+          "score": null,
+          "conditions": "Waves affecting entry/exit.",
+          "hazards": ["Shore break"],
+          "webcam": null,
+          "hasProvider": false
+        },
+        "kahana": {
+          "id": "kahana",
+          "name": "Kahana",
+          "coordinates": [-156.6547, 20.9839],
+          "score": null,
+          "conditions": "Strong currents present.",
+          "hazards": ["Current"],
+          "webcam": null,
+          "hasProvider": false
+        }
+      }
+    },
+    "kaanapali": {
+      "id": "kaanapali",
+      "name": "Ka'anapali",
+      "score": 5.5,
+      "summary": "Moderate conditions. Use caution.",
+      "details": "Increasing afternoon winds. Possible showers.",
+      "spots": {
+        "blackrock": {
+          "id": "blackrock",
+          "name": "Black Rock (Pu'u Keka'a)",
+          "coordinates": [-156.6950, 20.9250],
+          "score": 5.0,
+          "conditions": "Strong currents & higher waves. Experienced snorkelers only.",
+          "hazards": ["Current", "Waves"],
+          "webcam": null,
+          "hasProvider": true
+        },
+        "kahekili": {
+          "id": "kahekili",
+          "name": "Kahekili (Airport Beach)",
+          "coordinates": [-156.6936, 20.9372],
+          "score": 6.5,
+          "conditions": "Calmest in the zone. Waves affecting entry/exit.",
+          "hazards": ["Shore break on entry"],
+          "webcam": null,
+          "hasProvider": true
+        }
+      }
+    },
+    "southshore": {
+      "id": "southshore",
+      "name": "South Shore",
+      "score": 4.5,
+      "summary": "Waves present. Most hazardous near Makena/Wailea.",
+      "details": "Stronger afternoon winds. Possible showers.",
+      "spots": {
+        "olowalu": {
+          "id": "olowalu",
+          "name": "Olowalu",
+          "coordinates": [-156.6103, 20.8106],
+          "score": 5.5,
+          "conditions": "Calmer than south. Good for beginners if wind stays low.",
+          "hazards": [],
+          "webcam": null,
+          "hasProvider": false
+        },
+        "kihei": {
+          "id": "kihei",
+          "name": "Kamaole 1, 2, 3",
+          "coordinates": [-156.4505, 20.7217],
+          "score": 5.0,
+          "conditions": "Smallest waves in zone. Sandy entry.",
+          "hazards": ["Afternoon wind chop"],
+          "webcam": null,
+          "hasProvider": false
+        },
+        "makena": {
+          "id": "makena",
+          "name": "Makena Landing",
+          "coordinates": [-156.4442, 20.6636],
+          "score": 3.0,
+          "conditions": "Hazardous today. Strong waves and current.",
+          "hazards": ["Strong current", "High surf", "Rocky"],
+          "webcam": null,
+          "hasProvider": true
+        }
+      }
+    }
+  }
+}

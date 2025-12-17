@@ -1,0 +1,59 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "zoneId": "northwest",
+        "name": "Northwest"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-156.70, 21.03],
+          [-156.62, 21.03],
+          [-156.60, 21.00],
+          [-156.62, 20.97],
+          [-156.68, 20.97],
+          [-156.70, 21.00],
+          [-156.70, 21.03]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zoneId": "kaanapali",
+        "name": "Ka'anapali"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-156.72, 20.97],
+          [-156.68, 20.97],
+          [-156.68, 20.90],
+          [-156.72, 20.90],
+          [-156.72, 20.97]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "zoneId": "southshore",
+        "name": "South Shore"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-156.65, 20.85],
+          [-156.42, 20.75],
+          [-156.40, 20.62],
+          [-156.48, 20.60],
+          [-156.65, 20.75],
+          [-156.65, 20.85]
+        ]]
+      }
+    }
+  ]
+}
