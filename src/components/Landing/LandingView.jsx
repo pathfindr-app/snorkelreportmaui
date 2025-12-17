@@ -47,7 +47,7 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/satellite-streets-v12',
       center: MAUI_CENTER,
-      zoom: 9.5,
+      zoom: 8,
       pitch: 45,
       bearing: 0,
       interactive: false,
