@@ -72,8 +72,8 @@
           "hazards": ["Shore break on entry"],
           "webcam": null,
           "hasProvider": true
-        },
-       
+        }
+      }
     },
     "southshore": {
       "id": "southshore",
@@ -92,6 +92,16 @@
           "webcam": null,
           "hasProvider": false
         },
+        "coralgardens": {
+          "id": "coralgardens",
+          "name": "Coral Gardens",
+          "coordinates": [-156.561684, 20.789125],
+          "score": 6.0,
+          "conditions": "Good visibility when calm. Popular snorkel spot.",
+          "hazards": ["Boat traffic"],
+          "webcam": null,
+          "hasProvider": true
+        },
         "kihei": {
           "id": "kihei",
           "name": "Kamaole 1, 2, 3",
@@ -102,18 +112,6 @@
           "webcam": null,
           "hasProvider": false
         },
- "coralgardens": {
-          "id": "coralgardens",
-          "name": "Coral Gardens",
-          "coordinates": [-156.561684, 20.789125],
-          "score": 6.0,
-          "conditions": "Good visibility when calm. Popular snorkel spot.",
-          "hazards": ["Boat traffic"],
-          "webcam": null,
-          "hasProvider": true
-        }
-      }
-        
         "uluabeach": {
           "id": "uluabeach",
           "name": "Ulua Beach",
