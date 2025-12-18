@@ -59,7 +59,7 @@
     "kaanapali": {
       "id": "kaanapali",
       "name": "Ka'anapali",
-      "score": 5.5,
+      "score": 3,
       "summary": "Moderate conditions. Use caution.",
       "details": "Increasing afternoon winds. Possible showers.",
       "spots": {
@@ -88,7 +88,7 @@
     "southshore": {
       "id": "southshore",
       "name": "South Shore",
-      "score": 4.5,
+      "score": 3,
       "summary": "Waves present. Most hazardous near Makena/Wailea.",
       "details": "Stronger afternoon winds. Possible showers.",
       "spots": {
