@@ -9,8 +9,8 @@ mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 // Maui center coordinates and initial view
 const MAUI_CENTER = [-156.3319, 20.7984];
-const INITIAL_ZOOM = 10;
-const INITIAL_PITCH = 50;
+const INITIAL_ZOOM = 9;
+const INITIAL_PITCH = 0;
 const INITIAL_BEARING = 0;
 
 function MapView({ zones, allSpots, weather, onSelectSpot, onBackToLanding }) {
