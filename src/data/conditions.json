@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-12-17T07:02:00-10:00",
+  "lastUpdated": "2025-12-18T08:00:00-10:00",
   "alerts": [
     {
       "type": "warning",
@@ -43,16 +43,6 @@
           "hazards": ["Shore break"],
           "webcam": null,
           "hasProvider": false
-        },
-        "kahana": {
-          "id": "kahana",
-          "name": "Kahana",
-          "coordinates": [-156.6547, 20.9839],
-          "score": null,
-          "conditions": "Strong currents present.",
-          "hazards": ["Current"],
-          "webcam": null,
-          "hasProvider": false
         }
       }
     },
@@ -80,6 +70,16 @@
           "score": 6.5,
           "conditions": "Calmest in the zone. Waves affecting entry/exit.",
           "hazards": ["Shore break on entry"],
+          "webcam": null,
+          "hasProvider": true
+        },
+        "coralgardens": {
+          "id": "coralgardens",
+          "name": "Coral Gardens",
+          "coordinates": [-156.561684, 20.789125],
+          "score": 6.0,
+          "conditions": "Good visibility when calm. Popular snorkel spot.",
+          "hazards": ["Boat traffic"],
           "webcam": null,
           "hasProvider": true
         }
@@ -112,15 +112,85 @@
           "webcam": null,
           "hasProvider": false
         },
-        "makena": {
-          "id": "makena",
-          "name": "Makena Landing",
-          "coordinates": [-156.4442, 20.6636],
-          "score": 3.0,
-          "conditions": "Hazardous today. Strong waves and current.",
-          "hazards": ["Strong current", "High surf", "Rocky"],
+        "uluabeach": {
+          "id": "uluabeach",
+          "name": "Ulua Beach",
+          "coordinates": [-156.445444, 20.691493],
+          "score": 5.5,
+          "conditions": "Protected cove with good snorkeling on calm days.",
+          "hazards": ["Afternoon wind chop"],
+          "webcam": null,
+          "hasProvider": false
+        },
+        "waileapoint": {
+          "id": "waileapoint",
+          "name": "Wailea Point",
+          "coordinates": [-156.445772, 20.680442],
+          "score": 5.0,
+          "conditions": "Rocky entry. Best in morning before winds pick up.",
+          "hazards": ["Rocky entry", "Current"],
+          "webcam": null,
+          "hasProvider": false
+        },
+        "changssouth": {
+          "id": "changssouth",
+          "name": "Chang's South",
+          "coordinates": [-156.442740, 20.659536],
+          "score": 4.5,
+          "conditions": "Local favorite. Rocky entry requires care.",
+          "hazards": ["Rocky entry", "Current"],
+          "webcam": null,
+          "hasProvider": false
+        },
+        "fivegraves": {
+          "id": "fivegraves",
+          "name": "Five Graves (Five Caves)",
+          "coordinates": [-156.445004, 20.656093],
+          "score": 4.0,
+          "conditions": "Advanced spot. Lava rock entry, possible surge.",
+          "hazards": ["Rocky entry", "Surge", "Current"],
           "webcam": null,
           "hasProvider": true
+        },
+        "makenalandingnorth": {
+          "id": "makenalandingnorth",
+          "name": "Makena Landing North",
+          "coordinates": [-156.442665, 20.653844],
+          "score": 4.0,
+          "conditions": "Easier entry than south side. Watch for boat traffic.",
+          "hazards": ["Boat traffic", "Current"],
+          "webcam": null,
+          "hasProvider": true
+        },
+        "makenalandingsouth": {
+          "id": "makenalandingsouth",
+          "name": "Makena Landing South",
+          "coordinates": [-156.442954, 20.650953],
+          "score": 3.5,
+          "conditions": "Rocky entry. Strong current possible.",
+          "hazards": ["Strong current", "Rocky entry"],
+          "webcam": null,
+          "hasProvider": true
+        },
+        "maluaka": {
+          "id": "maluaka",
+          "name": "Maluaka Beach",
+          "coordinates": [-156.445261, 20.645522],
+          "score": 5.0,
+          "conditions": "Sandy beach entry. Turtle cleaning station nearby.",
+          "hazards": ["Afternoon wind chop"],
+          "webcam": null,
+          "hasProvider": true
+        },
+        "ahihikinau": {
+          "id": "ahihikinau",
+          "name": "Ahihi-Kinau Marine Preserve",
+          "coordinates": [-156.435861, 20.616056],
+          "score": 4.5,
+          "conditions": "Protected marine reserve. No sunscreen allowed. Lava rock entry.",
+          "hazards": ["Rocky entry", "No facilities", "Long walk"],
+          "webcam": null,
+          "hasProvider": false
         }
       }
     }
