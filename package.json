@@ -11,7 +11,10 @@
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.18",
+    "@vercel/blob": "^2.0.0",
+    "cheerio": "^1.1.0",
     "mapbox-gl": "^3.17.0",
+    "openai": "^6.15.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
