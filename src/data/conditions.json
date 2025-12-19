@@ -1,11 +1,6 @@
 {
   "lastUpdated": "2025-12-18T08:00:00-10:00",
-  "alerts": [
-    {
-      "type": "warning",
-      "message": "High surf advisory for North Shore through Wednesday"
-    }
-  ],
+
   "zones": {
     "northwest": {
       "id": "northwest",
