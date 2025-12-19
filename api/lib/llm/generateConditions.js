@@ -114,7 +114,9 @@ Rules:
 - Mention specific hazards when present
 - Use plain language tourists can understand
 - If conditions are dangerous, say so clearly
-- Keep it under 50 words`;
+- Keep it under 50 words
+- IMPORTANT: Paraphrase all information in your own words - never copy text verbatim from the source
+- Use your own phrasing and sentence structure`;
 
 /**
  * Generates conditions text for all spots using GPT-4o-mini

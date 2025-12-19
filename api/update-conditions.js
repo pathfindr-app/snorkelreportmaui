@@ -82,7 +82,8 @@ export default async function handler(req, res) {
       updatedConditions.zones[zoneId] = {
         ...zoneData,
         score: scrapedZone.score ?? zoneData.score,
-        summary: scrapedZone.narrative || zoneData.summary,
+        // Keep original summary, don't copy scraped narrative verbatim
+        summary: zoneData.summary,
         details: `Water temp ${buoyData.waterTempF}. Waves ${buoyData.waveHeightFt} from ${buoyData.waveDirectionCompass}.`,
         spots: {}
       };
@@ -102,6 +103,7 @@ export default async function handler(req, res) {
     const blob = await put('conditions.json', JSON.stringify(updatedConditions, null, 2), {
       access: 'public',
       addRandomSuffix: false,
+      allowOverwrite: true,
       contentType: 'application/json'
     });
 
