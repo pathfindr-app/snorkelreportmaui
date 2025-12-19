@@ -59,6 +59,14 @@ function SpotModal({ spot, onClose, onBooking }) {
           </div>
         </div>
 
+        {/* Description */}
+        {spot.description && (
+          <div className="px-6 pb-4">
+            <h3 className="text-sm font-medium text-ocean-300 mb-2">About This Spot</h3>
+            <p className="text-ocean-200 text-sm">{spot.description}</p>
+          </div>
+        )}
+
         {/* Conditions */}
         <div className="px-6 pb-4">
           <h3 className="text-sm font-medium text-ocean-300 mb-2">Today's Conditions</h3>
