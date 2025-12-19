@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { scoreToColor } from '../../utils/scoreToColor';
-import zoneBoundaries from '../../data/zoneBoundaries.json';
 import WeatherOverlay from './WeatherOverlay';
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
@@ -84,45 +83,6 @@ function MapView({ zones, allSpots, weather, onSelectSpot, onBackToLanding }) {
         },
       });
 
-      // Add zone boundaries
-      map.current.addSource('zones', {
-        type: 'geojson',
-        data: zoneBoundaries,
-      });
-
-      // Zone fill layer
-      map.current.addLayer({
-        id: 'zone-fills',
-        type: 'fill',
-        source: 'zones',
-        paint: {
-          'fill-color': [
-            'match',
-            ['get', 'zoneId'],
-            ...zones.flatMap(zone => [zone.id, scoreToColor(zone.score)]),
-            '#ffffff',
-          ],
-          'fill-opacity': 0.2,
-        },
-      });
-
-      // Zone outline layer
-      map.current.addLayer({
-        id: 'zone-outlines',
-        type: 'line',
-        source: 'zones',
-        paint: {
-          'line-color': [
-            'match',
-            ['get', 'zoneId'],
-            ...zones.flatMap(zone => [zone.id, scoreToColor(zone.score)]),
-            '#ffffff',
-          ],
-          'line-width': 2,
-          'line-opacity': 0.8,
-        },
-      });
-
       setMapLoaded(true);
     });
 
@@ -191,30 +151,6 @@ function MapView({ zones, allSpots, weather, onSelectSpot, onBackToLanding }) {
       el.addEventListener('mouseleave', () => {
         popup.remove();
       });
-
-      markersRef.current.push(marker);
-    });
-
-    // Add zone labels
-    zones.forEach(zone => {
-      const feature = zoneBoundaries.features.find(f => f.properties.zoneId === zone.id);
-      if (!feature) return;
-
-      const coords = feature.geometry.coordinates[0];
-      const centerLng = coords.reduce((sum, c) => sum + c[0], 0) / coords.length;
-      const centerLat = coords.reduce((sum, c) => sum + c[1], 0) / coords.length;
-
-      const el = document.createElement('div');
-      el.className = 'zone-label pointer-events-none';
-      el.innerHTML = `
-        <div class="px-2 py-1 rounded text-xs font-medium text-white/80 text-shadow">
-          ${zone.name}
-        </div>
-      `;
-
-      const marker = new mapboxgl.Marker({ element: el, anchor: 'center' })
-        .setLngLat([centerLng, centerLat + 0.02])
-        .addTo(map.current);
 
       markersRef.current.push(marker);
     });
