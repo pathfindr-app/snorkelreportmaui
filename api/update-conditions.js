@@ -1,14 +1,20 @@
 // Vercel Cron Handler - Updates conditions daily at 8:05am HST
 // Schedule: 5 18 * * * (18:05 UTC = 8:05am HST)
 
-import { put, list } from '@vercel/blob';
+import { put } from '@vercel/blob';
 import { scrapeSnorkelStore } from './lib/scrapers/snorkelStore.js';
 import { fetchBuoyData } from './lib/fetchers/noaaBuoy.js';
 import { fetchTideData } from './lib/fetchers/noaaTides.js';
 import { generateAllConditions } from './lib/llm/generateConditions.js';
+import { readFileSync } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 // Base conditions structure (will be merged with scraped data)
-import baseConditions from '../src/data/conditions.json' assert { type: 'json' };
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const baseConditions = JSON.parse(
+  readFileSync(join(__dirname, '../src/data/conditions.json'), 'utf-8')
+);
 
 export const config = {
   maxDuration: 60

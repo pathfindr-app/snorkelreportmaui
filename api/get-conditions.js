@@ -2,9 +2,15 @@
 // Returns the latest conditions from Vercel Blob storage
 
 import { list } from '@vercel/blob';
+import { readFileSync } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 // Fallback to static data if blob is unavailable
-import staticConditions from '../src/data/conditions.json' assert { type: 'json' };
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const staticConditions = JSON.parse(
+  readFileSync(join(__dirname, '../src/data/conditions.json'), 'utf-8')
+);
 
 export default async function handler(req, res) {
   // Set CORS headers for frontend access
