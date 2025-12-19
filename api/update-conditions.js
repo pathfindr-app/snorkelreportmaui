@@ -3,6 +3,7 @@
 
 import { put } from '@vercel/blob';
 import { scrapeSnorkelStore } from './lib/scrapers/snorkelStore.js';
+import { scrapeMauiNow } from './lib/scrapers/mauiNow.js';
 import { fetchBuoyData } from './lib/fetchers/noaaBuoy.js';
 import { fetchTideData } from './lib/fetchers/noaaTides.js';
 import { generateAllConditions } from './lib/llm/generateConditions.js';
@@ -33,14 +34,16 @@ export default async function handler(req, res) {
 
   try {
     // Fetch all data sources in parallel
-    const [snorkelStoreData, buoyData, tideData] = await Promise.all([
+    const [snorkelStoreData, mauiNowData, buoyData, tideData] = await Promise.all([
       scrapeSnorkelStore(),
+      scrapeMauiNow(),
       fetchBuoyData(),
       fetchTideData()
     ]);
 
     console.log('Data fetched:', {
       snorkelStore: snorkelStoreData.zones,
+      mauiNow: { advisories: mauiNowData.advisories, surf: mauiNowData.surfConditions },
       buoy: { waves: buoyData.waveHeightFt, temp: buoyData.waterTempF },
       tides: { nextHigh: tideData.nextHighTide }
     });
@@ -49,7 +52,8 @@ export default async function handler(req, res) {
     const spotConditions = await generateAllConditions({
       zones: snorkelStoreData.zones,
       buoyData,
-      tideData
+      tideData,
+      mauiNowData
     });
 
     console.log('Generated conditions for', Object.keys(spotConditions).length, 'spots');
@@ -79,12 +83,17 @@ export default async function handler(req, res) {
     for (const [zoneId, zoneData] of Object.entries(baseConditions.zones)) {
       const scrapedZone = snorkelStoreData.zones[zoneId] || {};
 
+      // General wave description based on buoy data
+      const waveDesc = buoyData.waveHeight < 1.2 ? 'Light' :
+                       buoyData.waveHeight < 2 ? 'Moderate' :
+                       buoyData.waveHeight < 2.5 ? 'Elevated' : 'Rough';
+
       updatedConditions.zones[zoneId] = {
         ...zoneData,
         score: scrapedZone.score ?? zoneData.score,
         // Keep original summary, don't copy scraped narrative verbatim
         summary: zoneData.summary,
-        details: `Water temp ${buoyData.waterTempF}. Waves ${buoyData.waveHeightFt} from ${buoyData.waveDirectionCompass}.`,
+        details: `Water is warm (${buoyData.waterTempF}). ${waveDesc} conditions. ${mauiNowData.windConditions || 'Light'} winds.`,
         spots: {}
       };
 

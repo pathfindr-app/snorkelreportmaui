@@ -110,20 +110,47 @@ const SYSTEM_PROMPT = `You are a concise snorkeling conditions reporter for Maui
 
 Rules:
 - Be direct and actionable
-- Include water temp and relevant tide info naturally
-- Mention specific hazards when present
+- Keep it GENERAL - avoid specific numbers
+- Use phrases like "waves are up", "light chop", "calm conditions", "reduced visibility likely"
+- NEVER cite specific wave heights or measurements
+- Include water temp if good (70s°F is pleasant)
+- Mention hazards only when relevant
 - Use plain language tourists can understand
-- If conditions are dangerous, say so clearly
-- Keep it under 50 words
-- IMPORTANT: Paraphrase all information in your own words - never copy text verbatim from the source
-- Use your own phrasing and sentence structure`;
+- If conditions are dangerous, say so clearly but don't be alarmist
+- Keep it under 40 words
+- Paraphrase everything in your own words
+- When swell is from a certain direction, spots facing that direction have bigger waves
+- Buoy data shows OFFSHORE conditions - shoreline is usually smaller but visibility is reduced when waves are up`;
+
+/**
+ * Convert buoy wave height (meters) to general description
+ */
+function getWaveDescription(waveHeightMeters) {
+  if (waveHeightMeters === null || waveHeightMeters === undefined) return 'unknown';
+  const ft = waveHeightMeters * 3.28084;
+  if (ft < 2) return 'calm to light';
+  if (ft < 4) return 'moderate';
+  if (ft < 6) return 'elevated';
+  if (ft < 8) return 'rough';
+  return 'very rough - use caution';
+}
 
 /**
  * Generates conditions text for all spots using GPT-4o-mini
- * @param {object} params - { zones, buoyData, tideData }
+ * @param {object} params - { zones, buoyData, tideData, mauiNowData }
  * @returns {Promise<object>} - { spotId: conditionsText, ... }
  */
-export async function generateAllConditions({ zones, buoyData, tideData }) {
+export async function generateAllConditions({ zones, buoyData, tideData, mauiNowData }) {
+  // Convert buoy data to general descriptions (not specific numbers)
+  const waveCondition = getWaveDescription(buoyData.waveHeight);
+  const swellDir = buoyData.waveDirectionCompass || 'variable';
+  const waterTemp = buoyData.waterTempF || 'pleasant';
+
+  // Get advisory info from Maui Now
+  const hasAdvisory = mauiNowData?.advisories?.length > 0;
+  const advisoryText = hasAdvisory ? mauiNowData.advisories[0].message : null;
+  const surfConditions = mauiNowData?.surfConditions || {};
+  const windDesc = mauiNowData?.windConditions || 'variable';
   const spotConditions = {};
 
   // Build prompts for all spots
@@ -145,24 +172,35 @@ export async function generateAllConditions({ zones, buoyData, tideData }) {
     }
 
     const zoneScore = zone?.score ?? 5;
-    const zoneNarrative = zone?.narrative ?? 'Conditions vary.';
 
-    // Build the prompt for this spot
+    // Determine if this spot is affected by current swell direction
+    const spotExposure = spotMeta.exposure.toLowerCase();
+    let swellImpact = 'minimal';
+    if (swellDir.includes('N') && (spotExposure.includes('north') || zoneName === 'Northwest')) {
+      swellImpact = 'waves are up, visibility likely reduced';
+    } else if (swellDir.includes('S') && (spotExposure.includes('south') || zoneName === 'South Shore')) {
+      swellImpact = 'waves are up, visibility likely reduced';
+    } else if (swellDir.includes('W') && spotExposure.includes('west')) {
+      swellImpact = 'some wave action expected';
+    }
+
+    // Build the prompt for this spot - using GENERAL descriptions
     const prompt = `Zone: ${zoneName} (Score: ${zoneScore}/10)
-Zone Report: "${zoneNarrative}"
 
 Spot: ${spotMeta.name}
 Characteristics: ${spotMeta.characteristics}
 Exposure: ${spotMeta.exposure}
 
-Current Conditions:
-- Waves: ${buoyData.waveHeightFt}
-- Water Temp: ${buoyData.waterTempF}
-- Swell Direction: ${buoyData.waveDirectionCompass}
-- Tide: ${tideData.currentTide?.rising ? 'Rising' : 'Falling'} (${tideData.currentTide?.height || 'N/A'})
-- Next High Tide: ${tideData.nextHighTide?.time || 'N/A'} (${tideData.nextHighTide?.height || 'N/A'})
+Current Conditions (general):
+- Overall waves: ${waveCondition}
+- Swell coming from: ${swellDir}
+- Impact on this spot: ${swellImpact}
+- Water temp: ${waterTemp}
+- Wind: ${windDesc}
+- Tide: ${tideData.currentTide?.rising ? 'Rising' : 'Falling'}
+${advisoryText ? `- ADVISORY: ${advisoryText}` : ''}
 
-Generate a concise conditions report for ${spotMeta.name}.`;
+Generate a brief, general conditions report. DO NOT use specific wave heights.`;
 
     prompts.push({ spotId, prompt });
   }
@@ -207,14 +245,14 @@ Generate a concise conditions report for ${spotMeta.name}.`;
         }
       }
 
-      spotConditions[spotId] = conditions || `Conditions vary. Water temp ${buoyData.waterTempF}. Check current conditions before entering.`;
+      spotConditions[spotId] = conditions || `Conditions vary. Water is warm. Check conditions before entering.`;
     }
   } catch (error) {
     console.error('Error generating conditions with LLM:', error);
 
     // Fallback: generate basic conditions without LLM
     for (const spotId of Object.keys(SPOTS_METADATA)) {
-      spotConditions[spotId] = `Water temp ${buoyData.waterTempF}. Waves ${buoyData.waveHeightFt}. Check local conditions before snorkeling.`;
+      spotConditions[spotId] = `Water is warm. Conditions vary - check locally before snorkeling.`;
     }
   }
 
