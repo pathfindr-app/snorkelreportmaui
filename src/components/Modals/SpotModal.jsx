@@ -111,6 +111,29 @@ function SpotModal({ spot, onClose, onBooking }) {
           </div>
         </div>
 
+        {/* Webcam links */}
+        {spot.webcam && (
+          <div className="px-6 pb-4">
+            <h3 className="text-sm font-medium text-ocean-300 mb-3">Live Webcam</h3>
+            <div className={`grid gap-3 ${Array.isArray(spot.webcam) && spot.webcam.length > 1 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+              {(Array.isArray(spot.webcam) ? spot.webcam : [spot.webcam]).map((url, index) => (
+                <a
+                  key={index}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 px-4 py-3 bg-ocean-800 hover:bg-ocean-700 text-ocean-100 rounded-lg transition-colors"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  {Array.isArray(spot.webcam) && spot.webcam.length > 1 ? `Cam ${index + 1}` : 'Watch Live'}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Coordinates display */}
         <div className="px-6 pb-4">
           <p className="text-xs text-ocean-500">
