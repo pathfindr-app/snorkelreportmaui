@@ -41,7 +41,7 @@
           "score": null,
           "conditions": "Waves affecting entry/exit.",
           "hazards": ["Shore break"],
-          "webcam": null,
+          "webcam": "https://www.ozolio.com/explore/00000008",
           "hasProvider": false
         }
       }
@@ -60,7 +60,7 @@
           "score": 4,
           "conditions": "Strong currents & higher waves. Experienced snorkelers only.",
           "hazards": ["Current", "Waves"],
-          "webcam": null,
+          "webcam": "https://www.youtube.com/watch?v=6c3naP3HZkk",
           "hasProvider": true
         },
         "kahekili": {
@@ -70,7 +70,7 @@
           "score": 4,
           "conditions": "Calmest in the zone. Waves affecting entry/exit.",
           "hazards": ["Shore break on entry"],
-          "webcam": null,
+          "webcam": "https://www.ozolio.com/explore/TIGL000014BB",
           "hasProvider": true
         }
       }
@@ -109,7 +109,7 @@
           "score": 3.0,
           "conditions": "Smallest waves in zone. Sandy entry.",
           "hazards": ["Afternoon wind chop"],
-          "webcam": null,
+          "webcam": ["https://www.mauirealestate.net/video.php?Size=Large", "https://www.youtube.com/watch?v=hPvl6IACa2k"],
           "hasProvider": false
         },
         "uluabeach": {
@@ -119,7 +119,7 @@
           "score": 5.5,
           "conditions": "Protected cove with good snorkeling on calm days.",
           "hazards": ["Afternoon wind chop"],
-          "webcam": null,
+          "webcam": "https://marriott.ozolio.com/wailea-beach-resort/",
           "hasProvider": false
         },
         "waileapoint": {
@@ -129,7 +129,7 @@
           "score": 5.0,
           "conditions": "Rocky entry. Best in morning before winds pick up.",
           "hazards": ["Rocky entry", "Current"],
-          "webcam": null,
+          "webcam": "https://www.ozolio.com/explore/XWEE00001592",
           "hasProvider": false
         },
         "changssouth": {
@@ -139,7 +139,7 @@
           "score": 4.5,
           "conditions": "Local favorite. Rocky entry requires care.",
           "hazards": ["Rocky entry", "Current"],
-          "webcam": null,
+          "webcam": "https://streamer2.brownrice.com/makenasurf/makenasurf.stream/playlist.m3u8",
           "hasProvider": false
         },
         "fivegraves": {
