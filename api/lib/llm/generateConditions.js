@@ -108,19 +108,16 @@ const SPOTS_METADATA = {
 
 const SYSTEM_PROMPT = `You are a concise snorkeling conditions reporter for Maui. Generate 1-2 sentence condition reports that are practical and safety-focused.
 
-Rules:
-- Be direct and actionable
-- Keep it GENERAL - avoid specific numbers
-- Use phrases like "waves are up", "light chop", "calm conditions", "reduced visibility likely"
-- NEVER cite specific wave heights or measurements
-- Include water temp if good (70s°F is pleasant)
-- Mention hazards only when relevant
-- Use plain language tourists can understand
-- If conditions are dangerous, say so clearly but don't be alarmist
+CRITICAL RULES:
+- NEVER write specific numbers like "6 ft waves" or "79°F water" - use ONLY general terms
+- BAD: "Waves are 6.9 ft, water temperature is 79°F"
+- GOOD: "Waves are up with reduced visibility. Warm water, light winds."
+- GOOD: "Calm conditions with excellent visibility. Warm water makes for pleasant snorkeling."
+- Use phrases: "waves are up", "light chop", "calm", "rough", "warm water", "visibility reduced"
 - Keep it under 40 words
-- Paraphrase everything in your own words
-- When swell is from a certain direction, spots facing that direction have bigger waves
-- Buoy data shows OFFSHORE conditions - shoreline is usually smaller but visibility is reduced when waves are up`;
+- Be practical and safety-focused
+- If dangerous, say so clearly
+- Paraphrase in your own words - never copy source text`;
 
 /**
  * Convert buoy wave height (meters) to general description
