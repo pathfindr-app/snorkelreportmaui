@@ -107,13 +107,17 @@ export async function scrapeSnorkelStore() {
         zones.southshore.narrative = zones.southshore.narrative || extractNarrative(text);
       }
 
-      // Check for alerts/warnings
-      if (textLower.includes('warning') || textLower.includes('advisory') ||
-          textLower.includes('dangerous') || textLower.includes('hazardous')) {
-        alerts.push({
-          type: textLower.includes('warning') ? 'warning' : 'advisory',
-          message: text.slice(0, 200) // Limit length
-        });
+      // Check for alerts/warnings - only extract SHORT, official-sounding alerts
+      // Skip long narrative paragraphs that just mention hazards
+      if (text.length < 100 && (textLower.includes('warning') || textLower.includes('advisory'))) {
+        // Only add if it sounds like an official alert
+        if (textLower.includes('high surf') || textLower.includes('small craft') ||
+            textLower.includes('wind advisory') || textLower.includes('in effect')) {
+          alerts.push({
+            type: textLower.includes('warning') ? 'warning' : 'advisory',
+            message: text.trim()
+          });
+        }
       }
     }
 

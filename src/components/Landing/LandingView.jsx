@@ -15,6 +15,7 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
   const [mapLoaded, setMapLoaded] = useState(false);
   const [expandedZone, setExpandedZone] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
+  const [alertsExpanded, setAlertsExpanded] = useState(false);
 
   // Get spots for a specific zone
   const getZoneSpots = (zoneId) => {
@@ -204,21 +205,40 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
           </div>
         )}
 
-        {/* Alerts */}
+        {/* Alerts - Collapsible */}
         {alerts && alerts.length > 0 && (
           <div className="absolute top-14 left-3 right-3 md:right-auto md:max-w-sm">
-            {alerts.map((alert, index) => (
-              <div
-                key={index}
-                className={`px-3 py-2 rounded-lg mb-2 text-sm backdrop-blur-sm ${
-                  alert.type === 'warning'
-                    ? 'bg-score-orange/90 text-white'
-                    : 'bg-score-red/90 text-white'
-                }`}
+            <button
+              onClick={() => setAlertsExpanded(!alertsExpanded)}
+              className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm backdrop-blur-sm bg-score-red/90 text-white"
+            >
+              <span className="flex items-center gap-2">
+                <span>⚠️</span>
+                <span>{alerts.length} Active {alerts.length === 1 ? 'Advisory' : 'Advisories'}</span>
+              </span>
+              <svg
+                className={`w-4 h-4 transition-transform ${alertsExpanded ? 'rotate-180' : ''}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
               >
-                {alert.type === 'warning' ? '⚠️' : '🚨'} {alert.message}
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            {alertsExpanded && (
+              <div className="mt-1 bg-ocean-900/95 backdrop-blur-sm rounded-lg border border-ocean-700 overflow-hidden">
+                {alerts.map((alert, index) => (
+                  <div
+                    key={index}
+                    className={`px-3 py-2 text-sm border-b border-ocean-700/50 last:border-b-0 ${
+                      alert.type === 'warning' ? 'text-score-orange' : 'text-score-red'
+                    }`}
+                  >
+                    {alert.type === 'warning' ? '⚠️' : '🚨'} {alert.message}
+                  </div>
+                ))}
               </div>
-            ))}
+            )}
           </div>
         )}
 
