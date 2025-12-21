@@ -20,7 +20,7 @@ function Header({ lastUpdated, onReportClick, onBookingClick, showBackButton, on
             )}
             <div>
               <h1 className="text-lg sm:text-xl font-semibold text-ocean-50 tracking-tight">
-                MAUI SNORKEL REPORT
+                Snorkel Report Maui
               </h1>
               {lastUpdated && (
                 <>
