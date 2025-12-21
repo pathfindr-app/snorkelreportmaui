@@ -4,8 +4,8 @@ import staticConditionsData from '../data/conditions.json';
 // API endpoint for dynamic conditions (used in production)
 const API_URL = '/api/get-conditions';
 
-// Cache duration in milliseconds (5 minutes)
-const CACHE_DURATION = 5 * 60 * 1000;
+// Cache duration in milliseconds (1 minute)
+const CACHE_DURATION = 1 * 60 * 1000;
 const CACHE_KEY = 'maui_conditions_cache';
 
 /**

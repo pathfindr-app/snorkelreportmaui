@@ -1,7 +1,7 @@
 // Vercel Cron Handler - Updates conditions daily at 8:05am HST
 // Schedule: 5 18 * * * (18:05 UTC = 8:05am HST)
 
-import { put } from '@vercel/blob';
+import { put, list } from '@vercel/blob';
 import { scrapeSnorkelStore } from './lib/scrapers/snorkelStore.js';
 import { scrapeMauiNow } from './lib/scrapers/mauiNow.js';
 import { fetchBuoyData } from './lib/fetchers/noaaBuoy.js';
@@ -21,6 +21,22 @@ export const config = {
   maxDuration: 60
 };
 
+// Fetch manual overrides from blob
+async function getManualOverrides() {
+  try {
+    const { blobs } = await list({ prefix: 'manual-overrides.json', limit: 1 });
+    if (blobs.length > 0) {
+      const response = await fetch(`${blobs[0].url}?t=${Date.now()}`, { cache: 'no-store' });
+      if (response.ok) {
+        return await response.json();
+      }
+    }
+  } catch (err) {
+    console.error('Error fetching manual overrides:', err);
+  }
+  return { spots: {} };
+}
+
 export default async function handler(req, res) {
   // Verify this is a cron request (optional security)
   const authHeader = req.headers.authorization;
@@ -33,13 +49,16 @@ export default async function handler(req, res) {
   console.log('Starting conditions update at', new Date().toISOString());
 
   try {
-    // Fetch all data sources in parallel
-    const [snorkelStoreData, mauiNowData, buoyData, tideData] = await Promise.all([
+    // Fetch all data sources in parallel (including manual overrides)
+    const [snorkelStoreData, mauiNowData, buoyData, tideData, manualOverrides] = await Promise.all([
       scrapeSnorkelStore(),
       scrapeMauiNow(),
       fetchBuoyData(),
-      fetchTideData()
+      fetchTideData(),
+      getManualOverrides()
     ]);
+
+    console.log('Manual overrides:', Object.keys(manualOverrides.spots || {}).length, 'spots');
 
     console.log('Data fetched:', {
       snorkelStore: snorkelStoreData.zones,
@@ -99,11 +118,15 @@ export default async function handler(req, res) {
 
       // Update each spot in this zone
       for (const [spotId, spotData] of Object.entries(zoneData.spots)) {
+        const override = manualOverrides.spots?.[spotId];
         updatedConditions.zones[zoneId].spots[spotId] = {
           ...spotData,
-          conditions: spotConditions[spotId] || spotData.conditions,
-          // Inherit zone score if spot doesn't have explicit score
-          score: spotData.score ?? null
+          // Manual override takes priority, then LLM, then static
+          conditions: override?.conditions || spotConditions[spotId] || spotData.conditions,
+          // Manual override takes priority for score
+          score: override?.score ?? spotData.score ?? null,
+          // Flag if this spot has a manual override
+          ...(override && { hasManualOverride: true })
         };
       }
     }
