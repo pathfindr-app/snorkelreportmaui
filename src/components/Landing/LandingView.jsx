@@ -117,17 +117,21 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
     };
   }, [zones]);
 
+  // Manual zone marker positions for better layout
+  const zonePositions = {
+    northwest: { lng: -156.65, lat: 21.02 },    // Upper left, in the ocean
+    kaanapali: { lng: -156.70, lat: 20.88 },    // West side, in the ocean
+    southshore: { lng: -156.35, lat: 20.58 },   // Below the island
+  };
+
   // Add zone markers after map loads
   useEffect(() => {
     if (!mapLoaded || !map.current) return;
 
     zones.forEach(zone => {
-      const feature = zoneBoundaries.features.find(f => f.properties.zoneId === zone.id);
-      if (!feature) return;
+      const position = zonePositions[zone.id];
+      if (!position) return;
 
-      const coords = feature.geometry.coordinates[0];
-      const centerLng = coords.reduce((sum, c) => sum + c[0], 0) / coords.length;
-      const centerLat = coords.reduce((sum, c) => sum + c[1], 0) / coords.length;
       const color = scoreToColor(zone.score);
       const textColor = zone.score <= 5 ? 'white' : '#071a2b';
 
@@ -135,15 +139,15 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
       el.className = 'zone-marker';
       el.innerHTML = `
         <div style="display:flex;flex-direction:column;align-items:center;text-align:center;pointer-events:none;">
-          <div style="color:white;font-weight:600;font-size:12px;text-shadow:0 1px 4px rgba(0,0,0,0.9);margin-bottom:3px;white-space:nowrap;">${zone.name}</div>
-          <div style="background:${color};color:${textColor};font-weight:700;font-size:18px;padding:6px 12px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.5);">
+          <div style="color:white;font-weight:600;font-size:11px;text-shadow:0 1px 3px rgba(0,0,0,0.9),0 0 8px rgba(0,0,0,0.5);margin-bottom:4px;white-space:nowrap;letter-spacing:0.5px;">${zone.name}</div>
+          <div style="background:${color};color:${textColor};font-weight:700;font-size:16px;padding:5px 10px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.4);">
             ${zone.score.toFixed(1)}
           </div>
         </div>
       `;
 
       new mapboxgl.Marker({ element: el, anchor: 'center' })
-        .setLngLat([centerLng, centerLat])
+        .setLngLat([position.lng, position.lat])
         .addTo(map.current);
     });
   }, [mapLoaded, zones]);
