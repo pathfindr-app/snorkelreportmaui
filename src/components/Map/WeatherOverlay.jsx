@@ -65,29 +65,57 @@ function WeatherOverlay({ weather }) {
             {/* Visibility */}
             {weather.visibility && (
               <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5">
-                <svg 
-                  className="w-4 h-4 text-ocean-300" 
-                  fill="none" 
-                  stroke="currentColor" 
+                <svg
+                  className="w-4 h-4 text-ocean-300"
+                  fill="none"
+                  stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={1.5} 
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" 
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                   />
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={1.5} 
-                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" 
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
                   />
                 </svg>
                 <div className="flex items-baseline gap-1">
                   <span className="text-sm font-medium text-white">{weather.visibility}</span>
                   <span className="text-xs text-ocean-300">mi</span>
                 </div>
+              </div>
+            )}
+
+            {/* Sunrise */}
+            {weather.sunrise && (
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5">
+                <svg
+                  className="w-4 h-4 text-yellow-400"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 2v3m0 14v3m9-9h-3M6 12H3m15.364-6.364l-2.121 2.121M8.757 15.243l-2.121 2.121m12.728 0l-2.121-2.121M8.757 8.757L6.636 6.636M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                </svg>
+                <span className="text-sm font-medium text-white">{weather.sunrise}</span>
+              </div>
+            )}
+
+            {/* Sunset */}
+            {weather.sunset && (
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5">
+                <svg
+                  className="w-4 h-4 text-orange-400"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 3v3m0 12v3m9-9h-3M6 12H3m15.364 6.364l-2.121-2.121M8.757 8.757L6.636 6.636m12.728 0l-2.121 2.121M8.757 15.243l-2.121 2.121M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                </svg>
+                <span className="text-sm font-medium text-white">{weather.sunset}</span>
               </div>
             )}
           </div>

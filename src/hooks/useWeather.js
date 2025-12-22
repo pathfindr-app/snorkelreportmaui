@@ -54,6 +54,8 @@ export function useWeather() {
           description: data.weather[0]?.description || '',
           icon: data.weather[0]?.icon || '',
           visibility: data.visibility ? Math.round(data.visibility / 1609.34) : null, // Convert to miles
+          sunrise: formatHawaiiTime(data.sys.sunrise),
+          sunset: formatHawaiiTime(data.sys.sunset),
         };
 
         // Cache the result
@@ -74,6 +76,19 @@ export function useWeather() {
   }, []);
 
   return { weather, loading, error };
+}
+
+/**
+ * Format Unix timestamp to Hawaii time (HH:MM AM/PM)
+ */
+function formatHawaiiTime(unixTimestamp) {
+  const date = new Date(unixTimestamp * 1000);
+  return date.toLocaleTimeString('en-US', {
+    timeZone: 'Pacific/Honolulu',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  });
 }
 
 /**
