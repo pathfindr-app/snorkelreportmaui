@@ -153,7 +153,7 @@ export default async function handler(req, res) {
       message: 'Conditions updated successfully',
       timestamp: new Date().toISOString(),
       blobUrl: blob.url,
-      spotsUpdated: Object.keys(spotConditions).length,
+      spotsUpdated: Object.keys(llmResult.spots).length,
       dataQuality: updatedConditions.dataQuality
     });
   } catch (error) {
