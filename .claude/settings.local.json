@@ -11,7 +11,8 @@
       "Bash(set -a)",
       "Bash(source .env.local)",
       "Bash(set +a)",
-      "Bash(npm i:*)"
+      "Bash(npm i:*)",
+      "Bash(node -e \"\nconst fetch = require\\(''node-fetch''\\) || globalThis.fetch;\n\nasync function test\\(\\) {\n  const res = await fetch\\(''https://thesnorkelstore.com/maui-snorkeling-conditions-reports/''\\);\n  const html = await res.text\\(\\);\n  \n  // Find Ka''anapali section and nearby numbers\n  const kaanapaliMatch = html.match\\(/Ka.{0,3}anapali.{0,200}/gi\\);\n  console.log\\(''Ka\\\\''anapali matches:'', kaanapaliMatch?.slice\\(0, 3\\)\\);\n  \n  // Find all score patterns\n  const scoreMatches = html.match\\(/\\(?:northwest|ka.?anapali|south\\\\s*shore\\)[^0-9]*?\\(\\\\d+\\\\.?\\\\d*\\)/gi\\);\n  console.log\\(''\\\\nScore patterns:'', scoreMatches\\);\n}\ntest\\(\\);\n\")"
     ]
   }
 }

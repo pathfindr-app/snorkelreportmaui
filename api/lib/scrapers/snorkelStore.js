@@ -66,7 +66,7 @@ export async function scrapeSnorkelStore() {
     // Looking for patterns like "Northwest: 1.5" or "Northwest - 1.5" or "Northwest 1.5/10"
     const scorePatterns = [
       /(?:northwest|north\s*west)[:\s\-–]+(\d+(?:\.\d+)?)/gi,
-      /(?:ka[ʻ']?anapali)[:\s\-–]+(\d+(?:\.\d+)?)/gi,
+      /(?:ka[ʻ''`']?anapali)[:\s\-–]+(\d+(?:\.\d+)?)/gi,
       /(?:south\s*shore|south|kihei|wailea|makena)[:\s\-–]+(\d+(?:\.\d+)?)/gi
     ];
 
@@ -116,7 +116,7 @@ export async function scrapeSnorkelStore() {
         zones.northwest = zones.northwest || {};
         zones.northwest.narrative = zones.northwest.narrative || extractNarrative(text);
       }
-      if (textLower.includes('kaanapali') || textLower.includes("ka'anapali") || textLower.includes('kaʻanapali')) {
+      if (textLower.includes('kaanapali') || textLower.includes("ka'anapali") || textLower.includes('kaʻanapali') || textLower.includes("ka'anapali") || textLower.includes("ka'anapali")) {
         zones.kaanapali = zones.kaanapali || {};
         zones.kaanapali.narrative = zones.kaanapali.narrative || extractNarrative(text);
       }
