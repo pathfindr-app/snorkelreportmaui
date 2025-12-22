@@ -58,9 +58,6 @@ function MapView({ zones, allSpots, weather, onSelectSpot, onBackToLanding }) {
       bearing: INITIAL_BEARING,
     });
 
-    // Add navigation controls (bottom-right to group with other controls)
-    map.current.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
-
     map.current.on('load', () => {
       // Add terrain for 3D effect
       map.current.addSource('mapbox-dem', {
@@ -213,29 +210,52 @@ function MapView({ zones, allSpots, weather, onSelectSpot, onBackToLanding }) {
       {/* Weather overlay */}
       {weather && <WeatherOverlay weather={weather} />}
 
-      {/* Map control buttons - positioned below Mapbox controls */}
-      <div className="absolute bottom-7 right-[10px] z-10 flex flex-col gap-1">
-        {/* Fly to user location */}
+      {/* Unified map controls */}
+      <div className="absolute bottom-6 right-3 z-10 flex flex-col rounded-xl overflow-hidden shadow-lg" style={{ background: 'rgba(7, 26, 43, 0.85)', backdropFilter: 'blur(8px)' }}>
+        {/* Zoom in */}
+        <button
+          onClick={() => map.current?.zoomIn()}
+          className="w-10 h-10 flex items-center justify-center text-ocean-300 hover:text-ocean-100 hover:bg-white/10 transition-colors border-b border-white/10"
+          title="Zoom in"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
+          </svg>
+        </button>
+
+        {/* Zoom out */}
+        <button
+          onClick={() => map.current?.zoomOut()}
+          className="w-10 h-10 flex items-center justify-center text-ocean-300 hover:text-ocean-100 hover:bg-white/10 transition-colors border-b border-white/10"
+          title="Zoom out"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M18 12H6" />
+          </svg>
+        </button>
+
+        {/* My location */}
         {userLocation && (
           <button
             onClick={handleFlyToUser}
-            className="w-9 h-9 flex items-center justify-center bg-[rgba(12,42,64,0.9)] hover:bg-[rgba(255,255,255,0.1)] text-ocean-300 rounded-lg transition-colors"
-            title="Go to my location"
+            className="w-10 h-10 flex items-center justify-center text-ocean-300 hover:text-ocean-100 hover:bg-white/10 transition-colors border-b border-white/10"
+            title="My location"
           >
-            <svg className="w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="3" />
+              <path strokeLinecap="round" d="M12 2v3m0 14v3m10-10h-3M5 12H2" />
             </svg>
           </button>
         )}
-        {/* Reset view */}
+
+        {/* Reset view / home */}
         <button
           onClick={handleResetView}
-          className="w-9 h-9 flex items-center justify-center bg-[rgba(12,42,64,0.9)] hover:bg-[rgba(255,255,255,0.1)] text-ocean-300 rounded-lg transition-colors"
-          title="Reset View"
+          className="w-10 h-10 flex items-center justify-center text-ocean-300 hover:text-ocean-100 hover:bg-white/10 transition-colors"
+          title="Reset view"
         >
-          <svg className="w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
           </svg>
         </button>
       </div>
