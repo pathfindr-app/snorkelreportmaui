@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { createPortal } from 'react-dom';
+import { Analytics } from '@vercel/analytics/react';
 import Header from './components/Layout/Header';
 import LandingView from './components/Landing/LandingView';
 import MapView from './components/Map/MapView';
@@ -85,6 +86,8 @@ function App() {
         <BookingModal onClose={handleCloseModal} preselectedSpot={selectedSpot} />,
         document.body
       )}
+
+      <Analytics />
     </div>
   );
 }

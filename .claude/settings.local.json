@@ -10,7 +10,8 @@
       "Bash(node test-update.js:*)",
       "Bash(set -a)",
       "Bash(source .env.local)",
-      "Bash(set +a)"
+      "Bash(set +a)",
+      "Bash(npm i:*)"
     ]
   }
 }
