@@ -19,7 +19,10 @@ function Header({ lastUpdated, onReportClick, onBookingClick, showBackButton, on
               </button>
             )}
             <div>
-              <h1 className="text-lg sm:text-xl font-semibold text-ocean-50 tracking-tight">
+              <h1
+                className="text-lg sm:text-xl font-semibold text-ocean-50 tracking-tight"
+                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+              >
                 Snorkel Report Maui
               </h1>
               {lastUpdated && (
