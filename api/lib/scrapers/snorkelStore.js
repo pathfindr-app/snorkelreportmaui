@@ -64,26 +64,35 @@ export async function scrapeSnorkelStore() {
 
     // Extract zone scores using regex patterns
     // Looking for patterns like "Northwest: 1.5" or "Northwest - 1.5" or "Northwest 1.5/10"
+    // Using .? for Ka'anapali to match ANY apostrophe variant
     const scorePatterns = [
-      /(?:northwest|north\s*west)[:\s\-–]+(\d+(?:\.\d+)?)/gi,
-      /(?:ka[ʻ''`']?anapali)[:\s\-–]+(\d+(?:\.\d+)?)/gi,
-      /(?:south\s*shore|south|kihei|wailea|makena)[:\s\-–]+(\d+(?:\.\d+)?)/gi
+      /northwest[:\s\-–]+(\d+(?:\.\d+)?)/gi,
+      /ka.?anapali[:\s\-–]+(\d+(?:\.\d+)?)/gi,
+      /south\s*shore[:\s\-–]+(\d+(?:\.\d+)?)/gi
     ];
+
+    console.log('Raw content length:', rawContent.length);
+    console.log('Looking for Ka.anapali pattern in content...');
 
     const zoneNames = ['northwest', 'kaanapali', 'southshore'];
 
     for (let i = 0; i < scorePatterns.length; i++) {
       const pattern = scorePatterns[i];
-      const matches = rawContent.matchAll(pattern);
+      const matches = [...rawContent.matchAll(pattern)];
+      console.log(`Pattern ${zoneNames[i]}: found ${matches.length} matches`);
       for (const match of matches) {
+        console.log(`  Match: "${match[0]}" -> score: ${match[1]}`);
         const score = parseFloat(match[1]);
         if (score >= 0 && score <= 10) {
           zones[zoneNames[i]] = zones[zoneNames[i]] || {};
           zones[zoneNames[i]].score = score;
+          console.log(`  ✓ Set ${zoneNames[i]} score to ${score}`);
           break; // Take the first valid match
         }
       }
     }
+
+    console.log('Final scraped zones:', JSON.stringify(zones));
 
     // Extract narratives/descriptions for each zone
     // Look for paragraphs or sections that mention zone names
