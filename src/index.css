@@ -22,6 +22,10 @@ body {
   font-family: 'Inter', system-ui, sans-serif;
 }
 
+.mapboxgl-ctrl-bottom-right {
+  bottom: 120px !important;
+}
+
 .mapboxgl-popup-content {
   background: #0c2a40 !important;
   color: #e6f4f9 !important;

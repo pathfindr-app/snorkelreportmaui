@@ -58,8 +58,8 @@ function MapView({ zones, allSpots, weather, onSelectSpot, onBackToLanding }) {
       bearing: INITIAL_BEARING,
     });
 
-    // Add navigation controls
-    map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
+    // Add navigation controls (bottom-right to group with other controls)
+    map.current.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 
     map.current.on('load', () => {
       // Add terrain for 3D effect
