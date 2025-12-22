@@ -23,15 +23,17 @@ body {
 }
 
 .mapboxgl-popup-content {
-  background: #0c2a40;
-  color: #e6f4f9;
-  border-radius: 8px;
-  padding: 12px 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  background: #0c2a40 !important;
+  color: #e6f4f9 !important;
+  border-radius: 8px !important;
+  padding: 12px 16px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+  border: 1px solid rgba(141, 205, 229, 0.3) !important;
 }
 
 .mapboxgl-popup-tip {
-  border-top-color: #0c2a40;
+  border-top-color: #0c2a40 !important;
+  border-bottom-color: #0c2a40 !important;
 }
 
 .mapboxgl-popup-close-button {

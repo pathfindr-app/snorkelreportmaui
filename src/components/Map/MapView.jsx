@@ -140,9 +140,9 @@ function MapView({ zones, allSpots, weather, onSelectSpot, onBackToLanding }) {
         popup
           .setLngLat(spot.coordinates)
           .setHTML(`
-            <div class="text-sm">
-              <div class="font-semibold">${spot.name}</div>
-              <div class="text-ocean-300 text-xs">${spot.zoneName}</div>
+            <div style="font-size: 14px;">
+              <div style="font-weight: 600; color: #e6f4f9;">${spot.name}</div>
+              <div style="font-size: 12px; color: #8dcde5;">${spot.zoneName}</div>
             </div>
           `)
           .addTo(map.current);
