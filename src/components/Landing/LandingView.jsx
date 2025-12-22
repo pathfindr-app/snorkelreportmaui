@@ -189,11 +189,71 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
         {/* Gradient overlay at bottom */}
         <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-ocean-950 to-transparent pointer-events-none" />
 
-        {/* Weather badge */}
+        {/* Weather Card - Premium Design */}
         {weather && (
-          <div className="absolute top-3 right-3 bg-ocean-900/80 backdrop-blur-sm px-3 py-2 rounded-lg">
-            <div className="text-ocean-50 font-semibold">{weather.temp}°F</div>
-            <div className="text-ocean-400 text-xs">{weather.wind?.speed} mph {weather.wind?.direction}</div>
+          <div className="absolute top-3 right-3 rounded-2xl overflow-hidden" style={{ background: 'rgba(7, 26, 43, 0.85)', backdropFilter: 'blur(12px)' }}>
+            {/* Main temp section */}
+            <div className="px-4 py-3 flex items-center gap-4">
+              <div className="relative">
+                <div className="absolute inset-0 bg-ocean-400/20 blur-xl rounded-full" />
+                <div className="relative flex items-baseline">
+                  <span className="text-4xl font-medium text-white" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                    {weather.temp}
+                  </span>
+                  <span className="text-lg text-ocean-300/70 ml-0.5">°F</span>
+                </div>
+              </div>
+              <div className="text-right">
+                <div className="text-sm font-medium text-ocean-100 capitalize">{weather.description}</div>
+                <div className="text-xs text-ocean-400">Maui, HI</div>
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className="h-px bg-white/10" />
+
+            {/* Stats grid */}
+            <div className="px-3 py-2.5 grid grid-cols-2 gap-x-4 gap-y-2">
+              {/* Wind */}
+              <div className="flex items-center gap-2">
+                <svg className="w-4 h-4 text-ocean-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" style={{ transform: `rotate(${weather.wind?.deg || 0}deg)` }}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-4-4l4 4-4 4" />
+                </svg>
+                <span className="text-xs text-ocean-200">{weather.wind?.speed} mph {weather.wind?.direction}</span>
+              </div>
+
+              {/* Humidity */}
+              <div className="flex items-center gap-2">
+                <svg className="w-4 h-4 text-ocean-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 21c-4 0-6-3-6-6 0-3.5 6-9 6-9s6 5.5 6 9c0 3-2 6-6 6z" />
+                </svg>
+                <span className="text-xs text-ocean-200">{weather.humidity}%</span>
+              </div>
+
+              {/* Visibility */}
+              {weather.visibility && (
+                <div className="flex items-center gap-2">
+                  <svg className="w-4 h-4 text-ocean-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                  <span className="text-xs text-ocean-200">{weather.visibility} mi</span>
+                </div>
+              )}
+
+              {/* Sun times - combined */}
+              {(weather.sunrise || weather.sunset) && (
+                <div className="flex items-center gap-2">
+                  <svg className="w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                    <circle cx="12" cy="12" r="4" />
+                    <path d="M12 2v2m0 16v2m10-10h-2M4 12H2m15.364-6.364l-1.414 1.414M8.05 15.95l-1.414 1.414m12.728 0l-1.414-1.414M8.05 8.05L6.636 6.636" strokeLinecap="round" />
+                  </svg>
+                  <span className="text-xs text-ocean-200">
+                    {weather.sunrise?.replace(' AM', 'a').replace(' PM', 'p')} – {weather.sunset?.replace(' AM', 'a').replace(' PM', 'p')}
+                  </span>
+                </div>
+              )}
+            </div>
           </div>
         )}
 
