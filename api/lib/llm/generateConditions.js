@@ -1,126 +1,103 @@
 // GPT-4o-mini Conditions Generator
-// Generates spot-specific conditions text using LLM
+// Generates spot-specific scores AND conditions text using LLM
+// Interprets The Snorkel Store narrative to fine-tune individual spot scores
 
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
-
-// Spot metadata for generating conditions
-const SPOTS_METADATA = {
-  // Northwest Zone
-  honolua: {
-    name: 'Honolua Bay',
-    exposure: 'Fully exposed to north swells',
-    characteristics: 'Marine Life Conservation District, rocky entry, best in calm summer conditions'
-  },
-  kapalua: {
-    name: 'Kapalua Bay',
-    exposure: 'Partially protected cove, still affected by large north swells',
-    characteristics: 'Small protected cove, sandy entry, good for beginners on calm days'
-  },
-  napili: {
-    name: 'Napili Bay',
-    exposure: 'Sheltered crescent bay, less exposed than Honolua',
-    characteristics: 'Sandy bottom with reef on sides, popular with families'
-  },
-
-  // Ka\'anapali Zone
-  blackrock: {
-    name: 'Black Rock (Pu\'u Keka\'a)',
-    exposure: 'West-facing, exposed to west swells',
-    characteristics: 'Iconic lava rock formation, easy beach access, can get crowded'
-  },
-  kahekili: {
-    name: 'Kahekili (Airport Beach)',
-    exposure: 'West-facing, partially protected',
-    characteristics: 'Less crowded, excellent reef system, sandy entry'
-  },
-
-  // South Shore Zone
-  olowalu: {
-    name: 'Olowalu',
-    exposure: 'Protected from north swells, exposed to south',
-    characteristics: 'Mile Marker 14, shallow water, known for turtle sightings'
-  },
-  coralgardens: {
-    name: 'Coral Gardens',
-    exposure: 'Protected, boat access common',
-    characteristics: 'Vibrant coral formations, abundant marine life, watch for boat traffic'
-  },
-  kamaole1: {
-    name: 'Kamaole Beach I',
-    exposure: 'South-facing, affected by south swells',
-    characteristics: 'Family-friendly, lifeguards, best snorkeling near south rocks'
-  },
-  kamaole2: {
-    name: 'Kamaole Beach II',
-    exposure: 'South-facing, affected by south swells',
-    characteristics: 'Reef on both ends, lifeguards present'
-  },
-  kamaole3: {
-    name: 'Kamaole Beach III',
-    exposure: 'South-facing, affected by south swells',
-    characteristics: 'Largest Kamaole beach, grassy park, family friendly'
-  },
-  uluabeach: {
-    name: 'Ulua Beach',
-    exposure: 'Protected cove in Wailea',
-    characteristics: 'Gentle sandy entry, lava fingers with diverse marine life'
-  },
-  waileapoint: {
-    name: 'Wailea Point',
-    exposure: 'Rocky point, more exposed',
-    characteristics: 'Rocky entry, good reef structure, occasional currents'
-  },
-  changssouth: {
-    name: 'Chang\'s South',
-    exposure: 'Part of Turtle Town, moderate exposure',
-    characteristics: 'Rocky shoreline entry, excellent coral, local favorite'
-  },
-  fivegraves: {
-    name: 'Five Graves (Five Caves)',
-    exposure: 'Exposed, can have surge',
-    characteristics: 'Advanced spot, underwater caves, lava rock entry'
-  },
-  makenalandingnorth: {
-    name: 'Makena Landing North',
-    exposure: 'Gateway to Turtle Town',
-    characteristics: 'Sandy entry, boat traffic, excellent turtle encounters'
-  },
-  makenalandingsouth: {
-    name: 'Makena Landing South',
-    exposure: 'More exposed than north side',
-    characteristics: 'Rockier entry, strong currents possible, less crowded'
-  },
-  maluaka: {
-    name: 'Maluaka Beach',
-    exposure: 'Protected sandy beach',
-    characteristics: 'Easy entry, turtle cleaning station nearby, great for beginners'
-  },
-  ahihikinau: {
-    name: 'Ahihi-Kinau Marine Preserve',
-    exposure: 'Protected reserve, lava rock coastline',
-    characteristics: 'Pristine reef, no fishing allowed, reef-safe sunscreen only'
+// Lazy initialization of OpenAI client
+let openai = null;
+function getOpenAI() {
+  if (!openai) {
+    openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY
+    });
   }
+  return openai;
+}
+
+// Zone to spot mapping
+const ZONE_SPOTS = {
+  northwest: ['honolua', 'kapalua', 'napili'],
+  kaanapali: ['blackrock', 'kahekili'],
+  southshore: [
+    'olowalu', 'coralgardens', 'kamaole1', 'kamaole2', 'kamaole3',
+    'uluabeach', 'waileapoint', 'changssouth', 'fivegraves',
+    'makenalandingnorth', 'makenalandingsouth', 'maluaka', 'ahihikinau'
+  ]
 };
 
-const SYSTEM_PROMPT = `You are a concise snorkeling conditions reporter for Maui. Generate 1-2 sentence condition reports that are practical and safety-focused.
+// All spot IDs
+const ALL_SPOTS = Object.values(ZONE_SPOTS).flat();
 
-CRITICAL RULES:
-- NEVER write specific numbers like "6 ft waves" or "79°F water" - use ONLY general terms
-- BAD: "Waves are 6.9 ft, water temperature is 79°F"
-- GOOD: "Waves are up with reduced visibility. Warm water, light winds."
-- GOOD: "Calm conditions with excellent visibility. Warm water makes for pleasant snorkeling."
-- Use phrases: "waves are up", "light chop", "calm", "rough", "warm water", "visibility reduced"
-- Keep it under 40 words
+// Spot metadata for context
+const SPOTS_METADATA = {
+  honolua: { name: 'Honolua Bay', exposure: 'Fully exposed to north swells', zone: 'northwest' },
+  kapalua: { name: 'Kapalua Bay', exposure: 'Partially protected cove', zone: 'northwest' },
+  napili: { name: 'Napili Bay', exposure: 'Sheltered crescent bay', zone: 'northwest' },
+  blackrock: { name: 'Black Rock', exposure: 'West-facing, exposed to west swells', zone: 'kaanapali' },
+  kahekili: { name: 'Kahekili (Airport Beach)', exposure: 'West-facing, partially protected', zone: 'kaanapali' },
+  olowalu: { name: 'Olowalu', exposure: 'Protected from north swells', zone: 'southshore' },
+  coralgardens: { name: 'Coral Gardens', exposure: 'Protected, boat access', zone: 'southshore' },
+  kamaole1: { name: 'Kamaole Beach I', exposure: 'South-facing', zone: 'southshore' },
+  kamaole2: { name: 'Kamaole Beach II', exposure: 'South-facing', zone: 'southshore' },
+  kamaole3: { name: 'Kamaole Beach III', exposure: 'South-facing', zone: 'southshore' },
+  uluabeach: { name: 'Ulua Beach', exposure: 'Protected cove in Wailea', zone: 'southshore' },
+  waileapoint: { name: 'Wailea Point', exposure: 'Rocky point, more exposed', zone: 'southshore' },
+  changssouth: { name: "Chang's South", exposure: 'Part of Turtle Town', zone: 'southshore' },
+  fivegraves: { name: 'Five Graves', exposure: 'Exposed, can have surge', zone: 'southshore' },
+  makenalandingnorth: { name: 'Makena Landing North', exposure: 'Gateway to Turtle Town', zone: 'southshore' },
+  makenalandingsouth: { name: 'Makena Landing South', exposure: 'More exposed than north', zone: 'southshore' },
+  maluaka: { name: 'Maluaka Beach', exposure: 'Protected sandy beach', zone: 'southshore' },
+  ahihikinau: { name: 'Ahihi-Kinau', exposure: 'Protected marine reserve', zone: 'southshore' }
+};
+
+// System prompt for JSON output with scores
+const SYSTEM_PROMPT = `You are a snorkeling conditions analyst for Maui. Given zone scores and narrative from The Snorkel Store, generate individual spot scores and brief condition descriptions.
+
+CRITICAL SCORING RULES:
+1. Each spot score MUST be within ±1 point of its zone score (e.g., if zone is 6, spot can be 5.0-7.0)
+2. Use the narrative to determine relative rankings within each zone
+3. If narrative says "X is better than Y" or "X is calmer than Y", X should score higher than Y
+4. If narrative mentions a spot is dangerous/rough/hazardous, score it lower within the range
+5. If narrative mentions a spot is calm/protected/good, score it higher within the range
+6. If a spot is not mentioned in the narrative, default to exactly the zone score
+7. Scores should be to 1 decimal place (e.g., 6.5, not 6.53)
+
+CONDITION TEXT RULES:
+- 1-2 sentences maximum
+- NEVER use specific numbers like "6 ft waves" or "79°F" - use general terms only
+- Use phrases like: "waves are up", "calm conditions", "visibility reduced", "warm water"
 - Be practical and safety-focused
 - If dangerous, say so clearly
-- Paraphrase in your own words - never copy source text`;
+
+ZONE ASSIGNMENTS:
+- Northwest zone: honolua, kapalua, napili
+- Ka'anapali zone: blackrock, kahekili
+- South Shore zone: olowalu, coralgardens, kamaole1, kamaole2, kamaole3, uluabeach, waileapoint, changssouth, fivegraves, makenalandingnorth, makenalandingsouth, maluaka, ahihikinau
+
+You MUST output valid JSON only, no markdown or explanation.`;
 
 /**
- * Convert buoy wave height (meters) to general description
+ * Get zone score for a spot
+ */
+function getZoneScoreForSpot(spotId, zones) {
+  const meta = SPOTS_METADATA[spotId];
+  if (!meta) return 5;
+  return zones[meta.zone]?.score ?? 5;
+}
+
+/**
+ * Clamp score to within ±1 of zone score
+ */
+function clampToZoneRange(score, zoneScore) {
+  const min = Math.max(0, zoneScore - 1);
+  const max = Math.min(10, zoneScore + 1);
+  const clamped = Math.max(min, Math.min(max, score));
+  return Math.round(clamped * 10) / 10;
+}
+
+/**
+ * Convert buoy wave height to general description
  */
 function getWaveDescription(waveHeightMeters) {
   if (waveHeightMeters === null || waveHeightMeters === undefined) return 'unknown';
@@ -129,131 +106,167 @@ function getWaveDescription(waveHeightMeters) {
   if (ft < 4) return 'moderate';
   if (ft < 6) return 'elevated';
   if (ft < 8) return 'rough';
-  return 'very rough - use caution';
+  return 'very rough';
 }
 
 /**
- * Generates conditions text for all spots using GPT-4o-mini
- * @param {object} params - { zones, buoyData, tideData, mauiNowData }
- * @returns {Promise<object>} - { spotId: conditionsText, ... }
+ * Generate fallback scores when LLM fails - just use zone scores
  */
-export async function generateAllConditions({ zones, buoyData, tideData, mauiNowData }) {
-  // Convert buoy data to general descriptions (not specific numbers)
-  const waveCondition = getWaveDescription(buoyData.waveHeight);
-  const swellDir = buoyData.waveDirectionCompass || 'variable';
-  const waterTemp = buoyData.waterTempF || 'pleasant';
+function generateFallbackScores(zones) {
+  const result = { spots: {} };
+  for (const spotId of ALL_SPOTS) {
+    const zoneScore = getZoneScoreForSpot(spotId, zones);
+    result.spots[spotId] = {
+      score: zoneScore,
+      conditions: 'Conditions vary. Check locally before snorkeling.'
+    };
+  }
+  return result;
+}
 
-  // Get advisory info from Maui Now
-  const hasAdvisory = mauiNowData?.advisories?.length > 0;
-  const advisoryText = hasAdvisory ? mauiNowData.advisories[0].message : null;
-  const surfConditions = mauiNowData?.surfConditions || {};
-  const windDesc = mauiNowData?.windConditions || 'variable';
-  const spotConditions = {};
+/**
+ * Parse and validate LLM response
+ */
+function parseAndValidateResponse(content, zones) {
+  let parsed;
 
-  // Build prompts for all spots
-  const prompts = [];
-
-  for (const [spotId, spotMeta] of Object.entries(SPOTS_METADATA)) {
-    // Determine which zone this spot belongs to
-    let zone = null;
-    let zoneName = '';
-    if (['honolua', 'kapalua', 'napili'].includes(spotId)) {
-      zone = zones.northwest;
-      zoneName = 'Northwest';
-    } else if (['blackrock', 'kahekili'].includes(spotId)) {
-      zone = zones.kaanapali;
-      zoneName = "Ka'anapali";
+  // Try to parse JSON
+  try {
+    parsed = JSON.parse(content);
+  } catch (e) {
+    // Try to extract JSON from markdown code blocks
+    const jsonMatch = content.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+    if (jsonMatch) {
+      parsed = JSON.parse(jsonMatch[1]);
     } else {
-      zone = zones.southshore;
-      zoneName = 'South Shore';
+      throw new Error('Failed to parse LLM response as JSON');
     }
-
-    const zoneScore = zone?.score ?? 5;
-
-    // Determine if this spot is affected by current swell direction
-    const spotExposure = spotMeta.exposure.toLowerCase();
-    let swellImpact = 'minimal';
-    if (swellDir.includes('N') && (spotExposure.includes('north') || zoneName === 'Northwest')) {
-      swellImpact = 'waves are up, visibility likely reduced';
-    } else if (swellDir.includes('S') && (spotExposure.includes('south') || zoneName === 'South Shore')) {
-      swellImpact = 'waves are up, visibility likely reduced';
-    } else if (swellDir.includes('W') && spotExposure.includes('west')) {
-      swellImpact = 'some wave action expected';
-    }
-
-    // Build the prompt for this spot - using GENERAL descriptions
-    const prompt = `Zone: ${zoneName} (Score: ${zoneScore}/10)
-
-Spot: ${spotMeta.name}
-Characteristics: ${spotMeta.characteristics}
-Exposure: ${spotMeta.exposure}
-
-Current Conditions (general):
-- Overall waves: ${waveCondition}
-- Swell coming from: ${swellDir}
-- Impact on this spot: ${swellImpact}
-- Water temp: ${waterTemp}
-- Wind: ${windDesc}
-- Tide: ${tideData.currentTide?.rising ? 'Rising' : 'Falling'}
-${advisoryText ? `- ADVISORY: ${advisoryText}` : ''}
-
-Generate a brief, general conditions report. DO NOT use specific wave heights.`;
-
-    prompts.push({ spotId, prompt });
   }
 
-  // Call OpenAI for all spots in a single batch request
-  // Using a single prompt with all spots to minimize API calls
-  const batchPrompt = prompts.map((p, i) => `[SPOT ${i + 1}: ${SPOTS_METADATA[p.spotId].name}]\n${p.prompt}`).join('\n\n---\n\n');
+  // Validate structure
+  if (!parsed.spots || typeof parsed.spots !== 'object') {
+    throw new Error('LLM response missing "spots" object');
+  }
+
+  // Validate and clamp each spot
+  const validatedSpots = {};
+  for (const spotId of ALL_SPOTS) {
+    const zoneScore = getZoneScoreForSpot(spotId, zones);
+    const spotData = parsed.spots[spotId] || {};
+
+    // Parse and clamp score
+    let score = parseFloat(spotData.score);
+    if (isNaN(score)) {
+      score = zoneScore;
+    } else {
+      score = clampToZoneRange(score, zoneScore);
+    }
+
+    // Get conditions text
+    let conditions = spotData.conditions;
+    if (!conditions || typeof conditions !== 'string' || conditions.length < 5) {
+      conditions = 'Conditions vary. Check locally before entering.';
+    }
+
+    validatedSpots[spotId] = { score, conditions };
+  }
+
+  return { spots: validatedSpots };
+}
+
+/**
+ * Generates scores and conditions for all spots using GPT-4o-mini
+ * @param {object} params - { zones, fullNarrative, buoyData, tideData, mauiNowData }
+ * @returns {Promise<{spots: object}>} - { spots: { spotId: { score, conditions } } }
+ */
+export async function generateSpotScoresAndConditions({ zones, fullNarrative, buoyData, tideData, mauiNowData }) {
+  // Build environmental context (no specific numbers for LLM output)
+  const waveCondition = getWaveDescription(buoyData?.waveHeight);
+  const swellDir = buoyData?.waveDirectionCompass || 'variable';
+  const windDesc = mauiNowData?.windConditions || 'variable';
+  const tideStatus = tideData?.currentTide?.rising ? 'rising' : 'falling';
+
+  // Build spot list for prompt
+  const spotList = ALL_SPOTS.map(id => {
+    const meta = SPOTS_METADATA[id];
+    return `- ${id}: ${meta.name} (${meta.exposure})`;
+  }).join('\n');
+
+  // Build the user prompt
+  const userPrompt = `ZONE SCORES FROM THE SNORKEL STORE:
+- Northwest: ${zones.northwest?.score ?? 5}/10
+- Ka'anapali: ${zones.kaanapali?.score ?? 5}/10
+- South Shore: ${zones.southshore?.score ?? 5}/10
+
+NARRATIVE FROM THE SNORKEL STORE:
+"""
+${fullNarrative || 'No narrative available today.'}
+"""
+
+CURRENT ENVIRONMENTAL CONDITIONS:
+- Wave conditions: ${waveCondition}
+- Swell direction: ${swellDir}
+- Wind: ${windDesc}
+- Tide: ${tideStatus}
+
+SPOTS TO SCORE (remember: each score must be within ±1 of its zone score):
+${spotList}
+
+Generate a JSON object with this exact structure:
+{
+  "spots": {
+    "honolua": { "score": <number>, "conditions": "<string>" },
+    "kapalua": { "score": <number>, "conditions": "<string>" },
+    ... and so on for all ${ALL_SPOTS.length} spots ...
+  }
+}`;
 
   try {
-    const response = await openai.chat.completions.create({
+    console.log('Calling GPT-4o-mini for spot scores and conditions...');
+
+    const response = await getOpenAI().chat.completions.create({
       model: 'gpt-4o-mini',
+      response_format: { type: 'json_object' },
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
-        {
-          role: 'user',
-          content: `Generate conditions for each of these ${prompts.length} snorkeling spots. Format your response as:\n\n[SPOT 1: Name]\nConditions text here.\n\n[SPOT 2: Name]\nConditions text here.\n\n...and so on.\n\n${batchPrompt}`
-        }
+        { role: 'user', content: userPrompt }
       ],
-      temperature: 0.7,
-      max_tokens: 2000
+      temperature: 0.3, // Lower for more consistent scoring
+      max_tokens: 2500
     });
 
     const content = response.choices[0]?.message?.content || '';
+    console.log('LLM response received, parsing...');
 
-    // Parse the response to extract conditions for each spot
-    for (let i = 0; i < prompts.length; i++) {
-      const spotId = prompts[i].spotId;
-      const spotName = SPOTS_METADATA[spotId].name;
+    // Parse and validate
+    const result = parseAndValidateResponse(content, zones);
+    console.log('Successfully generated scores for', Object.keys(result.spots).length, 'spots');
 
-      // Try to find this spot's section in the response
-      const patterns = [
-        new RegExp(`\\[SPOT ${i + 1}[^\\]]*\\]\\s*([^\\[]+)`, 'i'),
-        new RegExp(`${spotName.replace(/[()]/g, '\\$&')}[:\\s]*([^\\[]+)`, 'i')
-      ];
-
-      let conditions = null;
-      for (const pattern of patterns) {
-        const match = content.match(pattern);
-        if (match && match[1]) {
-          conditions = match[1].trim().split('\n')[0].trim(); // Take first line
-          break;
-        }
-      }
-
-      spotConditions[spotId] = conditions || `Conditions vary. Water is warm. Check conditions before entering.`;
-    }
+    return result;
   } catch (error) {
-    console.error('Error generating conditions with LLM:', error);
-
-    // Fallback: generate basic conditions without LLM
-    for (const spotId of Object.keys(SPOTS_METADATA)) {
-      spotConditions[spotId] = `Water is warm. Conditions vary - check locally before snorkeling.`;
-    }
+    console.error('Error generating conditions with LLM:', error.message);
+    console.log('Using fallback scores (zone scores directly)');
+    return generateFallbackScores(zones);
   }
-
-  return spotConditions;
 }
 
-export default generateAllConditions;
+// Keep old function name for backwards compatibility during transition
+export async function generateAllConditions(params) {
+  // Convert old params to new format
+  const result = await generateSpotScoresAndConditions({
+    zones: params.zones,
+    fullNarrative: '', // Old callers don't have narrative
+    buoyData: params.buoyData,
+    tideData: params.tideData,
+    mauiNowData: params.mauiNowData
+  });
+
+  // Return just the conditions text for backwards compatibility
+  const conditions = {};
+  for (const [spotId, data] of Object.entries(result.spots)) {
+    conditions[spotId] = data.conditions;
+  }
+  return conditions;
+}
+
+export default generateSpotScoresAndConditions;

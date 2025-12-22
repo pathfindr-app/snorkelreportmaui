@@ -1,0 +1,19 @@
+{
+  "spots": {},
+  "updatedAt": null,
+  "_comment": "Edit this file to manually override spot conditions. Push to GitHub and it will sync to production.",
+  "_validSpotIds": [
+    "honolua", "kapalua", "napili",
+    "blackrock", "kahekili",
+    "olowalu", "coralgardens", "kamaole1", "kamaole2", "kamaole3",
+    "uluabeach", "waileapoint", "changssouth", "fivegraves",
+    "makenalandingnorth", "makenalandingsouth", "maluaka", "ahihikinau"
+  ],
+  "_example": {
+    "honolua": {
+      "score": 8,
+      "conditions": "Excellent visibility today, calm waters.",
+      "note": "Personal observation 12/21"
+    }
+  }
+}

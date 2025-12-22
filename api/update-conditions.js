@@ -6,7 +6,7 @@ import { scrapeSnorkelStore } from './lib/scrapers/snorkelStore.js';
 import { scrapeMauiNow } from './lib/scrapers/mauiNow.js';
 import { fetchBuoyData } from './lib/fetchers/noaaBuoy.js';
 import { fetchTideData } from './lib/fetchers/noaaTides.js';
-import { generateAllConditions } from './lib/llm/generateConditions.js';
+import { generateSpotScoresAndConditions } from './lib/llm/generateConditions.js';
 import { readFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -64,18 +64,21 @@ export default async function handler(req, res) {
       snorkelStore: snorkelStoreData.zones,
       mauiNow: { advisories: mauiNowData.advisories, surf: mauiNowData.surfConditions },
       buoy: { waves: buoyData.waveHeightFt, temp: buoyData.waterTempF },
-      tides: { nextHigh: tideData.nextHighTide }
+      tides: { nextHigh: tideData.nextHighTide },
+      narrativeLength: snorkelStoreData.fullNarrative?.length || 0
     });
 
-    // Generate conditions for all spots using LLM
-    const spotConditions = await generateAllConditions({
+    // Generate scores AND conditions for all spots using LLM
+    // The LLM interprets the Snorkel Store narrative to fine-tune individual spot scores
+    const llmResult = await generateSpotScoresAndConditions({
       zones: snorkelStoreData.zones,
+      fullNarrative: snorkelStoreData.fullNarrative || '',
       buoyData,
       tideData,
       mauiNowData
     });
 
-    console.log('Generated conditions for', Object.keys(spotConditions).length, 'spots');
+    console.log('Generated scores and conditions for', Object.keys(llmResult.spots).length, 'spots');
 
     // Build the updated conditions object
     const updatedConditions = {
@@ -119,14 +122,18 @@ export default async function handler(req, res) {
       // Update each spot in this zone
       for (const [spotId, spotData] of Object.entries(zoneData.spots)) {
         const override = manualOverrides.spots?.[spotId];
+        const llmSpot = llmResult.spots?.[spotId];
+        const zoneScore = scrapedZone.score ?? zoneData.score;
+
         updatedConditions.zones[zoneId].spots[spotId] = {
           ...spotData,
-          // Manual override takes priority, then LLM, then static
-          conditions: override?.conditions || spotConditions[spotId] || spotData.conditions,
-          // Manual override takes priority for score
-          score: override?.score ?? spotData.score ?? null,
-          // Flag if this spot has a manual override
-          ...(override && { hasManualOverride: true })
+          // Priority for conditions: 1) Manual override, 2) LLM, 3) Static
+          conditions: override?.conditions || llmSpot?.conditions || spotData.conditions,
+          // Priority for score: 1) Manual override, 2) LLM score, 3) Zone score
+          score: override?.score ?? llmSpot?.score ?? zoneScore,
+          // Flag source of score
+          ...(override && { hasManualOverride: true }),
+          ...(llmSpot && !override && { hasLLMScore: true })
         };
       }
     }

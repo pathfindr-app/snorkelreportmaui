@@ -21,7 +21,7 @@ const ZONE_MAPPING = {
 
 /**
  * Scrapes The Snorkel Store conditions page for zone scores and narratives
- * @returns {Promise<{zones: object, lastUpdated: string, alerts: array}>}
+ * @returns {Promise<{zones: object, lastUpdated: string, alerts: array, fullNarrative: string}>}
  */
 export async function scrapeSnorkelStore() {
   try {
@@ -35,6 +35,7 @@ export async function scrapeSnorkelStore() {
 
     const zones = {};
     const alerts = [];
+    const narrativeParagraphs = []; // Collect all condition-related paragraphs
     let rawContent = '';
 
     // Get the main content area
@@ -88,9 +89,27 @@ export async function scrapeSnorkelStore() {
     // Look for paragraphs or sections that mention zone names
     const paragraphs = content ? content.find('p').toArray() : $('p').toArray();
 
+    // Keywords that indicate a paragraph is about snorkeling conditions
+    const conditionKeywords = [
+      'snorkel', 'conditions', 'waves', 'surf', 'visibility', 'calm', 'rough',
+      'current', 'wind', 'swell', 'entry', 'exit', 'dangerous', 'safe',
+      'recommended', 'avoid', 'best', 'better', 'worse', 'protected'
+    ];
+
+    // Spot names to look for in narrative
+    const spotNames = [
+      'honolua', 'kapalua', 'napili', 'black rock', 'blackrock', 'kahekili',
+      'airport beach', 'olowalu', 'coral gardens', 'kamaole', 'kam 1', 'kam 2', 'kam 3',
+      'ulua', 'wailea point', 'chang', 'five graves', 'five caves', 'makena landing',
+      'maluaka', 'turtle town', 'ahihi', 'kinau'
+    ];
+
     for (const p of paragraphs) {
       const text = $(p).text().trim();
       const textLower = text.toLowerCase();
+
+      // Skip very short or very long paragraphs
+      if (text.length < 20 || text.length > 1000) continue;
 
       // Check if this paragraph is about a specific zone
       if (textLower.includes('northwest') || textLower.includes('north west')) {
@@ -105,6 +124,17 @@ export async function scrapeSnorkelStore() {
           textLower.includes('wailea') || textLower.includes('makena')) {
         zones.southshore = zones.southshore || {};
         zones.southshore.narrative = zones.southshore.narrative || extractNarrative(text);
+      }
+
+      // Collect paragraphs that mention conditions or spots for fullNarrative
+      const hasConditionKeyword = conditionKeywords.some(kw => textLower.includes(kw));
+      const hasSpotName = spotNames.some(spot => textLower.includes(spot));
+      const hasZoneName = textLower.includes('northwest') || textLower.includes('kaanapali') ||
+                          textLower.includes("ka'anapali") || textLower.includes('south') ||
+                          textLower.includes('kihei') || textLower.includes('wailea');
+
+      if (hasConditionKeyword || hasSpotName || hasZoneName) {
+        narrativeParagraphs.push(text);
       }
 
       // Check for alerts/warnings - only extract SHORT, official-sounding alerts
@@ -136,9 +166,16 @@ export async function scrapeSnorkelStore() {
       }
     }
 
+    // Build fullNarrative from collected paragraphs (limit to ~2000 chars for LLM context)
+    let fullNarrative = narrativeParagraphs.join('\n\n');
+    if (fullNarrative.length > 2000) {
+      fullNarrative = fullNarrative.slice(0, 2000) + '...';
+    }
+
     return {
       zones,
       alerts: alerts.slice(0, 3), // Limit to 3 alerts
+      fullNarrative, // NEW: Combined narrative for LLM interpretation
       lastUpdated,
       source: SNORKEL_STORE_URL,
       rawContentLength: rawContent.length
@@ -148,6 +185,7 @@ export async function scrapeSnorkelStore() {
     return {
       zones: {},
       alerts: [],
+      fullNarrative: '',
       lastUpdated: new Date().toISOString(),
       source: SNORKEL_STORE_URL,
       error: error.message
