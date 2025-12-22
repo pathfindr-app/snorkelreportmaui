@@ -22,8 +22,53 @@ body {
   font-family: 'Inter', system-ui, sans-serif;
 }
 
+/* Position navigation controls above custom buttons */
 .mapboxgl-ctrl-bottom-right {
-  bottom: 120px !important;
+  bottom: 100px !important;
+  right: 10px !important;
+}
+
+/* Style navigation controls to match app theme */
+.mapboxgl-ctrl-group {
+  background: rgba(12, 42, 64, 0.9) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  overflow: hidden;
+}
+
+.mapboxgl-ctrl-group button {
+  background: transparent !important;
+  border: none !important;
+  width: 36px !important;
+  height: 36px !important;
+}
+
+.mapboxgl-ctrl-group button:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.mapboxgl-ctrl-group button + button {
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.mapboxgl-ctrl-group button .mapboxgl-ctrl-icon {
+  filter: invert(1) brightness(0.8);
+}
+
+/* Make attribution smaller and subtle */
+.mapboxgl-ctrl-attrib {
+  background: rgba(0, 0, 0, 0.5) !important;
+  font-size: 9px !important;
+  padding: 2px 5px !important;
+  border-radius: 3px 0 0 0 !important;
+}
+
+.mapboxgl-ctrl-attrib a {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.mapboxgl-ctrl-attrib-button {
+  display: none !important;
 }
 
 .mapboxgl-popup-content {
