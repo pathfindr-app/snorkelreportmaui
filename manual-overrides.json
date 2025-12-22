@@ -10,10 +10,10 @@
     "makenalandingnorth", "makenalandingsouth", "maluaka", "ahihikinau"
   ],
   "_example": {
-    "honolua": {
-      "score": 8,
-      "conditions": "Excellent visibility today, calm waters.",
-      "note": "Personal observation 12/21"
+    "blackrock": {
+      "score": 6,
+      "conditions": "Good visibility.",
+      "note": "first hand info "
     }
   }
 }
