@@ -16,7 +16,7 @@ function App() {
   const [activeModal, setActiveModal] = useState(null);
 
   const { zones, allSpots, loading, lastUpdated, alerts } = useConditions();
-  const { weather } = useWeather();
+  const { weather, userWeather } = useWeather();
 
   const handleExploreMap = useCallback(() => setCurrentView('map'), []);
   const handleBackToLanding = useCallback(() => {
@@ -54,6 +54,7 @@ function App() {
             allSpots={allSpots}
             alerts={alerts}
             weather={weather}
+            userWeather={userWeather}
             onExploreMap={handleExploreMap}
             onSelectSpot={handleSelectSpot}
           />
@@ -62,6 +63,7 @@ function App() {
             zones={zones}
             allSpots={allSpots}
             weather={weather}
+            userWeather={userWeather}
             onSelectSpot={handleSelectSpot}
           />
         )}

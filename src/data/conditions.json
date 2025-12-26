@@ -72,6 +72,18 @@
           "hazards": ["Shore break on entry"],
           "webcam": "https://www.ozolio.com/explore/TIGL000014BB",
           "hasProvider": true
+        },
+        "malawharf": {
+          "id": "malawharf",
+          "name": "Mala Wharf",
+          "coordinates": [-156.6871171536624, 20.8853424074552],
+          "score": 6,
+          "description": "Historic pier ruins create an artificial reef teeming with marine life. Excellent for spotting turtles, rays, and diverse fish species. Entry from nearby boat ramp. Best in calm conditions.",
+          "conditions": "Conditions vary. Check locally before entering.",
+          "hazards": ["Boat traffic", "Current", "Submerged structures"],
+          "webcam": null,
+          "hasProvider": false,
+          "derivedScore": true
         }
       }
     },
@@ -213,6 +225,17 @@
           "hazards": ["Afternoon wind chop"],
           "webcam": null,
           "hasProvider": true
+        },
+        "whiterock": {
+          "id": "whiterock",
+          "name": "White Rock",
+          "coordinates": [-156.44283811341825, 20.670694213288858],
+          "score": 6.5,
+          "description": "Large white rock formation at south end of Makena State Park (Big Beach). Rocky entry leads to excellent snorkeling with diverse marine life. Best on calm days with low surf.",
+          "conditions": "Conditions vary. Check surf before entering.",
+          "hazards": ["Rocky entry", "Strong current", "Shore break"],
+          "webcam": null,
+          "hasProvider": false
         },
         "ahihikinau": {
           "id": "ahihikinau",

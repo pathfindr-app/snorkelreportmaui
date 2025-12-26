@@ -125,6 +125,17 @@ export default async function handler(req, res) {
         const llmSpot = llmResult.spots?.[spotId];
         const zoneScore = scrapedZone.score ?? zoneData.score;
 
+        // Skip malawharf here - it gets a derived score calculated below
+        if (spotId === 'malawharf') {
+          updatedConditions.zones[zoneId].spots[spotId] = {
+            ...spotData,
+            conditions: override?.conditions || spotData.conditions,
+            score: zoneScore, // Placeholder - calculated after all spots
+            derivedScore: true
+          };
+          continue;
+        }
+
         updatedConditions.zones[zoneId].spots[spotId] = {
           ...spotData,
           // Priority for conditions: 1) Manual override, 2) LLM, 3) Static
@@ -136,6 +147,20 @@ export default async function handler(req, res) {
           ...(llmSpot && !override && { hasLLMScore: true })
         };
       }
+    }
+
+    // Calculate derived score for Mala Wharf (average of zone + blackrock + kahekili)
+    if (updatedConditions.zones.kaanapali?.spots?.malawharf) {
+      const kaanapaliZone = updatedConditions.zones.kaanapali;
+      const blackrockScore = kaanapaliZone.spots.blackrock?.score ?? kaanapaliZone.score;
+      const kahekiliScore = kaanapaliZone.spots.kahekili?.score ?? kaanapaliZone.score;
+      const zoneScore = kaanapaliZone.score;
+
+      // Average of zone score, blackrock, and kahekili
+      const derivedScore = Math.round(((zoneScore + blackrockScore + kahekiliScore) / 3) * 10) / 10;
+
+      updatedConditions.zones.kaanapali.spots.malawharf.score = derivedScore;
+      console.log(`Mala Wharf derived score: ${derivedScore} (avg of zone:${zoneScore}, blackrock:${blackrockScore}, kahekili:${kahekiliScore})`);
     }
 
     // Save to Vercel Blob

@@ -18,11 +18,11 @@ function getOpenAI() {
 // Zone to spot mapping
 const ZONE_SPOTS = {
   northwest: ['honolua', 'kapalua', 'napili'],
-  kaanapali: ['blackrock', 'kahekili'],
+  kaanapali: ['blackrock', 'kahekili'],  // malawharf has derived score,
   southshore: [
     'olowalu', 'coralgardens', 'kamaole1', 'kamaole2', 'kamaole3',
     'uluabeach', 'waileapoint', 'changssouth', 'fivegraves',
-    'makenalandingnorth', 'makenalandingsouth', 'maluaka', 'ahihikinau'
+    'makenalandingnorth', 'makenalandingsouth', 'maluaka', 'whiterock', 'ahihikinau'
   ]
 };
 
@@ -48,6 +48,7 @@ const SPOTS_METADATA = {
   makenalandingnorth: { name: 'Makena Landing North', exposure: 'Gateway to Turtle Town', zone: 'southshore' },
   makenalandingsouth: { name: 'Makena Landing South', exposure: 'More exposed than north', zone: 'southshore' },
   maluaka: { name: 'Maluaka Beach', exposure: 'Protected sandy beach', zone: 'southshore' },
+  whiterock: { name: 'White Rock', exposure: 'South end of Big Beach, rocky entry', zone: 'southshore' },
   ahihikinau: { name: 'Ahihi-Kinau', exposure: 'Protected marine reserve', zone: 'southshore' }
 };
 
@@ -73,7 +74,7 @@ CONDITION TEXT RULES:
 ZONE ASSIGNMENTS:
 - Northwest zone: honolua, kapalua, napili
 - Ka'anapali zone: blackrock, kahekili
-- South Shore zone: olowalu, coralgardens, kamaole1, kamaole2, kamaole3, uluabeach, waileapoint, changssouth, fivegraves, makenalandingnorth, makenalandingsouth, maluaka, ahihikinau
+- South Shore zone: olowalu, coralgardens, kamaole1, kamaole2, kamaole3, uluabeach, waileapoint, changssouth, fivegraves, makenalandingnorth, makenalandingsouth, maluaka, whiterock, ahihikinau
 
 You MUST output valid JSON only, no markdown or explanation.`;
 

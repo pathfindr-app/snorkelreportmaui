@@ -12,7 +12,7 @@ const INITIAL_ZOOM = 9;
 const INITIAL_PITCH = 0;
 const INITIAL_BEARING = 0;
 
-function MapView({ zones, allSpots, weather, onSelectSpot, onBackToLanding }) {
+function MapView({ zones, allSpots, weather, userWeather, onSelectSpot, onBackToLanding }) {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const markersRef = useRef([]);
@@ -208,7 +208,7 @@ function MapView({ zones, allSpots, weather, onSelectSpot, onBackToLanding }) {
       <div ref={mapContainer} className="absolute inset-0" style={{ width: '100%', height: '100%' }} />
 
       {/* Weather overlay */}
-      {weather && <WeatherOverlay weather={weather} />}
+      {weather && <WeatherOverlay weather={weather} userWeather={userWeather} />}
 
       {/* Unified map controls */}
       <div className="absolute bottom-6 right-3 z-10 flex flex-col rounded-xl overflow-hidden shadow-lg" style={{ background: 'rgba(7, 26, 43, 0.85)', backdropFilter: 'blur(8px)' }}>
