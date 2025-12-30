@@ -1,0 +1,45 @@
+name: Update Snorkel Conditions
+
+on:
+  schedule:
+    # Runs at 6:05 PM UTC (8:05 AM HST) daily
+    - cron: '5 18 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  update-conditions:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Update conditions
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: node scripts/update-conditions-github.js
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          git diff --quiet data/conditions.json || echo "changes=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push changes
+        if: steps.git-check.outputs.changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data/conditions.json
+          git commit -m "Update snorkel conditions $(date -u +%Y-%m-%d)"
+          git push

@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo } from 'react';
 import staticConditionsData from '../data/conditions.json';
 
-// API endpoint for dynamic conditions (used in production)
-const API_URL = '/api/get-conditions';
+// GitHub raw URL for conditions data (updated daily by GitHub Actions)
+const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/pathfindr-app/snorkelreportmaui/main/data/conditions.json';
 
 // Cache duration in milliseconds (1 minute)
 const CACHE_DURATION = 1 * 60 * 1000;
@@ -10,7 +10,7 @@ const CACHE_KEY = 'maui_conditions_cache';
 
 /**
  * Hook to load and provide conditions data
- * Fetches from API with fallback to static JSON
+ * Fetches from GitHub with fallback to static JSON
  */
 export function useConditions() {
   const [conditions, setConditions] = useState(null);
@@ -33,12 +33,14 @@ export function useConditions() {
           }
         }
 
-        // Try to fetch from API
-        const response = await fetch(API_URL);
+        // Fetch from GitHub raw URL with cache busting
+        const response = await fetch(`${GITHUB_RAW_URL}?t=${Date.now()}`, {
+          cache: 'no-store'
+        });
         if (response.ok) {
           const data = await response.json();
           setConditions(data);
-          setDataSource(data.source || 'api');
+          setDataSource('github');
 
           // Cache the response
           localStorage.setItem(CACHE_KEY, JSON.stringify({
@@ -46,10 +48,10 @@ export function useConditions() {
             timestamp: Date.now()
           }));
         } else {
-          throw new Error('API request failed');
+          throw new Error('GitHub fetch failed');
         }
       } catch (err) {
-        console.log('API fetch failed, using static data:', err.message);
+        console.log('GitHub fetch failed, using static data:', err.message);
         // Fallback to static data
         setConditions(staticConditionsData);
         setDataSource('static');

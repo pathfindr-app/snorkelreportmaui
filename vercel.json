@@ -1,10 +1,5 @@
 {
-  "crons": [
-    {
-      "path": "/api/update-conditions",
-      "schedule": "5 18 * * *"
-    }
-  ],
+  "crons": [],
   "functions": {
     "api/update-conditions.js": {
       "maxDuration": 60
