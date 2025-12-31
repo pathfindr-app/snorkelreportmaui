@@ -166,9 +166,14 @@ function calculateZoneAdjustments(results) {
 function applyAdjustments(conditions, adjustments) {
   const updated = JSON.parse(JSON.stringify(conditions)); // Deep clone
 
+  const now = new Date().toISOString();
+
+  // Update the main lastUpdated timestamp so the UI shows fresh time
+  updated.lastUpdated = now;
+
   // Add wind check metadata
   updated.windCheck = {
-    timestamp: new Date().toISOString(),
+    timestamp: now,
     adjustments: {},
     cameras: WEBCAMS.map(w => ({ id: w.id, name: w.name, zone: w.zone }))
   };
