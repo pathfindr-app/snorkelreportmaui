@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-01-05T18:38:26.658Z",
+  "lastUpdated": "2026-01-05T21:11:26.403Z",
   "dataQuality": {
     "snorkelStore": "fresh",
     "noaaBuoy": "fresh",
@@ -29,7 +29,7 @@
     "northwest": {
       "id": "northwest",
       "name": "Northwest",
-      "score": 1,
+      "score": 0,
       "summary": "Hazardous. Powerful waves & strong currents",
       "details": "Water is warm (77°F). Rough conditions. light winds.",
       "spots": {
@@ -50,7 +50,8 @@
           ],
           "webcam": null,
           "hasProvider": false,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "kapalua": {
           "id": "kapalua",
@@ -59,7 +60,7 @@
             -156.666723,
             20.999107
           ],
-          "score": 1,
+          "score": 0,
           "description": "Small protected cove ideal for beginners and families. Reefs on both sides block swell. Best snorkeling on northeastern side where visibility is better. Very sensitive to winter swells.",
           "conditions": "Partially protected but still faces strong waves and currents. Caution is advised.",
           "hazards": [
@@ -67,7 +68,8 @@
           ],
           "webcam": null,
           "hasProvider": true,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "napili": {
           "id": "napili",
@@ -76,7 +78,7 @@
             -156.666922,
             20.994735
           ],
-          "score": 1,
+          "score": 0,
           "description": "Sheltered crescent bay popular with families. Sandy bottom with reef on both sides. Good for beginners on calm days. Sea turtles frequently visit.",
           "conditions": "Sheltered bay but conditions are dangerous today due to strong currents and waves.",
           "hazards": [
@@ -84,9 +86,12 @@
           ],
           "webcam": "https://www.ozolio.com/explore/00000008",
           "hasProvider": false,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         }
-      }
+      },
+      "windAdjusted": true,
+      "windCondition": "LIGHT"
     },
     "kaanapali": {
       "id": "kaanapali",
@@ -410,5 +415,50 @@
         }
       }
     }
+  },
+  "windCheck": {
+    "timestamp": "2026-01-05T21:11:26.403Z",
+    "adjustments": {
+      "northwest": {
+        "originalScore": 1,
+        "adjustedScore": 0,
+        "condition": "LIGHT",
+        "penalty": 2
+      },
+      "kaanapali": {
+        "originalScore": 6,
+        "adjustedScore": 6,
+        "condition": "CALM",
+        "penalty": 0
+      },
+      "southshore": {
+        "originalScore": 7,
+        "adjustedScore": 7,
+        "condition": "CALM",
+        "penalty": 0
+      }
+    },
+    "cameras": [
+      {
+        "id": "napili",
+        "name": "Napili Bay",
+        "zone": "northwest"
+      },
+      {
+        "id": "kahekili",
+        "name": "Airport Beach",
+        "zone": "kaanapali"
+      },
+      {
+        "id": "uluabeach",
+        "name": "Ulua/Wailea Beach",
+        "zone": "southshore"
+      },
+      {
+        "id": "waileapoint",
+        "name": "Polo Beach",
+        "zone": "southshore"
+      }
+    ]
   }
 }
