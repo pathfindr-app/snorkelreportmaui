@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-01-07T21:11:31.252Z",
+  "lastUpdated": "2026-01-08T00:46:25.182Z",
   "dataQuality": {
     "snorkelStore": "fresh",
     "noaaBuoy": "fresh",
@@ -29,7 +29,7 @@
     "northwest": {
       "id": "northwest",
       "name": "Northwest",
-      "score": 6,
+      "score": 4,
       "summary": "Hazardous. Powerful waves & strong currents",
       "details": "Water is warm (77°F). Elevated conditions. light winds.",
       "spots": {
@@ -40,7 +40,7 @@
             -156.638009,
             21.013477
           ],
-          "score": 5,
+          "score": 3,
           "description": "Marine Life Conservation District with 50% more fish diversity than other reefs. Best 8am-noon in summer. Check conditions from lookout - water should be blue, not milky. If surfers are present, conditions are too rough.",
           "conditions": "Rough conditions with exposure to north swells; caution is advised.",
           "hazards": [
@@ -50,7 +50,8 @@
           ],
           "webcam": null,
           "hasProvider": false,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "kapalua": {
           "id": "kapalua",
@@ -59,7 +60,7 @@
             -156.666723,
             20.999107
           ],
-          "score": 6.5,
+          "score": 4.5,
           "description": "Small protected cove ideal for beginners and families. Reefs on both sides block swell. Best snorkeling on northeastern side where visibility is better. Very sensitive to winter swells.",
           "conditions": "Partially protected cove with relatively calm conditions early, but strong currents near the point.",
           "hazards": [
@@ -67,7 +68,8 @@
           ],
           "webcam": null,
           "hasProvider": true,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "napili": {
           "id": "napili",
@@ -76,7 +78,7 @@
             -156.666922,
             20.994735
           ],
-          "score": 6,
+          "score": 4,
           "description": "Sheltered crescent bay popular with families. Sandy bottom with reef on both sides. Good for beginners on calm days. Sea turtles frequently visit.",
           "conditions": "Sheltered crescent bay, but conditions may worsen with the incoming swell.",
           "hazards": [
@@ -84,9 +86,12 @@
           ],
           "webcam": "https://www.ozolio.com/explore/00000008",
           "hasProvider": false,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         }
-      }
+      },
+      "windAdjusted": true,
+      "windCondition": "LIGHT"
     },
     "kaanapali": {
       "id": "kaanapali",
@@ -412,13 +417,13 @@
     }
   },
   "windCheck": {
-    "timestamp": "2026-01-07T21:11:31.252Z",
+    "timestamp": "2026-01-08T00:46:25.182Z",
     "adjustments": {
       "northwest": {
         "originalScore": 6,
-        "adjustedScore": 6,
-        "condition": "CALM",
-        "penalty": 0
+        "adjustedScore": 4,
+        "condition": "LIGHT",
+        "penalty": 2
       },
       "kaanapali": {
         "originalScore": 9,
