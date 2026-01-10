@@ -174,14 +174,14 @@ function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSel
     businesses.filter(b => !b.animated).forEach((business, index) => {
       const iconConfig = BUSINESS_ICONS[business.icon] || { image: null };
 
-      // Simple stable marker - no complex animations
+      // Subtle, understated marker - secondary to main content
       const el = document.createElement('div');
       el.className = 'partner-marker';
       el.innerHTML = `
-        <div class="partner-marker-inner">
+        <div class="partner-ring"></div>
+        <div class="partner-core">
           <img src="${iconConfig.image}" alt="${business.name}" draggable="false" />
         </div>
-        <div class="partner-marker-point"></div>
       `;
 
       el.addEventListener('click', () => {
