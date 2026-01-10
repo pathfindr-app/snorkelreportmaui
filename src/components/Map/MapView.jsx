@@ -12,10 +12,19 @@ const INITIAL_ZOOM = 9;
 const INITIAL_PITCH = 0;
 const INITIAL_BEARING = 0;
 
-function MapView({ zones, allSpots, weather, userWeather, onSelectSpot, onBackToLanding }) {
+const BUSINESS_ICONS = {
+  pizza: { image: '/outrigger-logo.png' },
+  sandwich: { image: '/808deli-logo.png' },
+  boat: { image: '/aqua-adventures-logo.png' },
+};
+
+function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSelectSpot, onSelectBusiness, onBackToLanding }) {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const markersRef = useRef([]);
+  const businessMarkersRef = useRef([]);
+  const boatMarkerRef = useRef(null);
+  const boatAnimationRef = useRef(null);
   const userMarkerRef = useRef(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [userLocation, setUserLocation] = useState(null);
@@ -152,6 +161,170 @@ function MapView({ zones, allSpots, weather, userWeather, onSelectSpot, onBackTo
       markersRef.current.push(marker);
     });
   }, [mapLoaded, allSpots, zones, onSelectSpot]);
+
+  // Add business markers when map is loaded
+  useEffect(() => {
+    if (!mapLoaded || !map.current) return;
+
+    // Clear existing business markers
+    businessMarkersRef.current.forEach(marker => marker.remove());
+    businessMarkersRef.current = [];
+
+    // Add business markers (skip animated ones - they're handled separately)
+    businesses.filter(b => !b.animated).forEach((business, index) => {
+      const iconConfig = BUSINESS_ICONS[business.icon] || { image: null };
+
+      // Simple stable marker - no complex animations
+      const el = document.createElement('div');
+      el.className = 'partner-marker';
+      el.innerHTML = `
+        <div class="partner-marker-inner">
+          <img src="${iconConfig.image}" alt="${business.name}" draggable="false" />
+        </div>
+        <div class="partner-marker-point"></div>
+      `;
+
+      el.addEventListener('click', () => {
+        onSelectBusiness(business);
+      });
+
+      const marker = new mapboxgl.Marker({ element: el, anchor: 'bottom' })
+        .setLngLat(business.coordinates)
+        .addTo(map.current);
+
+      // Add popup on hover
+      const popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false,
+        offset: 25,
+        className: 'spot-popup',
+      });
+
+      el.addEventListener('mouseenter', () => {
+        popup
+          .setLngLat(business.coordinates)
+          .setHTML(`
+            <div style="font-size: 14px;">
+              <div style="font-weight: 600; color: #e6f4f9;">${business.name}</div>
+              <div style="font-size: 12px; color: #8dcde5;">Local Business</div>
+            </div>
+          `)
+          .addTo(map.current);
+      });
+
+      el.addEventListener('mouseleave', () => {
+        popup.remove();
+      });
+
+      businessMarkersRef.current.push(marker);
+    });
+  }, [mapLoaded, businesses, onSelectBusiness]);
+
+  // Add animated boat marker
+  useEffect(() => {
+    if (!mapLoaded || !map.current) return;
+
+    // Find animated boat business
+    const boatBusiness = businesses.find(b => b.animated && b.icon === 'boat');
+    if (!boatBusiness) return;
+
+    // Clean up existing boat marker and animation
+    if (boatMarkerRef.current) {
+      boatMarkerRef.current.remove();
+    }
+    if (boatAnimationRef.current) {
+      cancelAnimationFrame(boatAnimationRef.current);
+    }
+
+    // Create boat marker element with oceanic animations
+    const el = document.createElement('div');
+    el.className = 'boat-marker';
+    const boatIcon = BUSINESS_ICONS.boat;
+    el.innerHTML = `
+      <div class="boat-marker-wrap">
+        <div class="boat-marker-wake"></div>
+        <div class="boat-marker-wake boat-marker-wake-2"></div>
+        <div class="boat-marker-glow"></div>
+        <div class="boat-marker-core">
+          <img src="${boatIcon.image}" alt="${boatBusiness.name}" />
+        </div>
+      </div>
+    `;
+
+    el.addEventListener('click', () => {
+      onSelectBusiness(boatBusiness);
+    });
+
+    // Start position
+    const start = boatBusiness.routeStart;
+    const end = boatBusiness.routeEnd;
+
+    boatMarkerRef.current = new mapboxgl.Marker({ element: el, anchor: 'center' })
+      .setLngLat(start)
+      .addTo(map.current);
+
+    // Add popup on hover
+    const popup = new mapboxgl.Popup({
+      closeButton: false,
+      closeOnClick: false,
+      offset: 30,
+      className: 'spot-popup',
+    });
+
+    el.addEventListener('mouseenter', () => {
+      const currentPos = boatMarkerRef.current.getLngLat();
+      popup
+        .setLngLat([currentPos.lng, currentPos.lat])
+        .setHTML(`
+          <div style="font-size: 14px;">
+            <div style="font-weight: 600; color: #e6f4f9;">${boatBusiness.name}</div>
+            <div style="font-size: 12px; color: #8dcde5;">Snorkel Tour - Click to Book!</div>
+          </div>
+        `)
+        .addTo(map.current);
+    });
+
+    el.addEventListener('mouseleave', () => {
+      popup.remove();
+    });
+
+    // Animate boat along route (60 second round trip)
+    const animationDuration = 60000;
+    let startTime = null;
+
+    const animate = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = (elapsed % animationDuration) / animationDuration;
+
+      // Ping-pong animation (go and return)
+      const t = progress < 0.5
+        ? progress * 2
+        : 1 - (progress - 0.5) * 2;
+
+      // Ease in-out for smoother movement
+      const eased = t < 0.5
+        ? 2 * t * t
+        : 1 - Math.pow(-2 * t + 2, 2) / 2;
+
+      const lng = start[0] + (end[0] - start[0]) * eased;
+      const lat = start[1] + (end[1] - start[1]) * eased;
+
+      if (boatMarkerRef.current) {
+        boatMarkerRef.current.setLngLat([lng, lat]);
+      }
+
+      boatAnimationRef.current = requestAnimationFrame(animate);
+    };
+
+    boatAnimationRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (boatAnimationRef.current) {
+        cancelAnimationFrame(boatAnimationRef.current);
+      }
+    };
+  }, [mapLoaded, businesses, onSelectBusiness]);
 
   // Add/update user location marker
   useEffect(() => {

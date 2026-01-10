@@ -7,24 +7,31 @@ import MapView from './components/Map/MapView';
 import SpotModal from './components/Modals/SpotModal';
 import ReportModal from './components/Modals/ReportModal';
 import BookingModal from './components/Modals/BookingModal';
+import BusinessModal from './components/Modals/BusinessModal';
 import { useConditions } from './hooks/useConditions';
 import { useWeather } from './hooks/useWeather';
+import businessesData from './data/businesses.json';
 
 function App() {
   const [currentView, setCurrentView] = useState('landing');
   const [selectedSpot, setSelectedSpot] = useState(null);
+  const [selectedBusiness, setSelectedBusiness] = useState(null);
   const [activeModal, setActiveModal] = useState(null);
 
   const { zones, allSpots, loading, lastUpdated, alerts } = useConditions();
   const { weather, userWeather } = useWeather();
+  const businesses = businessesData.businesses;
 
   const handleExploreMap = useCallback(() => setCurrentView('map'), []);
   const handleBackToLanding = useCallback(() => {
     setCurrentView('landing');
     setSelectedSpot(null);
+    setSelectedBusiness(null);
   }, []);
   const handleSelectSpot = useCallback((spot) => setSelectedSpot(spot), []);
   const handleCloseSpotModal = useCallback(() => setSelectedSpot(null), []);
+  const handleSelectBusiness = useCallback((business) => setSelectedBusiness(business), []);
+  const handleCloseBusinessModal = useCallback(() => setSelectedBusiness(null), []);
   const handleOpenReport = useCallback(() => setActiveModal('report'), []);
   const handleOpenBooking = useCallback(() => setActiveModal('booking'), []);
   const handleCloseModal = useCallback(() => setActiveModal(null), []);
@@ -62,9 +69,11 @@ function App() {
           <MapView
             zones={zones}
             allSpots={allSpots}
+            businesses={businesses}
             weather={weather}
             userWeather={userWeather}
             onSelectSpot={handleSelectSpot}
+            onSelectBusiness={handleSelectBusiness}
           />
         )}
       </main>
@@ -74,6 +83,15 @@ function App() {
         <SpotModal
           spot={selectedSpot}
           onClose={handleCloseSpotModal}
+          onBooking={handleOpenBooking}
+        />,
+        document.body
+      )}
+
+      {selectedBusiness && createPortal(
+        <BusinessModal
+          business={selectedBusiness}
+          onClose={handleCloseBusinessModal}
           onBooking={handleOpenBooking}
         />,
         document.body

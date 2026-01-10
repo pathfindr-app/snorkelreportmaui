@@ -1,0 +1,44 @@
+{
+  "businesses": [
+    {
+      "id": "outrigger-pizza",
+      "name": "Outrigger Pizza Co",
+      "coordinates": [-156.45139229174228, 20.73116976625197],
+      "icon": "pizza",
+      "description": "Hawaii's first mobile wood-fired pizza, featured on Diners, Drive-Ins and Dives. Chef-owner Kevin Laut has been crafting artisan pizzas from his custom-built trailer since 2009, using handmade dough and sauces cooked in an authentic Italian clay oven.",
+      "highlights": ["Wood-fired pizza", "Handmade dough daily", "Featured on Food Network"],
+      "signature": "The Lilikoi Pork Pizza - passion fruit glaze, sweet peppers, mozzarella & pulled pork",
+      "phone": "808-280-2985",
+      "website": "https://www.outriggerpizzas.com",
+      "hours": "Mon-Sat 11:00 AM - 8:30 PM"
+    },
+    {
+      "id": "808-deli",
+      "name": "808 Deli",
+      "coordinates": [-156.4459780830136, 20.7192420355422],
+      "icon": "sandwich",
+      "description": "Two-time winner of 'Best Sandwich in Maui' by Maui Time Weekly. This beloved Kihei deli serves generous portions of handcrafted sandwiches, fresh salads, and their famous banana pudding. Now in a spacious new location at Rainbow Mall with indoor seating.",
+      "highlights": ["Award-winning sandwiches", "Famous banana pudding", "Fresh deli sides"],
+      "signature": "The Belly Dancer - savory pork belly sandwich with all the fixings",
+      "phone": null,
+      "website": "http://www.808deli.com",
+      "hours": null
+    },
+    {
+      "id": "aqua-adventures",
+      "name": "Aqua Adventures",
+      "icon": "boat",
+      "animated": true,
+      "routeStart": [-156.5107, 20.7927],
+      "routeEnd": [-156.4957, 20.6320],
+      "coordinates": [-156.5107, 20.7927],
+      "description": "Family-owned Molokini snorkel tours on a fast 50-foot boat with an all-local crew. Departs Ma'alaea Harbor at 7:15am for two snorkel locations: Molokini Crater and Turtle Arches. Limited to 36 guests for a more personal experience.",
+      "highlights": ["Molokini Crater & Turtle Arches", "Open bar included", "SNUBA available", "Whale watching (Dec-Apr)"],
+      "signature": "Two-location snorkel tour with continental breakfast, deli lunch, and open bar",
+      "phone": null,
+      "website": "https://www.mauisnorkelsnuba.com",
+      "hours": "Daily departure 7:15 AM from Ma'alaea Harbor",
+      "bookable": true
+    }
+  ]
+}
