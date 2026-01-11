@@ -1,18 +1,18 @@
 {
-  "lastUpdated": "2026-01-11T18:12:03.546Z",
+  "lastUpdated": "2026-01-11T18:34:06.903Z",
   "dataQuality": {
     "snorkelStore": "fresh",
     "noaaBuoy": "fresh",
     "noaaTides": "fresh",
-    "lastSuccessfulUpdate": "2026-01-11T18:12:03.546Z"
+    "lastSuccessfulUpdate": "2026-01-11T18:34:06.903Z"
   },
   "marine": {
-    "waveHeight": "10.5 ft",
+    "waveHeight": "12.8 ft",
     "waveDirection": "NNW",
     "waterTemp": "78°F",
     "currentTide": {
       "height": "1.3 ft",
-      "time": "8:12 AM",
+      "time": "8:30 AM",
       "rising": false
     },
     "nextHighTide": null,
@@ -39,7 +39,7 @@
           ],
           "score": 0.5,
           "description": "Marine Life Conservation District with 50% more fish diversity than other reefs. Best 8am-noon in summer. Check conditions from lookout - water should be blue, not milky. If surfers are present, conditions are too rough.",
-          "conditions": "Very hazardous conditions with powerful waves and strong currents.",
+          "conditions": "Very hazardous conditions with powerful waves and strong currents. Not recommended for snorkeling.",
           "hazards": [
             "Strong current",
             "High surf",
@@ -58,7 +58,7 @@
           ],
           "score": 1.5,
           "description": "Small protected cove ideal for beginners and families. Reefs on both sides block swell. Best snorkeling on northeastern side where visibility is better. Very sensitive to winter swells.",
-          "conditions": "Partially protected but still affected by rough conditions.",
+          "conditions": "Partially protected but still facing hazardous conditions due to north swells. Caution is advised.",
           "hazards": [
             "Dangerous current"
           ],
@@ -73,9 +73,9 @@
             -156.666922,
             20.994735
           ],
-          "score": 1.5,
+          "score": 1,
           "description": "Sheltered crescent bay popular with families. Sandy bottom with reef on both sides. Good for beginners on calm days. Sea turtles frequently visit.",
-          "conditions": "Sheltered but still facing very rough ocean conditions.",
+          "conditions": "Sheltered but still affected by rough conditions. Not ideal for snorkeling.",
           "hazards": [
             "Shore break"
           ],
@@ -101,7 +101,7 @@
           ],
           "score": 6.5,
           "description": "Iconic lava rock formation with excellent turtle sightings. Easy beach access with nearby amenities. Watch for cliff jumpers and stay close to shore. Can get crowded but accessible for all skill levels.",
-          "conditions": "Calm on the south face, but strong currents near the point.",
+          "conditions": "Calm on the south face, but strong currents near the point. Stay cautious.",
           "hazards": [
             "Current",
             "Waves",
@@ -120,7 +120,7 @@
           ],
           "score": 7,
           "description": "Less crowded alternative to Black Rock with excellent reef system. Sandy entry leads to vibrant coral gardens. Morning visits recommended before afternoon winds.",
-          "conditions": "Generally good conditions, but more exposed to incoming swells.",
+          "conditions": "Partially protected with good conditions, but may become rough later. Monitor conditions closely.",
           "hazards": [
             "Shore break on entry"
           ],
@@ -165,7 +165,7 @@
           ],
           "score": 9,
           "description": "Mile Marker 14 reef with extensive coral formations. Shallow water perfect for beginners. Known for turtle sightings. Best before noon when winds pick up.",
-          "conditions": "Protected from north swells, excellent snorkeling conditions.",
+          "conditions": "Protected from north swells with calm conditions. Excellent choice for snorkeling.",
           "hazards": [],
           "webcam": null,
           "hasProvider": false,
@@ -180,7 +180,7 @@
           ],
           "score": 9,
           "description": "Popular boat snorkel destination with vibrant coral formations and abundant marine life. Shallow reef teeming with tropical fish. Watch for boat traffic.",
-          "conditions": "Protected area with great visibility and calm conditions.",
+          "conditions": "Protected and calm, making it a great spot for snorkeling.",
           "hazards": [
             "Boat traffic"
           ],
@@ -197,7 +197,7 @@
           ],
           "score": 9,
           "description": "Family-friendly beach with lifeguards. Best snorkeling off south end near rocky reef. Smooth sandy entry ideal for beginners. Visibility can be poor due to sandy bottom.",
-          "conditions": "Superb snorkeling with calm conditions and good visibility.",
+          "conditions": "Excellent snorkeling conditions with calm waters and good visibility.",
           "hazards": [
             "Afternoon wind chop",
             "Variable visibility"
@@ -215,7 +215,7 @@
           ],
           "score": 9,
           "description": "Middle beach with reef between Kam I and III. Good snorkeling around lava rock outcroppings on both ends. Lifeguards, restrooms, and showers available.",
-          "conditions": "Excellent conditions for snorkeling, calm and sunny.",
+          "conditions": "Superb conditions for snorkeling with calm waters and sunshine.",
           "hazards": [
             "Afternoon wind chop",
             "Variable visibility"
@@ -233,7 +233,7 @@
           ],
           "score": 9,
           "description": "Largest of the three Kamaole beaches with grassy park. Best snorkeling near north end rocks. Popular with families, has playground. Lifeguards on duty.",
-          "conditions": "Great snorkeling conditions with calm waters.",
+          "conditions": "Great snorkeling conditions with calm waters and light winds.",
           "hazards": [
             "Afternoon wind chop",
             "Variable visibility"
@@ -251,7 +251,7 @@
           ],
           "score": 9,
           "description": "Excellent beginner spot in Wailea. Gentle sandy entry with lava fingers housing diverse marine life. Best snorkeling on right side toward Andaz hotel. Sea turtles common.",
-          "conditions": "Protected cove with calm conditions and good visibility.",
+          "conditions": "Protected cove with calm conditions, ideal for snorkeling.",
           "hazards": [
             "Afternoon wind chop"
           ],
@@ -268,7 +268,7 @@
           ],
           "score": 8,
           "description": "Rocky point between Wailea beaches with good reef structure. More advanced entry over rocks. Diverse fish populations and occasional turtle sightings.",
-          "conditions": "More exposed, but still decent conditions for snorkeling.",
+          "conditions": "More exposed, but still decent conditions. Be cautious of currents.",
           "hazards": [
             "Rocky entry",
             "Current"
@@ -286,7 +286,7 @@
           ],
           "score": 9,
           "description": "Local favorite near Makena Surf condos. Excellent coral formations and fish diversity. Part of Turtle Town area.",
-          "conditions": "Part of Turtle Town with calm and clear waters.",
+          "conditions": "Part of Turtle Town with calm conditions, great for snorkeling.",
           "hazards": [
             "Rocky entry",
             "Current"
@@ -304,7 +304,7 @@
           ],
           "score": 8,
           "description": "Named for 5 Chinese settler headstones nearby. Features underwater caves. Advanced entry over lava rocks.",
-          "conditions": "Exposed area that can have surge; caution is advised.",
+          "conditions": "Exposed with potential surge, but still manageable. Use caution.",
           "hazards": [
             "Rocky entry",
             "Surge",
@@ -323,7 +323,7 @@
           ],
           "score": 9,
           "description": "Gateway to Turtle Town with sandy entry. One of the best spots in Hawaii for sea turtle encounters. Family-friendly with restrooms and grassy park. Boat traffic in morning.",
-          "conditions": "Gateway to Turtle Town with excellent snorkeling conditions.",
+          "conditions": "Gateway to Turtle Town with calm conditions, excellent for snorkeling.",
           "hazards": [
             "Boat traffic",
             "Current"
@@ -341,7 +341,7 @@
           ],
           "score": 8,
           "description": "Southern access to Turtle Town. Excellent for experienced snorkelers seeking less crowded conditions. Strong currents possible.",
-          "conditions": "More exposed than north, but still decent conditions.",
+          "conditions": "More exposed than the north, but still decent conditions. Stay aware.",
           "hazards": [
             "Strong current",
             "Rocky entry"
@@ -359,7 +359,7 @@
           ],
           "score": 9,
           "description": "Beautiful sandy beach with easy entry. Turtle cleaning station nearby makes sightings almost guaranteed. Great for beginners and families.",
-          "conditions": "Protected sandy beach with calm and clear waters.",
+          "conditions": "Protected sandy beach with calm waters, perfect for snorkeling.",
           "hazards": [
             "Afternoon wind chop"
           ],
@@ -376,7 +376,7 @@
           ],
           "score": 8,
           "description": "Snorkeling is excellent around the rocky outcroppings at both ends of the beach, with the south end being a bit larger and slightly clearer.",
-          "conditions": "Rocky entry, but generally good conditions for snorkeling.",
+          "conditions": "Rocky entry but generally calm conditions. Exercise caution.",
           "hazards": [
             "Rocky entry",
             "Strong current",
@@ -395,7 +395,7 @@
           ],
           "score": 9,
           "description": "Protected Natural Area Reserve with pristine reef. No fishing allowed so fish thrive. Reef-safe sunscreen only. $5 parking fee for non-residents. Turtle cleaning station at south end of cove.",
-          "conditions": "Protected marine reserve with excellent snorkeling conditions.",
+          "conditions": "Protected marine reserve with calm conditions, excellent for snorkeling.",
           "hazards": [
             "Rocky entry",
             "No facilities",
