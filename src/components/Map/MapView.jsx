@@ -383,62 +383,54 @@ function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSel
       {/* Weather overlay */}
       {weather && <WeatherOverlay weather={weather} userWeather={userWeather} />}
 
-      {/* Unified map controls */}
+      {/* Map controls */}
       <div
-        className="absolute bottom-6 right-3 z-10 flex flex-col rounded-2xl overflow-hidden"
+        className="absolute bottom-6 right-3 z-10 flex flex-col rounded-xl overflow-hidden"
         style={{
-          background: 'linear-gradient(180deg, rgba(15, 48, 69, 0.9) 0%, rgba(5, 21, 32, 0.95) 100%)',
-          border: '1px solid rgba(0, 229, 204, 0.15)',
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 229, 204, 0.1)',
+          background: 'rgba(5, 21, 32, 0.9)',
+          border: '1px solid rgba(0, 229, 204, 0.1)',
           backdropFilter: 'blur(12px)',
         }}
       >
-        {/* Zoom in */}
         <button
           onClick={() => map.current?.zoomIn()}
-          className="w-11 h-11 flex items-center justify-center text-glow-cyan/70 hover:text-glow-cyan hover:bg-glow-cyan/10 transition-all duration-300"
+          className="w-9 h-9 flex items-center justify-center text-ocean-400 hover:text-glow-cyan hover:bg-glow-cyan/5 transition-all duration-200"
           title="Zoom in"
-          style={{ borderBottom: '1px solid rgba(0, 229, 204, 0.1)' }}
+          style={{ borderBottom: '1px solid rgba(0, 229, 204, 0.08)' }}
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
           </svg>
         </button>
-
-        {/* Zoom out */}
         <button
           onClick={() => map.current?.zoomOut()}
-          className="w-11 h-11 flex items-center justify-center text-glow-cyan/70 hover:text-glow-cyan hover:bg-glow-cyan/10 transition-all duration-300"
+          className="w-9 h-9 flex items-center justify-center text-ocean-400 hover:text-glow-cyan hover:bg-glow-cyan/5 transition-all duration-200"
           title="Zoom out"
-          style={{ borderBottom: '1px solid rgba(0, 229, 204, 0.1)' }}
+          style={{ borderBottom: '1px solid rgba(0, 229, 204, 0.08)' }}
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M18 12H6" />
           </svg>
         </button>
-
-        {/* My location */}
         {userLocation && (
           <button
             onClick={handleFlyToUser}
-            className="w-11 h-11 flex items-center justify-center text-glow-cyan/70 hover:text-glow-cyan hover:bg-glow-cyan/10 transition-all duration-300"
+            className="w-9 h-9 flex items-center justify-center text-ocean-400 hover:text-glow-cyan hover:bg-glow-cyan/5 transition-all duration-200"
             title="My location"
-            style={{ borderBottom: '1px solid rgba(0, 229, 204, 0.1)' }}
+            style={{ borderBottom: '1px solid rgba(0, 229, 204, 0.08)' }}
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="3" />
               <path strokeLinecap="round" d="M12 2v3m0 14v3m10-10h-3M5 12H2" />
             </svg>
           </button>
         )}
-
-        {/* Reset view / home */}
         <button
           onClick={handleResetView}
-          className="w-11 h-11 flex items-center justify-center text-glow-cyan/70 hover:text-glow-cyan hover:bg-glow-cyan/10 transition-all duration-300"
+          className="w-9 h-9 flex items-center justify-center text-ocean-400 hover:text-glow-cyan hover:bg-glow-cyan/5 transition-all duration-200"
           title="Reset view"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
           </svg>
         </button>
@@ -446,31 +438,29 @@ function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSel
 
       {/* Legend */}
       <div
-        className="absolute bottom-4 left-4 z-10 rounded-2xl p-4"
+        className="absolute bottom-4 left-3 z-10 px-3 py-2 rounded-xl"
         style={{
-          background: 'linear-gradient(135deg, rgba(15, 48, 69, 0.9) 0%, rgba(5, 21, 32, 0.95) 100%)',
-          border: '1px solid rgba(0, 229, 204, 0.15)',
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 229, 204, 0.1)',
+          background: 'rgba(5, 21, 32, 0.9)',
+          border: '1px solid rgba(0, 229, 204, 0.1)',
           backdropFilter: 'blur(12px)',
         }}
       >
-        <div className="text-xs text-glow-cyan/60 mb-3 font-semibold uppercase tracking-wider">Conditions</div>
-        <div className="space-y-2">
-          <div className="flex items-center gap-2.5">
-            <div className="w-3.5 h-3.5 rounded-full bg-score-green" style={{ boxShadow: '0 0 10px rgba(34, 197, 94, 0.5)' }} />
-            <span className="text-xs text-ocean-200">Good (6.6-10)</span>
+        <div className="flex items-center gap-3 text-[11px] text-ocean-400">
+          <div className="flex items-center gap-1.5">
+            <div className="w-2.5 h-2.5 rounded-full bg-score-green" />
+            <span>Good</span>
           </div>
-          <div className="flex items-center gap-2.5">
-            <div className="w-3.5 h-3.5 rounded-full bg-score-yellow" style={{ boxShadow: '0 0 10px rgba(234, 179, 8, 0.4)' }} />
-            <span className="text-xs text-ocean-200">Moderate (5.1-6.5)</span>
+          <div className="flex items-center gap-1.5">
+            <div className="w-2.5 h-2.5 rounded-full bg-score-yellow" />
+            <span>Moderate</span>
           </div>
-          <div className="flex items-center gap-2.5">
-            <div className="w-3.5 h-3.5 rounded-full bg-score-orange" style={{ boxShadow: '0 0 10px rgba(249, 115, 22, 0.4)' }} />
-            <span className="text-xs text-ocean-200">Caution (3.6-5.0)</span>
+          <div className="flex items-center gap-1.5">
+            <div className="w-2.5 h-2.5 rounded-full bg-score-orange" />
+            <span>Caution</span>
           </div>
-          <div className="flex items-center gap-2.5">
-            <div className="w-3.5 h-3.5 rounded-full bg-score-red" style={{ boxShadow: '0 0 10px rgba(239, 68, 68, 0.4)' }} />
-            <span className="text-xs text-ocean-200">Hazardous (1.0-3.5)</span>
+          <div className="flex items-center gap-1.5">
+            <div className="w-2.5 h-2.5 rounded-full bg-score-red" />
+            <span>Hazard</span>
           </div>
         </div>
       </div>

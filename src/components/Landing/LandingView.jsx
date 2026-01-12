@@ -208,7 +208,7 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
           }}
         />
 
-        {/* Weather Card - Bioluminescent Design */}
+        {/* Weather Card */}
         {weather && (
           <div
             className="absolute top-3 right-3 glow-card rounded-2xl overflow-hidden"
@@ -216,61 +216,58 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
           >
             {/* Main temp section */}
             <div className="px-4 py-3 flex items-center gap-4">
-              <div className="relative">
-                <div className="absolute inset-0 w-14 h-14 bg-glow-cyan/20 blur-xl rounded-full" />
-                <div className="relative flex items-baseline">
-                  <span className="text-4xl font-semibold text-ocean-50 font-display">
-                    {weather.temp}
-                  </span>
-                  <span className="text-lg text-glow-cyan/70 ml-0.5">°</span>
-                </div>
+              <div className="flex items-baseline">
+                <span className="text-4xl font-semibold text-ocean-50 font-display">
+                  {weather.temp}
+                </span>
+                <span className="text-lg text-glow-cyan/50 ml-0.5">°</span>
               </div>
               <div className="text-right">
-                <div className="text-sm font-medium text-ocean-100 capitalize">{weather.description}</div>
-                <div className="text-xs text-ocean-400">Maui, HI</div>
+                <div className="text-sm font-medium text-ocean-200 capitalize">{weather.description}</div>
+                <div className="text-xs text-ocean-500">Maui, HI</div>
               </div>
             </div>
 
-            {/* Divider with glow */}
-            <div className="h-px bg-gradient-to-r from-transparent via-glow-cyan/30 to-transparent" />
+            {/* Divider */}
+            <div className="h-px bg-ocean-700/30" />
 
             {/* Stats grid */}
             <div className="px-3 py-2.5 grid grid-cols-2 gap-x-4 gap-y-2">
               {/* Wind */}
               <div className="flex items-center gap-2">
-                <svg className="w-4 h-4 text-glow-cyan/70" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" style={{ transform: `rotate(${weather.wind?.deg || 0}deg)` }}>
+                <svg className="w-3.5 h-3.5 text-ocean-500" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" style={{ transform: `rotate(${weather.wind?.deg || 0}deg)` }}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-4-4l4 4-4 4" />
                 </svg>
-                <span className="text-xs text-ocean-200">{weather.wind?.speed} mph {weather.wind?.direction}</span>
+                <span className="text-xs text-ocean-300">{weather.wind?.speed} mph {weather.wind?.direction}</span>
               </div>
 
               {/* Humidity */}
               <div className="flex items-center gap-2">
-                <svg className="w-4 h-4 text-glow-cyan/70" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <svg className="w-3.5 h-3.5 text-ocean-500" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 21c-4 0-6-3-6-6 0-3.5 6-9 6-9s6 5.5 6 9c0 3-2 6-6 6z" />
                 </svg>
-                <span className="text-xs text-ocean-200">{weather.humidity}%</span>
+                <span className="text-xs text-ocean-300">{weather.humidity}%</span>
               </div>
 
               {/* Visibility */}
               {weather.visibility && (
                 <div className="flex items-center gap-2">
-                  <svg className="w-4 h-4 text-glow-cyan/70" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <svg className="w-3.5 h-3.5 text-ocean-500" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                   </svg>
-                  <span className="text-xs text-ocean-200">{weather.visibility} mi</span>
+                  <span className="text-xs text-ocean-300">{weather.visibility} mi</span>
                 </div>
               )}
 
               {/* Sun times */}
               {(weather.sunrise || weather.sunset) && (
                 <div className="flex items-center gap-2">
-                  <svg className="w-4 h-4 text-coral-warm/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                  <svg className="w-3.5 h-3.5 text-coral-warm/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                     <circle cx="12" cy="12" r="4" />
                     <path d="M12 2v2m0 16v2m10-10h-2M4 12H2m15.364-6.364l-1.414 1.414M8.05 15.95l-1.414 1.414m12.728 0l-1.414-1.414M8.05 8.05L6.636 6.636" strokeLinecap="round" />
                   </svg>
-                  <span className="text-xs text-ocean-200">
+                  <span className="text-xs text-ocean-300">
                     {weather.sunrise?.replace(' AM', 'a').replace(' PM', 'p')} – {weather.sunset?.replace(' AM', 'a').replace(' PM', 'p')}
                   </span>
                 </div>
@@ -282,8 +279,8 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
         {/* User location indicator */}
         {userLocation && (
           <div className="absolute top-3 left-3 glow-card px-3 py-2 rounded-xl flex items-center gap-2">
-            <div className="w-2.5 h-2.5 bg-glow-cyan rounded-full animate-breathe" style={{ boxShadow: '0 0 10px rgba(0, 229, 204, 0.6)' }} />
-            <span className="text-ocean-200 text-xs font-medium">Location enabled</span>
+            <div className="w-2 h-2 bg-glow-cyan rounded-full" />
+            <span className="text-ocean-300 text-xs font-medium">Location enabled</span>
           </div>
         )}
 
@@ -335,10 +332,10 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
           </div>
         )}
 
-        {/* Explore map button - floating with glow */}
+        {/* Explore map button */}
         <button
           onClick={onExploreMap}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 glow-btn px-6 py-3 rounded-full flex items-center gap-3 text-sm font-semibold animate-float"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 glow-btn px-6 py-3 rounded-full flex items-center gap-2 text-sm font-semibold"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
@@ -352,7 +349,7 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
         <div className="px-4 py-3 flex items-center justify-between border-b border-glow-cyan/10">
           <h2 className="text-sm font-semibold text-ocean-300 tracking-wide uppercase">Today's Conditions</h2>
           <div className="flex items-center gap-1.5 text-xs text-ocean-500">
-            <div className="w-1.5 h-1.5 rounded-full bg-glow-cyan animate-breathe" />
+            <div className="w-1.5 h-1.5 rounded-full bg-glow-cyan" />
             Live
           </div>
         </div>
@@ -368,10 +365,10 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
                 {/* Zone header - clickable */}
                 <button
                   onClick={() => toggleZone(zone.id)}
-                  className="w-full px-4 py-4 flex items-center justify-between hover:bg-ocean-800/30 active:bg-ocean-800/50 transition-all duration-200 group"
+                  className="w-full px-4 py-4 flex items-center justify-between hover:bg-ocean-800/30 transition-all duration-200 group"
                 >
                   <div className="flex items-center gap-4">
-                    <div className={`score-badge ${badgeClass} text-lg min-w-[60px] text-center`}>
+                    <div className={`score-badge ${badgeClass} text-lg min-w-[56px] text-center`}>
                       {zone.score.toFixed(1)}
                     </div>
                     <div className="text-left">
@@ -379,16 +376,14 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
                       <p className="text-xs text-ocean-400 mt-0.5">{spots.length} spots · {scoreToDescription(zone.score)}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <svg
-                      className={`w-5 h-5 text-glow-cyan/50 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </div>
+                  <svg
+                    className={`w-5 h-5 text-glow-cyan/50 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
                 </button>
 
                 {/* Expanded spots */}
@@ -406,7 +401,7 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
                         <button
                           key={spot.id}
                           onClick={() => onSelectSpot(spot)}
-                          className="w-full px-4 py-3.5 flex items-center justify-between hover:bg-glow-cyan/5 active:bg-glow-cyan/10 transition-all duration-200 border-t border-ocean-800/20 group"
+                          className="w-full px-4 py-3.5 flex items-center justify-between hover:bg-glow-cyan/5 transition-all duration-200 border-t border-ocean-800/20 group"
                         >
                           <div className="flex-1 min-w-0 text-left">
                             <span className="text-sm text-ocean-100 group-hover:text-glow-cyan transition-colors font-medium">{spot.name}</span>
@@ -417,10 +412,10 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
                             )}
                           </div>
                           <div className="flex items-center gap-3 ml-3">
-                            <span className={`score-badge ${spotBadgeClass} text-xs py-1 px-2.5`}>
+                            <span className={`score-badge ${spotBadgeClass} text-xs`}>
                               {spotScore.toFixed(1)}
                             </span>
-                            <svg className="w-4 h-4 text-glow-cyan/40 group-hover:text-glow-cyan group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-4 h-4 text-glow-cyan/40 group-hover:text-glow-cyan transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
                           </div>
