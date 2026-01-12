@@ -384,12 +384,21 @@ function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSel
       {weather && <WeatherOverlay weather={weather} userWeather={userWeather} />}
 
       {/* Unified map controls */}
-      <div className="absolute bottom-6 right-3 z-10 flex flex-col rounded-xl overflow-hidden shadow-lg" style={{ background: 'rgba(7, 26, 43, 0.85)', backdropFilter: 'blur(8px)' }}>
+      <div
+        className="absolute bottom-6 right-3 z-10 flex flex-col rounded-2xl overflow-hidden"
+        style={{
+          background: 'linear-gradient(180deg, rgba(15, 48, 69, 0.9) 0%, rgba(5, 21, 32, 0.95) 100%)',
+          border: '1px solid rgba(0, 229, 204, 0.15)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 229, 204, 0.1)',
+          backdropFilter: 'blur(12px)',
+        }}
+      >
         {/* Zoom in */}
         <button
           onClick={() => map.current?.zoomIn()}
-          className="w-10 h-10 flex items-center justify-center text-ocean-300 hover:text-ocean-100 hover:bg-white/10 transition-colors border-b border-white/10"
+          className="w-11 h-11 flex items-center justify-center text-glow-cyan/70 hover:text-glow-cyan hover:bg-glow-cyan/10 transition-all duration-300"
           title="Zoom in"
+          style={{ borderBottom: '1px solid rgba(0, 229, 204, 0.1)' }}
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
@@ -399,8 +408,9 @@ function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSel
         {/* Zoom out */}
         <button
           onClick={() => map.current?.zoomOut()}
-          className="w-10 h-10 flex items-center justify-center text-ocean-300 hover:text-ocean-100 hover:bg-white/10 transition-colors border-b border-white/10"
+          className="w-11 h-11 flex items-center justify-center text-glow-cyan/70 hover:text-glow-cyan hover:bg-glow-cyan/10 transition-all duration-300"
           title="Zoom out"
+          style={{ borderBottom: '1px solid rgba(0, 229, 204, 0.1)' }}
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M18 12H6" />
@@ -411,8 +421,9 @@ function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSel
         {userLocation && (
           <button
             onClick={handleFlyToUser}
-            className="w-10 h-10 flex items-center justify-center text-ocean-300 hover:text-ocean-100 hover:bg-white/10 transition-colors border-b border-white/10"
+            className="w-11 h-11 flex items-center justify-center text-glow-cyan/70 hover:text-glow-cyan hover:bg-glow-cyan/10 transition-all duration-300"
             title="My location"
+            style={{ borderBottom: '1px solid rgba(0, 229, 204, 0.1)' }}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="3" />
@@ -424,7 +435,7 @@ function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSel
         {/* Reset view / home */}
         <button
           onClick={handleResetView}
-          className="w-10 h-10 flex items-center justify-center text-ocean-300 hover:text-ocean-100 hover:bg-white/10 transition-colors"
+          className="w-11 h-11 flex items-center justify-center text-glow-cyan/70 hover:text-glow-cyan hover:bg-glow-cyan/10 transition-all duration-300"
           title="Reset view"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -434,23 +445,31 @@ function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSel
       </div>
 
       {/* Legend */}
-      <div className="absolute bottom-4 left-4 z-10 glass rounded-lg p-3">
-        <div className="text-xs text-ocean-300 mb-2 font-medium">Conditions</div>
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-score-green"></div>
+      <div
+        className="absolute bottom-4 left-4 z-10 rounded-2xl p-4"
+        style={{
+          background: 'linear-gradient(135deg, rgba(15, 48, 69, 0.9) 0%, rgba(5, 21, 32, 0.95) 100%)',
+          border: '1px solid rgba(0, 229, 204, 0.15)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 229, 204, 0.1)',
+          backdropFilter: 'blur(12px)',
+        }}
+      >
+        <div className="text-xs text-glow-cyan/60 mb-3 font-semibold uppercase tracking-wider">Conditions</div>
+        <div className="space-y-2">
+          <div className="flex items-center gap-2.5">
+            <div className="w-3.5 h-3.5 rounded-full bg-score-green" style={{ boxShadow: '0 0 10px rgba(34, 197, 94, 0.5)' }} />
             <span className="text-xs text-ocean-200">Good (6.6-10)</span>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-score-yellow"></div>
+          <div className="flex items-center gap-2.5">
+            <div className="w-3.5 h-3.5 rounded-full bg-score-yellow" style={{ boxShadow: '0 0 10px rgba(234, 179, 8, 0.4)' }} />
             <span className="text-xs text-ocean-200">Moderate (5.1-6.5)</span>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-score-orange"></div>
+          <div className="flex items-center gap-2.5">
+            <div className="w-3.5 h-3.5 rounded-full bg-score-orange" style={{ boxShadow: '0 0 10px rgba(249, 115, 22, 0.4)' }} />
             <span className="text-xs text-ocean-200">Caution (3.6-5.0)</span>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-score-red"></div>
+          <div className="flex items-center gap-2.5">
+            <div className="w-3.5 h-3.5 rounded-full bg-score-red" style={{ boxShadow: '0 0 10px rgba(239, 68, 68, 0.4)' }} />
             <span className="text-xs text-ocean-200">Hazardous (1.0-3.5)</span>
           </div>
         </div>

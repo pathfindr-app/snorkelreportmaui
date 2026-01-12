@@ -38,14 +38,38 @@ function App() {
 
   if (loading) {
     return (
-      <div className="h-screen bg-ocean-950 flex items-center justify-center">
-        <div className="text-ocean-200 text-lg">Loading conditions...</div>
+      <div
+        className="h-screen flex items-center justify-center"
+        style={{ background: 'linear-gradient(180deg, #030b12 0%, #051520 100%)' }}
+      >
+        <div className="text-center">
+          <div className="relative w-16 h-16 mx-auto mb-6">
+            {/* Outer ring */}
+            <div
+              className="absolute inset-0 rounded-full animate-spin"
+              style={{
+                border: '2px solid transparent',
+                borderTopColor: '#00e5cc',
+                animationDuration: '1.5s',
+              }}
+            />
+            {/* Inner glow */}
+            <div
+              className="absolute inset-2 rounded-full animate-breathe"
+              style={{
+                background: 'radial-gradient(circle, rgba(0, 229, 204, 0.3) 0%, transparent 70%)',
+              }}
+            />
+          </div>
+          <p className="text-glow-cyan text-lg font-medium">Loading conditions...</p>
+          <p className="text-ocean-500 text-sm mt-2">Checking Maui waters</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="h-screen bg-ocean-950 flex flex-col overflow-hidden">
+    <div className="h-screen flex flex-col overflow-hidden" style={{ background: 'linear-gradient(180deg, #030b12 0%, #051520 100%)' }}>
       <Header
         lastUpdated={lastUpdated}
         onReportClick={handleOpenReport}

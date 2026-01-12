@@ -8,6 +8,15 @@ mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 const MAUI_CENTER = [-156.3319, 20.7984];
 
+// Helper to get score badge class
+const getScoreBadgeClass = (score) => {
+  if (score >= 8) return 'excellent';
+  if (score >= 6.6) return 'good';
+  if (score >= 5.1) return 'moderate';
+  if (score >= 3.6) return 'caution';
+  return 'hazardous';
+};
+
 function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectSpot }) {
   const mapContainer = useRef(null);
   const map = useRef(null);
@@ -119,9 +128,9 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
 
   // Manual zone marker positions for better layout
   const zonePositions = {
-    northwest: { lng: -156.65, lat: 21.02 },    // Upper left, in the ocean
-    kaanapali: { lng: -156.70, lat: 20.88 },    // West side, in the ocean
-    southshore: { lng: -156.35, lat: 20.58 },   // Below the island
+    northwest: { lng: -156.65, lat: 21.02 },
+    kaanapali: { lng: -156.70, lat: 20.88 },
+    southshore: { lng: -156.35, lat: 20.58 },
   };
 
   // Add zone markers after map loads
@@ -133,14 +142,14 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
       if (!position) return;
 
       const color = scoreToColor(zone.score);
-      const textColor = zone.score <= 5 ? 'white' : '#071a2b';
+      const badgeClass = getScoreBadgeClass(zone.score);
 
       const el = document.createElement('div');
       el.className = 'zone-marker';
       el.innerHTML = `
         <div style="display:flex;flex-direction:column;align-items:center;text-align:center;pointer-events:none;">
-          <div style="color:white;font-weight:600;font-size:11px;text-shadow:0 1px 3px rgba(0,0,0,0.9),0 0 8px rgba(0,0,0,0.5);margin-bottom:4px;white-space:nowrap;letter-spacing:0.5px;">${zone.name}</div>
-          <div style="background:${color};color:${textColor};font-weight:700;font-size:16px;padding:5px 10px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.4);">
+          <div style="color:#f0fdfa;font-weight:600;font-size:12px;text-shadow:0 2px 8px rgba(0,0,0,0.9),0 0 20px rgba(0,0,0,0.5);margin-bottom:6px;white-space:nowrap;letter-spacing:0.5px;font-family:'Outfit',sans-serif;">${zone.name}</div>
+          <div class="score-badge ${badgeClass}" style="font-size:18px;padding:6px 14px;border-radius:20px;">
             ${zone.score.toFixed(1)}
           </div>
         </div>
@@ -156,17 +165,15 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
   useEffect(() => {
     if (!mapLoaded || !map.current || !userLocation) return;
 
-    // Remove existing marker
     if (userMarker.current) {
       userMarker.current.remove();
     }
 
-    // Create user location marker
     const el = document.createElement('div');
     el.innerHTML = `
       <div style="position:relative;">
-        <div style="width:16px;height:16px;background:#3b82f6;border:3px solid white;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.4);"></div>
-        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:32px;height:32px;background:rgba(59,130,246,0.3);border-radius:50%;animation:pulse 2s infinite;"></div>
+        <div style="width:18px;height:18px;background:linear-gradient(135deg, #00e5cc 0%, #14b8a6 100%);border:3px solid white;border-radius:50%;box-shadow:0 0 20px rgba(0,229,204,0.5),0 2px 8px rgba(0,0,0,0.4);"></div>
+        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:36px;height:36px;background:rgba(0,229,204,0.25);border-radius:50%;animation:pulse 2s infinite;"></div>
       </div>
     `;
 
@@ -180,8 +187,8 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
   };
 
   return (
-    <div className="h-full bg-ocean-950 flex flex-col">
-      {/* Map Section - Takes most of the screen */}
+    <div className="h-full flex flex-col" style={{ background: 'linear-gradient(180deg, #030b12 0%, #051520 100%)' }}>
+      {/* Map Section */}
       <div className="relative flex-1 min-h-0" style={{ minHeight: '55vh' }}>
         {/* Map container */}
         <div
@@ -190,21 +197,32 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
           style={{ width: '100%', height: '100%' }}
         />
 
-        {/* Gradient overlay at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-ocean-950 to-transparent pointer-events-none" />
+        {/* Caustics overlay effect */}
+        <div className="caustics-overlay absolute inset-0" />
 
-        {/* Weather Card - Premium Design */}
+        {/* Gradient overlay at bottom */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
+          style={{
+            background: 'linear-gradient(to top, #030b12 0%, rgba(3, 11, 18, 0.8) 40%, transparent 100%)',
+          }}
+        />
+
+        {/* Weather Card - Bioluminescent Design */}
         {weather && (
-          <div className="absolute top-3 right-3 rounded-2xl overflow-hidden" style={{ background: 'rgba(7, 26, 43, 0.85)', backdropFilter: 'blur(12px)' }}>
+          <div
+            className="absolute top-3 right-3 glow-card rounded-2xl overflow-hidden"
+            style={{ minWidth: '180px' }}
+          >
             {/* Main temp section */}
             <div className="px-4 py-3 flex items-center gap-4">
               <div className="relative">
-                <div className="absolute inset-0 bg-ocean-400/20 blur-xl rounded-full" />
+                <div className="absolute inset-0 w-14 h-14 bg-glow-cyan/20 blur-xl rounded-full" />
                 <div className="relative flex items-baseline">
-                  <span className="text-4xl font-medium text-white" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  <span className="text-4xl font-semibold text-ocean-50 font-display">
                     {weather.temp}
                   </span>
-                  <span className="text-lg text-ocean-300/70 ml-0.5">°F</span>
+                  <span className="text-lg text-glow-cyan/70 ml-0.5">°</span>
                 </div>
               </div>
               <div className="text-right">
@@ -213,14 +231,14 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
               </div>
             </div>
 
-            {/* Divider */}
-            <div className="h-px bg-white/10" />
+            {/* Divider with glow */}
+            <div className="h-px bg-gradient-to-r from-transparent via-glow-cyan/30 to-transparent" />
 
             {/* Stats grid */}
             <div className="px-3 py-2.5 grid grid-cols-2 gap-x-4 gap-y-2">
               {/* Wind */}
               <div className="flex items-center gap-2">
-                <svg className="w-4 h-4 text-ocean-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" style={{ transform: `rotate(${weather.wind?.deg || 0}deg)` }}>
+                <svg className="w-4 h-4 text-glow-cyan/70" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" style={{ transform: `rotate(${weather.wind?.deg || 0}deg)` }}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-4-4l4 4-4 4" />
                 </svg>
                 <span className="text-xs text-ocean-200">{weather.wind?.speed} mph {weather.wind?.direction}</span>
@@ -228,7 +246,7 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
 
               {/* Humidity */}
               <div className="flex items-center gap-2">
-                <svg className="w-4 h-4 text-ocean-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <svg className="w-4 h-4 text-glow-cyan/70" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 21c-4 0-6-3-6-6 0-3.5 6-9 6-9s6 5.5 6 9c0 3-2 6-6 6z" />
                 </svg>
                 <span className="text-xs text-ocean-200">{weather.humidity}%</span>
@@ -237,7 +255,7 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
               {/* Visibility */}
               {weather.visibility && (
                 <div className="flex items-center gap-2">
-                  <svg className="w-4 h-4 text-ocean-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 text-glow-cyan/70" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                   </svg>
@@ -245,10 +263,10 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
                 </div>
               )}
 
-              {/* Sun times - combined */}
+              {/* Sun times */}
               {(weather.sunrise || weather.sunset) && (
                 <div className="flex items-center gap-2">
-                  <svg className="w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                  <svg className="w-4 h-4 text-coral-warm/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                     <circle cx="12" cy="12" r="4" />
                     <path d="M12 2v2m0 16v2m10-10h-2M4 12H2m15.364-6.364l-1.414 1.414M8.05 15.95l-1.414 1.414m12.728 0l-1.414-1.414M8.05 8.05L6.636 6.636" strokeLinecap="round" />
                   </svg>
@@ -263,9 +281,9 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
 
         {/* User location indicator */}
         {userLocation && (
-          <div className="absolute top-3 left-3 bg-ocean-900/80 backdrop-blur-sm px-3 py-2 rounded-lg flex items-center gap-2">
-            <div className="w-2.5 h-2.5 bg-blue-500 rounded-full animate-pulse"></div>
-            <span className="text-ocean-200 text-xs">Location enabled</span>
+          <div className="absolute top-3 left-3 glow-card px-3 py-2 rounded-xl flex items-center gap-2">
+            <div className="w-2.5 h-2.5 bg-glow-cyan rounded-full animate-breathe" style={{ boxShadow: '0 0 10px rgba(0, 229, 204, 0.6)' }} />
+            <span className="text-ocean-200 text-xs font-medium">Location enabled</span>
           </div>
         )}
 
@@ -274,14 +292,20 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
           <div className="absolute top-14 left-3 right-3 md:right-auto md:max-w-sm">
             <button
               onClick={() => setAlertsExpanded(!alertsExpanded)}
-              className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm backdrop-blur-sm bg-score-red/90 text-white"
+              className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-sm backdrop-blur-lg text-white"
+              style={{
+                background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.9) 0%, rgba(220, 38, 38, 0.85) 100%)',
+                boxShadow: '0 0 20px rgba(239, 68, 68, 0.3)',
+              }}
             >
-              <span className="flex items-center gap-2">
-                <span>⚠️</span>
-                <span>{alerts.length} Active {alerts.length === 1 ? 'Advisory' : 'Advisories'}</span>
+              <span className="flex items-center gap-2 font-medium">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                {alerts.length} Active {alerts.length === 1 ? 'Advisory' : 'Advisories'}
               </span>
               <svg
-                className={`w-4 h-4 transition-transform ${alertsExpanded ? 'rotate-180' : ''}`}
+                className={`w-4 h-4 transition-transform duration-300 ${alertsExpanded ? 'rotate-180' : ''}`}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -290,15 +314,20 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
               </svg>
             </button>
             {alertsExpanded && (
-              <div className="mt-1 bg-ocean-900/95 backdrop-blur-sm rounded-lg border border-ocean-700 overflow-hidden">
+              <div className="mt-2 glow-card rounded-xl overflow-hidden">
                 {alerts.map((alert, index) => (
                   <div
                     key={index}
-                    className={`px-3 py-2 text-sm border-b border-ocean-700/50 last:border-b-0 ${
+                    className={`px-4 py-3 text-sm border-b border-ocean-700/30 last:border-b-0 ${
                       alert.type === 'warning' ? 'text-score-orange' : 'text-score-red'
                     }`}
                   >
-                    {alert.type === 'warning' ? '⚠️' : '🚨'} {alert.message}
+                    <div className="flex items-start gap-2">
+                      <svg className="w-4 h-4 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01" />
+                      </svg>
+                      {alert.message}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -306,28 +335,32 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
           </div>
         )}
 
-        {/* Tap to explore */}
+        {/* Explore map button - floating with glow */}
         <button
           onClick={onExploreMap}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-ocean-800/80 backdrop-blur-sm text-ocean-100 text-sm px-4 py-2 rounded-full border border-ocean-600/50 hover:bg-ocean-700/80 transition-colors flex items-center gap-2"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 glow-btn px-6 py-3 rounded-full flex items-center gap-3 text-sm font-semibold animate-float"
         >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
           </svg>
-          Tap to explore full map
+          Explore Full Map
         </button>
       </div>
 
       {/* Zone Accordions */}
-      <div className="shrink-0 bg-ocean-950">
-        <div className="px-3 py-2 border-b border-ocean-800">
-          <h2 className="text-sm font-medium text-ocean-400">Today's Conditions</h2>
+      <div className="shrink-0" style={{ background: 'linear-gradient(180deg, #030b12 0%, #051520 100%)' }}>
+        <div className="px-4 py-3 flex items-center justify-between border-b border-glow-cyan/10">
+          <h2 className="text-sm font-semibold text-ocean-300 tracking-wide uppercase">Today's Conditions</h2>
+          <div className="flex items-center gap-1.5 text-xs text-ocean-500">
+            <div className="w-1.5 h-1.5 rounded-full bg-glow-cyan animate-breathe" />
+            Live
+          </div>
         </div>
 
         <div className="max-h-[35vh] overflow-y-auto">
           {zones.map(zone => {
             const spots = getZoneSpots(zone.id);
-            const color = scoreToColor(zone.score);
+            const badgeClass = getScoreBadgeClass(zone.score);
             const isExpanded = expandedZone === zone.id;
 
             return (
@@ -335,60 +368,59 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
                 {/* Zone header - clickable */}
                 <button
                   onClick={() => toggleZone(zone.id)}
-                  className="w-full px-4 py-3 flex items-center justify-between hover:bg-ocean-900/50 active:bg-ocean-900 transition-colors"
+                  className="w-full px-4 py-4 flex items-center justify-between hover:bg-ocean-800/30 active:bg-ocean-800/50 transition-all duration-200 group"
                 >
-                  <div className="flex items-center gap-3">
-                    <div
-                      className="text-lg font-bold px-2.5 py-0.5 rounded-md min-w-[52px] text-center"
-                      style={{ backgroundColor: color, color: zone.score <= 5 ? 'white' : '#071a2b' }}
-                    >
+                  <div className="flex items-center gap-4">
+                    <div className={`score-badge ${badgeClass} text-lg min-w-[60px] text-center`}>
                       {zone.score.toFixed(1)}
                     </div>
                     <div className="text-left">
-                      <h3 className="text-sm font-semibold text-ocean-50">{zone.name}</h3>
-                      <p className="text-xs text-ocean-500">{spots.length} spots • {scoreToDescription(zone.score)}</p>
+                      <h3 className="text-base font-semibold text-ocean-50 group-hover:text-glow-cyan transition-colors">{zone.name}</h3>
+                      <p className="text-xs text-ocean-400 mt-0.5">{spots.length} spots · {scoreToDescription(zone.score)}</p>
                     </div>
                   </div>
-                  <svg
-                    className={`w-5 h-5 text-ocean-500 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
+                  <div className="flex items-center gap-2">
+                    <svg
+                      className={`w-5 h-5 text-glow-cyan/50 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
                 </button>
 
                 {/* Expanded spots */}
                 {isExpanded && (
-                  <div className="bg-ocean-900/30">
-                    <div className="px-4 py-2 text-xs text-ocean-400">{zone.summary}</div>
+                  <div
+                    className="overflow-hidden"
+                    style={{ background: 'linear-gradient(180deg, rgba(10, 34, 53, 0.5) 0%, rgba(5, 21, 32, 0.5) 100%)' }}
+                  >
+                    <div className="px-4 py-3 text-sm text-ocean-300 border-b border-ocean-800/30">{zone.summary}</div>
                     {spots.map((spot) => {
                       const spotScore = spot.effectiveScore;
-                      const spotColor = scoreToColor(spotScore);
+                      const spotBadgeClass = getScoreBadgeClass(spotScore);
 
                       return (
                         <button
                           key={spot.id}
                           onClick={() => onSelectSpot(spot)}
-                          className="w-full px-4 py-2.5 flex items-center justify-between hover:bg-ocean-800/40 active:bg-ocean-800/60 transition-colors border-t border-ocean-800/30"
+                          className="w-full px-4 py-3.5 flex items-center justify-between hover:bg-glow-cyan/5 active:bg-glow-cyan/10 transition-all duration-200 border-t border-ocean-800/20 group"
                         >
                           <div className="flex-1 min-w-0 text-left">
-                            <span className="text-sm text-ocean-100">{spot.name}</span>
+                            <span className="text-sm text-ocean-100 group-hover:text-glow-cyan transition-colors font-medium">{spot.name}</span>
                             {spot.hazards && spot.hazards.length > 0 && (
-                              <p className="text-xs text-ocean-500 truncate">
-                                {spot.hazards.slice(0, 2).join(' • ')}
+                              <p className="text-xs text-ocean-500 truncate mt-0.5">
+                                {spot.hazards.slice(0, 2).join(' · ')}
                               </p>
                             )}
                           </div>
-                          <div className="flex items-center gap-2 ml-2">
-                            <span
-                              className="text-xs font-semibold px-2 py-0.5 rounded"
-                              style={{ backgroundColor: spotColor, color: spotScore <= 5 ? 'white' : '#071a2b' }}
-                            >
+                          <div className="flex items-center gap-3 ml-3">
+                            <span className={`score-badge ${spotBadgeClass} text-xs py-1 px-2.5`}>
                               {spotScore.toFixed(1)}
                             </span>
-                            <svg className="w-4 h-4 text-ocean-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-4 h-4 text-glow-cyan/40 group-hover:text-glow-cyan group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
                           </div>

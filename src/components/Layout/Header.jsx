@@ -2,58 +2,72 @@ import { formatLastUpdated, formatShortDate } from '../../utils/formatDate';
 
 function Header({ lastUpdated, onReportClick, onBookingClick, showBackButton, onBackClick }) {
   return (
-    <header className="bg-ocean-900/90 backdrop-blur-sm border-b border-ocean-700/50 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 py-3">
-        <div className="flex items-center justify-between">
-          {/* Left: Back button or Logo */}
-          <div className="flex items-center gap-4">
-            {showBackButton && (
-              <button
-                onClick={onBackClick}
-                className="text-ocean-300 hover:text-ocean-100 transition-colors flex items-center gap-1"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-                <span className="hidden sm:inline">Back</span>
-              </button>
-            )}
-            <div>
-              <h1
-                className="text-lg sm:text-xl font-semibold text-ocean-50 tracking-tight"
-                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-              >
-                Snorkel Report Maui
-              </h1>
-              {lastUpdated && (
-                <>
-                  <p className="text-xs text-ocean-400 hidden sm:block">
-                    Updated: {formatLastUpdated(lastUpdated)}
-                  </p>
-                  <p className="text-xs text-ocean-400 sm:hidden">
-                    {formatShortDate(lastUpdated)}
-                  </p>
-                </>
-              )}
-            </div>
-          </div>
+    <header className="relative z-50">
+      {/* Glowing border at bottom */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-glow-cyan/40 to-transparent" />
 
-          {/* Right: Action buttons */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            <button
-              onClick={onBookingClick}
-              className="px-3 py-1.5 sm:px-4 sm:py-2 text-sm font-medium text-ocean-950 bg-ocean-300 hover:bg-ocean-200 rounded-lg transition-colors"
-            >
-              <span className="hidden sm:inline">Book Activity</span>
-              <span className="sm:hidden">Book</span>
-            </button>
-            <button
-              onClick={onReportClick}
-              className="px-3 py-1.5 sm:px-4 sm:py-2 text-sm font-medium text-ocean-200 border border-ocean-500 hover:bg-ocean-800 rounded-lg transition-colors"
-            >
-              <span className="hidden sm:inline">Submit Report</span>
-              <span className="sm:hidden">Report</span>
-            </button>
+      {/* Main header content */}
+      <div
+        className="backdrop-blur-xl"
+        style={{
+          background: 'linear-gradient(180deg, rgba(5, 21, 32, 0.95) 0%, rgba(3, 11, 18, 0.9) 100%)',
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-4 py-3">
+          <div className="flex items-center justify-between">
+            {/* Left: Back button or Logo */}
+            <div className="flex items-center gap-4">
+              {showBackButton && (
+                <button
+                  onClick={onBackClick}
+                  className="group flex items-center gap-1.5 text-glow-cyan/70 hover:text-glow-cyan transition-all duration-300"
+                >
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center border border-glow-cyan/30 group-hover:border-glow-cyan/60 group-hover:bg-glow-cyan/10 transition-all duration-300">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </div>
+                  <span className="hidden sm:inline text-sm font-medium">Back</span>
+                </button>
+              )}
+              <div>
+                <h1 className="font-display text-xl sm:text-2xl text-ocean-50 tracking-wide">
+                  <span className="text-glow-cyan">Snorkel</span>{' '}
+                  <span className="text-ocean-100">Report</span>{' '}
+                  <span className="text-coral-warm">Maui</span>
+                </h1>
+                {lastUpdated && (
+                  <>
+                    <p className="text-xs text-ocean-400 hidden sm:flex items-center gap-2 mt-0.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-glow-cyan animate-breathe" />
+                      Updated: {formatLastUpdated(lastUpdated)}
+                    </p>
+                    <p className="text-xs text-ocean-400 sm:hidden flex items-center gap-2 mt-0.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-glow-cyan animate-breathe" />
+                      {formatShortDate(lastUpdated)}
+                    </p>
+                  </>
+                )}
+              </div>
+            </div>
+
+            {/* Right: Action buttons */}
+            <div className="flex items-center gap-2 sm:gap-3">
+              <button
+                onClick={onBookingClick}
+                className="glow-btn px-4 py-2 sm:px-5 sm:py-2.5 text-sm font-semibold rounded-full"
+              >
+                <span className="hidden sm:inline">Book Activity</span>
+                <span className="sm:hidden">Book</span>
+              </button>
+              <button
+                onClick={onReportClick}
+                className="glow-btn-outline px-4 py-2 sm:px-5 sm:py-2.5 text-sm font-medium rounded-full"
+              >
+                <span className="hidden sm:inline">Submit Report</span>
+                <span className="sm:hidden">Report</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
