@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-01-14T18:38:59.438Z",
+  "lastUpdated": "2026-01-14T21:11:55.134Z",
   "dataQuality": {
     "snorkelStore": "fresh",
     "noaaBuoy": "fresh",
@@ -149,7 +149,7 @@
     "southshore": {
       "id": "southshore",
       "name": "South Shore",
-      "score": 6.5,
+      "score": 4.5,
       "summary": "Waves present. Most hazardous near Makena/Wailea.",
       "details": "Water is warm (77°F). Elevated conditions. breezy winds.",
       "spots": {
@@ -160,13 +160,14 @@
             -156.6103,
             20.8106
           ],
-          "score": 6.5,
+          "score": 4.5,
           "description": "Mile Marker 14 reef with extensive coral formations. Shallow water perfect for beginners. Known for turtle sightings. Best before noon when winds pick up.",
           "conditions": "Olowalu is protected from north swells, making it a safer option despite rough overall conditions.",
           "hazards": [],
           "webcam": null,
           "hasProvider": false,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "coralgardens": {
           "id": "coralgardens",
@@ -175,7 +176,7 @@
             -156.561684,
             20.789125
           ],
-          "score": 6.5,
+          "score": 4.5,
           "description": "Popular boat snorkel destination with vibrant coral formations and abundant marine life. Shallow reef teeming with tropical fish. Watch for boat traffic.",
           "conditions": "Coral Gardens is protected and generally safe, but be cautious of rough conditions.",
           "hazards": [
@@ -183,7 +184,8 @@
           ],
           "webcam": null,
           "hasProvider": true,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "kamaole1": {
           "id": "kamaole1",
@@ -192,7 +194,7 @@
             -156.448129,
             20.7221
           ],
-          "score": 6.5,
+          "score": 4.5,
           "description": "Family-friendly beach with lifeguards. Best snorkeling off south end near rocky reef. Smooth sandy entry ideal for beginners. Visibility can be poor due to sandy bottom.",
           "conditions": "Kamaole Beach I is calmer at the south end, but watch for elevated waves.",
           "hazards": [
@@ -201,7 +203,8 @@
           ],
           "webcam": "https://www.mauirealestate.net/video.php?Size=Large",
           "hasProvider": false,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "kamaole2": {
           "id": "kamaole2",
@@ -210,7 +213,7 @@
             -156.446883,
             20.714851
           ],
-          "score": 6,
+          "score": 4,
           "description": "Middle beach with reef between Kam I and III. Good snorkeling around lava rock outcroppings on both ends. Lifeguards, restrooms, and showers available.",
           "conditions": "Kamaole Beach II has a Brown Water Advisory; caution is advised.",
           "hazards": [
@@ -219,7 +222,8 @@
           ],
           "webcam": "https://www.youtube.com/watch?v=hPvl6IACa2k",
           "hasProvider": false,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "kamaole3": {
           "id": "kamaole3",
@@ -228,7 +232,7 @@
             -156.446442,
             20.711325
           ],
-          "score": 6.5,
+          "score": 4.5,
           "description": "Largest of the three Kamaole beaches with grassy park. Best snorkeling near north end rocks. Popular with families, has playground. Lifeguards on duty.",
           "conditions": "Kamaole Beach III is calmer at the south end, but still has some elevated waves.",
           "hazards": [
@@ -237,7 +241,8 @@
           ],
           "webcam": null,
           "hasProvider": false,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "uluabeach": {
           "id": "uluabeach",
@@ -246,7 +251,7 @@
             -156.445444,
             20.691493
           ],
-          "score": 6.5,
+          "score": 4.5,
           "description": "Excellent beginner spot in Wailea. Gentle sandy entry with lava fingers housing diverse marine life. Best snorkeling on right side toward Andaz hotel. Sea turtles common.",
           "conditions": "Ulua Beach is a protected cove, making it a good option despite rough conditions.",
           "hazards": [
@@ -254,7 +259,8 @@
           ],
           "webcam": "https://marriott.ozolio.com/wailea-beach-resort/",
           "hasProvider": false,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "waileapoint": {
           "id": "waileapoint",
@@ -263,7 +269,7 @@
             -156.445772,
             20.680442
           ],
-          "score": 5.5,
+          "score": 3.5,
           "description": "Rocky point between Wailea beaches with good reef structure. More advanced entry over rocks. Diverse fish populations and occasional turtle sightings.",
           "conditions": "Wailea Point is more exposed and may have rough conditions.",
           "hazards": [
@@ -272,7 +278,8 @@
           ],
           "webcam": "https://www.ozolio.com/explore/XWEE00001592",
           "hasProvider": false,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "changssouth": {
           "id": "changssouth",
@@ -281,7 +288,7 @@
             -156.44274,
             20.659536
           ],
-          "score": 6.5,
+          "score": 4.5,
           "description": "Local favorite near Makena Surf condos. Excellent coral formations and fish diversity. Part of Turtle Town area.",
           "conditions": "Chang's South is part of Turtle Town and generally safe, but conditions may be rough.",
           "hazards": [
@@ -290,7 +297,8 @@
           ],
           "webcam": "https://streamer2.brownrice.com/makenasurf/makenasurf.stream/playlist.m3u8",
           "hasProvider": false,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "fivegraves": {
           "id": "fivegraves",
@@ -299,7 +307,7 @@
             -156.445004,
             20.656093
           ],
-          "score": 5.5,
+          "score": 3.5,
           "description": "Named for 5 Chinese settler headstones nearby. Features underwater caves. Advanced entry over lava rocks.",
           "conditions": "Five Graves is exposed and can have surge; caution is necessary.",
           "hazards": [
@@ -309,7 +317,8 @@
           ],
           "webcam": null,
           "hasProvider": true,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "makenalandingnorth": {
           "id": "makenalandingnorth",
@@ -318,7 +327,7 @@
             -156.442665,
             20.653844
           ],
-          "score": 6.5,
+          "score": 4.5,
           "description": "Gateway to Turtle Town with sandy entry. One of the best spots in Hawaii for sea turtle encounters. Family-friendly with restrooms and grassy park. Boat traffic in morning.",
           "conditions": "Makena Landing North is a gateway to Turtle Town and generally safe.",
           "hazards": [
@@ -327,7 +336,8 @@
           ],
           "webcam": null,
           "hasProvider": true,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "makenalandingsouth": {
           "id": "makenalandingsouth",
@@ -336,7 +346,7 @@
             -156.442954,
             20.650953
           ],
-          "score": 5.5,
+          "score": 3.5,
           "description": "Southern access to Turtle Town. Excellent for experienced snorkelers seeking less crowded conditions. Strong currents possible.",
           "conditions": "Makena Landing South is more exposed and may have rough conditions.",
           "hazards": [
@@ -345,7 +355,8 @@
           ],
           "webcam": null,
           "hasProvider": true,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "maluaka": {
           "id": "maluaka",
@@ -354,7 +365,7 @@
             -156.445261,
             20.645522
           ],
-          "score": 6.5,
+          "score": 4.5,
           "description": "Beautiful sandy beach with easy entry. Turtle cleaning station nearby makes sightings almost guaranteed. Great for beginners and families.",
           "conditions": "Maluaka Beach is a protected sandy beach, making it a safer choice.",
           "hazards": [
@@ -362,7 +373,8 @@
           ],
           "webcam": null,
           "hasProvider": true,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "whiterock": {
           "id": "whiterock",
@@ -371,7 +383,7 @@
             -156.44283811341825,
             20.670694213288858
           ],
-          "score": 5.5,
+          "score": 3.5,
           "description": "Snorkeling is excellent around the rocky outcroppings at both ends of the beach, with the south end being a bit larger and slightly clearer.",
           "conditions": "White Rock has a rocky entry and may face rough conditions.",
           "hazards": [
@@ -381,7 +393,8 @@
           ],
           "webcam": null,
           "hasProvider": false,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "ahihikinau": {
           "id": "ahihikinau",
@@ -390,7 +403,7 @@
             -156.435861,
             20.616056
           ],
-          "score": 6.5,
+          "score": 4.5,
           "description": "Protected Natural Area Reserve with pristine reef. No fishing allowed so fish thrive. Reef-safe sunscreen only. $5 parking fee for non-residents. Turtle cleaning station at south end of cove.",
           "conditions": "Ahihi-Kinau is a protected marine reserve, generally safe for snorkeling.",
           "hazards": [
@@ -400,9 +413,57 @@
           ],
           "webcam": null,
           "hasProvider": false,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         }
-      }
+      },
+      "windAdjusted": true,
+      "windCondition": "LIGHT"
     }
+  },
+  "windCheck": {
+    "timestamp": "2026-01-14T21:11:55.134Z",
+    "adjustments": {
+      "northwest": {
+        "originalScore": 2,
+        "adjustedScore": 2,
+        "condition": "CALM",
+        "penalty": 0
+      },
+      "kaanapali": {
+        "originalScore": 7.5,
+        "adjustedScore": 7.5,
+        "condition": "CALM",
+        "penalty": 0
+      },
+      "southshore": {
+        "originalScore": 6.5,
+        "adjustedScore": 4.5,
+        "condition": "LIGHT",
+        "penalty": 2
+      }
+    },
+    "cameras": [
+      {
+        "id": "napili",
+        "name": "Napili Bay",
+        "zone": "northwest"
+      },
+      {
+        "id": "kahekili",
+        "name": "Airport Beach",
+        "zone": "kaanapali"
+      },
+      {
+        "id": "uluabeach",
+        "name": "Ulua/Wailea Beach",
+        "zone": "southshore"
+      },
+      {
+        "id": "waileapoint",
+        "name": "Polo Beach",
+        "zone": "southshore"
+      }
+    ]
   }
 }
