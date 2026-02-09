@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-02-08T21:16:00.303Z",
+  "lastUpdated": "2026-02-09T01:01:12.523Z",
   "dataQuality": {
     "snorkelStore": "fresh",
     "noaaBuoy": "fresh",
@@ -90,7 +90,7 @@
     "kaanapali": {
       "id": "kaanapali",
       "name": "Ka'anapali",
-      "score": 2,
+      "score": 0,
       "summary": "Moderate conditions. Use caution.",
       "details": "Water is warm (77°F). Rough conditions. strong trades winds.",
       "spots": {
@@ -101,7 +101,7 @@
             -156.695944,
             20.926733
           ],
-          "score": 1,
+          "score": 0,
           "description": "Iconic lava rock formation with excellent turtle sightings. Easy beach access with nearby amenities. Watch for cliff jumpers and stay close to shore. Can get crowded but accessible for all skill levels.",
           "conditions": "Dangerous conditions with strong currents and rough waves, despite some wind protection.",
           "hazards": [
@@ -111,7 +111,8 @@
           ],
           "webcam": "https://www.youtube.com/watch?v=6c3naP3HZkk",
           "hasProvider": true,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "kahekili": {
           "id": "kahekili",
@@ -120,7 +121,7 @@
             -156.6936,
             20.9372
           ],
-          "score": 1,
+          "score": 0,
           "description": "Less crowded alternative to Black Rock with excellent reef system. Sandy entry leads to vibrant coral gardens. Morning visits recommended before afternoon winds.",
           "conditions": "Hazardous ocean conditions with strong winds and rough seas, partially protected but still dangerous.",
           "hazards": [
@@ -128,7 +129,8 @@
           ],
           "webcam": "https://www.ozolio.com/explore/TIGL000014BB",
           "hasProvider": true,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "malawharf": {
           "id": "malawharf",
@@ -137,7 +139,7 @@
             -156.6871171536624,
             20.8853424074552
           ],
-          "score": 1.3,
+          "score": 0,
           "description": "Historic pier ruins create an artificial reef teeming with marine life. Excellent for spotting turtles, rays, and diverse fish species. Entry from nearby boat ramp. Best in calm conditions.",
           "conditions": "Conditions vary. Check locally before entering.",
           "hazards": [
@@ -147,9 +149,12 @@
           ],
           "webcam": null,
           "hasProvider": false,
-          "derivedScore": true
+          "derivedScore": true,
+          "windAdjusted": true
         }
-      }
+      },
+      "windAdjusted": true,
+      "windCondition": "LIGHT"
     },
     "southshore": {
       "id": "southshore",
@@ -423,29 +428,29 @@
         }
       },
       "windAdjusted": true,
-      "windCondition": "LIGHT"
+      "windCondition": "MODERATE"
     }
   },
   "windCheck": {
-    "timestamp": "2026-02-08T21:16:00.303Z",
+    "timestamp": "2026-02-09T01:01:12.523Z",
     "adjustments": {
       "northwest": {
-        "originalScore": 1,
+        "originalScore": 0,
         "adjustedScore": 0,
         "condition": "LIGHT",
         "penalty": 2
       },
       "kaanapali": {
         "originalScore": 2,
-        "adjustedScore": 2,
-        "condition": "CALM",
-        "penalty": 0
-      },
-      "southshore": {
-        "originalScore": 1.5,
         "adjustedScore": 0,
         "condition": "LIGHT",
         "penalty": 2
+      },
+      "southshore": {
+        "originalScore": 0,
+        "adjustedScore": 0,
+        "condition": "MODERATE",
+        "penalty": 3
       }
     },
     "cameras": [
