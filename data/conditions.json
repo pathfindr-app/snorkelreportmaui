@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-02-09T21:29:10.709Z",
+  "lastUpdated": "2026-02-10T01:09:19.979Z",
   "dataQuality": {
     "snorkelStore": "fresh",
     "noaaBuoy": "fresh",
@@ -85,7 +85,7 @@
         }
       },
       "windAdjusted": true,
-      "windCondition": "LIGHT"
+      "windCondition": "MODERATE"
     },
     "kaanapali": {
       "id": "kaanapali",
@@ -411,13 +411,13 @@
     }
   },
   "windCheck": {
-    "timestamp": "2026-02-09T21:29:10.709Z",
+    "timestamp": "2026-02-10T01:09:19.979Z",
     "adjustments": {
       "northwest": {
         "originalScore": 0,
         "adjustedScore": 0,
-        "condition": "LIGHT",
-        "penalty": 2
+        "condition": "MODERATE",
+        "penalty": 3
       },
       "kaanapali": {
         "originalScore": 1.5,
