@@ -4,7 +4,10 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { scoreToColor } from '../../utils/scoreToColor';
 import WeatherOverlay from './WeatherOverlay';
 
-mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
+const HAS_MAPBOX_TOKEN = Boolean(import.meta.env.VITE_MAPBOX_TOKEN);
+if (HAS_MAPBOX_TOKEN) {
+  mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
+}
 
 // Maui center coordinates and initial view
 const MAUI_CENTER = [-156.3319, 20.7984];
@@ -56,7 +59,7 @@ function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSel
 
   // Initialize map
   useEffect(() => {
-    if (map.current) return;
+    if (!HAS_MAPBOX_TOKEN || map.current || !mapContainer.current) return;
 
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
@@ -374,6 +377,32 @@ function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSel
       });
     }
   };
+
+  if (!HAS_MAPBOX_TOKEN) {
+    return (
+      <div
+        className="h-full w-full relative flex items-center justify-center px-6 text-center"
+        style={{
+          background:
+            'radial-gradient(circle at 20% 20%, rgba(0, 229, 204, 0.08) 0%, transparent 45%), radial-gradient(circle at 80% 80%, rgba(255, 126, 103, 0.08) 0%, transparent 45%), linear-gradient(180deg, #051520 0%, #030b12 100%)',
+        }}
+      >
+        <div
+          className="max-w-md rounded-2xl p-5"
+          style={{
+            background: 'linear-gradient(135deg, rgba(10, 34, 53, 0.8) 0%, rgba(5, 21, 32, 0.9) 100%)',
+            border: '1px solid rgba(0, 229, 204, 0.18)',
+          }}
+        >
+          <p className="text-sm text-ocean-100 font-semibold">Map View Disabled in Local Dev</p>
+          <p className="text-xs text-ocean-400 mt-2">
+            Add <code className="text-glow-cyan/80">VITE_MAPBOX_TOKEN</code> in
+            <code className="text-glow-cyan/80"> .env.local</code> and restart the dev server.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="h-full w-full relative">

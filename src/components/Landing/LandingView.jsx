@@ -4,7 +4,10 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { scoreToColor, scoreToDescription } from '../../utils/scoreToColor';
 import zoneBoundaries from '../../data/zoneBoundaries.json';
 
-mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
+const HAS_MAPBOX_TOKEN = Boolean(import.meta.env.VITE_MAPBOX_TOKEN);
+if (HAS_MAPBOX_TOKEN) {
+  mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
+}
 
 const MAUI_CENTER = [-156.3319, 20.7984];
 
@@ -17,7 +20,22 @@ const getScoreBadgeClass = (score) => {
   return 'hazardous';
 };
 
-function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectSpot }) {
+// Manual zone marker positions for better layout
+const ZONE_POSITIONS = {
+  northwest: { lng: -156.65, lat: 21.02 },
+  kaanapali: { lng: -156.70, lat: 20.88 },
+  southshore: { lng: -156.35, lat: 20.58 },
+};
+
+function LandingView({
+  zones,
+  allSpots,
+  alerts,
+  weather,
+  onExploreMap,
+  onSelectSpot,
+  onPrivateExperienceClick,
+}) {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const userMarker = useRef(null);
@@ -51,7 +69,7 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
 
   // Initialize map
   useEffect(() => {
-    if (map.current || !mapContainer.current) return;
+    if (!HAS_MAPBOX_TOKEN || map.current || !mapContainer.current) return;
 
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
@@ -126,22 +144,14 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
     };
   }, [zones]);
 
-  // Manual zone marker positions for better layout
-  const zonePositions = {
-    northwest: { lng: -156.65, lat: 21.02 },
-    kaanapali: { lng: -156.70, lat: 20.88 },
-    southshore: { lng: -156.35, lat: 20.58 },
-  };
-
   // Add zone markers after map loads
   useEffect(() => {
     if (!mapLoaded || !map.current) return;
 
     zones.forEach(zone => {
-      const position = zonePositions[zone.id];
+      const position = ZONE_POSITIONS[zone.id];
       if (!position) return;
 
-      const color = scoreToColor(zone.score);
       const badgeClass = getScoreBadgeClass(zone.score);
 
       const el = document.createElement('div');
@@ -191,11 +201,35 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
       {/* Map Section */}
       <div className="relative flex-1 min-h-0" style={{ minHeight: '55vh' }}>
         {/* Map container */}
-        <div
-          ref={mapContainer}
-          className="absolute inset-0"
-          style={{ width: '100%', height: '100%' }}
-        />
+        {HAS_MAPBOX_TOKEN ? (
+          <div
+            ref={mapContainer}
+            className="absolute inset-0"
+            style={{ width: '100%', height: '100%' }}
+          />
+        ) : (
+          <div
+            className="absolute inset-0 flex items-center justify-center px-6 text-center"
+            style={{
+              background:
+                'radial-gradient(circle at 20% 20%, rgba(0, 229, 204, 0.08) 0%, transparent 45%), radial-gradient(circle at 80% 80%, rgba(255, 126, 103, 0.08) 0%, transparent 45%), linear-gradient(180deg, #051520 0%, #030b12 100%)',
+            }}
+          >
+            <div
+              className="max-w-md rounded-2xl p-5"
+              style={{
+                background: 'linear-gradient(135deg, rgba(10, 34, 53, 0.8) 0%, rgba(5, 21, 32, 0.9) 100%)',
+                border: '1px solid rgba(0, 229, 204, 0.18)',
+              }}
+            >
+              <p className="text-sm text-ocean-100 font-semibold">Map Preview Disabled in Local Dev</p>
+              <p className="text-xs text-ocean-400 mt-2">
+                Add <code className="text-glow-cyan/80">VITE_MAPBOX_TOKEN</code> to
+                <code className="text-glow-cyan/80"> .env.local</code> to render the interactive map.
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* Caustics overlay effect */}
         <div className="caustics-overlay absolute inset-0" />
@@ -346,6 +380,44 @@ function LandingView({ zones, allSpots, alerts, weather, onExploreMap, onSelectS
 
       {/* Zone Accordions */}
       <div className="shrink-0" style={{ background: 'linear-gradient(180deg, #030b12 0%, #051520 100%)' }}>
+        <div className="px-4 pt-4 pb-3 border-b border-glow-cyan/10">
+          <div
+            className="relative overflow-hidden rounded-2xl p-4 sm:p-5"
+            style={{
+              background: 'linear-gradient(135deg, rgba(5, 35, 52, 0.92) 0%, rgba(9, 31, 44, 0.95) 100%)',
+              border: '1px solid rgba(0, 229, 204, 0.22)',
+              boxShadow: '0 12px 30px rgba(0, 0, 0, 0.35), 0 0 30px rgba(0, 229, 204, 0.1)',
+            }}
+          >
+            <div className="absolute inset-0 pointer-events-none shimmer-bg opacity-40" />
+
+            <div className="relative">
+              <p className="text-[11px] uppercase tracking-[0.2em] text-glow-cyan/70 mb-2">
+                Featured Private Service
+              </p>
+              <h3 className="text-lg sm:text-xl text-ocean-50 font-semibold leading-tight">
+                Kyle&apos;s Private Ocean Sessions
+              </h3>
+              <p className="text-sm text-ocean-200 mt-1.5">
+                Every website photo is shot by Kyle. 11-year Maui guide, PADI Divemaster, one group
+                per session, never mixed bookings.
+              </p>
+
+              <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div className="text-xs text-ocean-300">
+                  South Side from $135/person · West Side from $160/person
+                </div>
+                <button
+                  onClick={onPrivateExperienceClick}
+                  className="glow-btn px-4 py-2.5 rounded-full text-sm font-semibold"
+                >
+                  Book Your Private Session
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="px-4 py-3 flex items-center justify-between border-b border-glow-cyan/10">
           <h2 className="text-sm font-semibold text-ocean-300 tracking-wide uppercase">Today's Conditions</h2>
           <div className="flex items-center gap-1.5 text-xs text-ocean-500">

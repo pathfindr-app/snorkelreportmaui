@@ -96,6 +96,51 @@ body {
   transform: translateY(-1px);
 }
 
+/* Private-service funnel banner */
+.private-funnel-bar {
+  background:
+    linear-gradient(120deg, rgba(0, 229, 204, 0.2) 0%, rgba(10, 34, 53, 0.85) 40%, rgba(5, 21, 32, 0.95) 100%);
+}
+
+.private-funnel-wave {
+  position: absolute;
+  inset: -40% -20%;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(0, 229, 204, 0.2) 0%, transparent 45%),
+    radial-gradient(circle at 80% 70%, rgba(255, 126, 103, 0.14) 0%, transparent 42%);
+  animation: privateFunnelDrift 10s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.private-funnel-wave-delay {
+  animation-delay: 1.6s;
+  opacity: 0.75;
+}
+
+@keyframes privateFunnelDrift {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(2%, -2%, 0) scale(1.03);
+  }
+}
+
+.private-funnel-btn {
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0.08) 100%);
+  color: #f0fdfa;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.25s ease;
+}
+
+.private-funnel-btn:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.42);
+  box-shadow: 0 0 20px rgba(0, 229, 204, 0.2);
+}
+
 /* Secondary button - outline */
 .glow-btn-outline {
   background: transparent;

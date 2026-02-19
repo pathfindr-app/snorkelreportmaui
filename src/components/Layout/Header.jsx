@@ -1,8 +1,36 @@
 import { formatLastUpdated, formatShortDate } from '../../utils/formatDate';
 
-function Header({ lastUpdated, onReportClick, onBookingClick, showBackButton, onBackClick }) {
+function Header({
+  lastUpdated,
+  onReportClick,
+  onBookingClick,
+  onPrivateExperienceClick,
+  showBackButton,
+  onBackClick,
+}) {
   return (
     <header className="relative z-50">
+      {/* Private funnel bar */}
+      <div className="private-funnel-bar relative overflow-hidden border-b border-glow-cyan/20">
+        <div className="private-funnel-wave" />
+        <div className="private-funnel-wave private-funnel-wave-delay" />
+
+        <div className="relative max-w-7xl mx-auto px-4 py-2.5">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+            <p className="text-[12px] sm:text-sm text-ocean-100 leading-relaxed">
+              Book a private snorkel or scuba dive with Kyle: 11-year Maui guide, PADI Divemaster,
+              pro underwater photographer, and the builder of this website.
+            </p>
+            <button
+              onClick={onPrivateExperienceClick}
+              className="private-funnel-btn shrink-0 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold"
+            >
+              Book Your Private Session
+            </button>
+          </div>
+        </div>
+      </div>
+
       {/* Subtle border at bottom */}
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-glow-cyan/30 to-transparent" />
 
@@ -53,11 +81,17 @@ function Header({ lastUpdated, onReportClick, onBookingClick, showBackButton, on
             {/* Right: Action buttons */}
             <div className="flex items-center gap-2">
               <button
-                onClick={onBookingClick}
+                onClick={onPrivateExperienceClick}
                 className="glow-btn px-4 py-2 text-sm font-semibold rounded-full"
               >
-                <span className="hidden sm:inline">Book Activity</span>
-                <span className="sm:hidden">Book</span>
+                <span className="hidden sm:inline">Private Session</span>
+                <span className="sm:hidden">Private</span>
+              </button>
+              <button
+                onClick={onBookingClick}
+                className="hidden lg:inline-flex glow-btn-outline px-4 py-2 text-sm font-medium rounded-full"
+              >
+                General Booking
               </button>
               <button
                 onClick={onReportClick}

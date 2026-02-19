@@ -8,6 +8,7 @@ import SpotModal from './components/Modals/SpotModal';
 import ReportModal from './components/Modals/ReportModal';
 import BookingModal from './components/Modals/BookingModal';
 import BusinessModal from './components/Modals/BusinessModal';
+import PrivateExperienceModal from './components/Modals/PrivateExperienceModal';
 import { useConditions } from './hooks/useConditions';
 import { useWeather } from './hooks/useWeather';
 import businessesData from './data/businesses.json';
@@ -34,6 +35,7 @@ function App() {
   const handleCloseBusinessModal = useCallback(() => setSelectedBusiness(null), []);
   const handleOpenReport = useCallback(() => setActiveModal('report'), []);
   const handleOpenBooking = useCallback(() => setActiveModal('booking'), []);
+  const handleOpenPrivateExperience = useCallback(() => setActiveModal('private-experience'), []);
   const handleCloseModal = useCallback(() => setActiveModal(null), []);
 
   if (loading) {
@@ -74,6 +76,7 @@ function App() {
         lastUpdated={lastUpdated}
         onReportClick={handleOpenReport}
         onBookingClick={handleOpenBooking}
+        onPrivateExperienceClick={handleOpenPrivateExperience}
         showBackButton={currentView === 'map'}
         onBackClick={handleBackToLanding}
       />
@@ -88,6 +91,7 @@ function App() {
             userWeather={userWeather}
             onExploreMap={handleExploreMap}
             onSelectSpot={handleSelectSpot}
+            onPrivateExperienceClick={handleOpenPrivateExperience}
           />
         ) : (
           <MapView
@@ -128,6 +132,11 @@ function App() {
 
       {activeModal === 'booking' && createPortal(
         <BookingModal onClose={handleCloseModal} preselectedSpot={selectedSpot} />,
+        document.body
+      )}
+
+      {activeModal === 'private-experience' && createPortal(
+        <PrivateExperienceModal onClose={handleCloseModal} />,
         document.body
       )}
 
