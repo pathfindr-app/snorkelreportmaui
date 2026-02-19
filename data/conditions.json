@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-02-18T21:26:27.676Z",
+  "lastUpdated": "2026-02-19T01:00:49.151Z",
   "dataQuality": {
     "snorkelStore": "fresh",
     "noaaBuoy": "fresh",
@@ -29,7 +29,7 @@
     "northwest": {
       "id": "northwest",
       "name": "Northwest",
-      "score": 1.5,
+      "score": 0,
       "summary": "Hazardous. Powerful waves & strong currents",
       "details": "Water is warm (75°F). Rough conditions. light winds.",
       "spots": {
@@ -40,7 +40,7 @@
             -156.638009,
             21.013477
           ],
-          "score": 0.5,
+          "score": 0,
           "description": "Marine Life Conservation District with 50% more fish diversity than other reefs. Best 8am-noon in summer. Check conditions from lookout - water should be blue, not milky. If surfers are present, conditions are too rough.",
           "conditions": "Very rough conditions with strong currents; not recommended for snorkeling.",
           "hazards": [
@@ -60,7 +60,7 @@
             -156.666723,
             20.999107
           ],
-          "score": 1.5,
+          "score": 0,
           "description": "Small protected cove ideal for beginners and families. Reefs on both sides block swell. Best snorkeling on northeastern side where visibility is better. Very sensitive to winter swells.",
           "conditions": "Partially protected cove, but still experiencing strong currents and rough waves.",
           "hazards": [
@@ -78,7 +78,7 @@
             -156.666922,
             20.994735
           ],
-          "score": 1,
+          "score": 0,
           "description": "Sheltered crescent bay popular with families. Sandy bottom with reef on both sides. Good for beginners on calm days. Sea turtles frequently visit.",
           "conditions": "Sheltered bay, but conditions remain rough with strong currents.",
           "hazards": [
@@ -96,7 +96,7 @@
     "kaanapali": {
       "id": "kaanapali",
       "name": "Ka'anapali",
-      "score": 7,
+      "score": 5,
       "summary": "Moderate conditions. Use caution.",
       "details": "Water is warm (75°F). Rough conditions. light winds.",
       "spots": {
@@ -107,7 +107,7 @@
             -156.695944,
             20.926733
           ],
-          "score": 6,
+          "score": 4,
           "description": "Iconic lava rock formation with excellent turtle sightings. Easy beach access with nearby amenities. Watch for cliff jumpers and stay close to shore. Can get crowded but accessible for all skill levels.",
           "conditions": "Calmer area on the south face, but strong currents near the point; caution advised.",
           "hazards": [
@@ -117,7 +117,8 @@
           ],
           "webcam": "https://www.youtube.com/watch?v=6c3naP3HZkk",
           "hasProvider": true,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "kahekili": {
           "id": "kahekili",
@@ -126,7 +127,7 @@
             -156.6936,
             20.9372
           ],
-          "score": 6,
+          "score": 4,
           "description": "Less crowded alternative to Black Rock with excellent reef system. Sandy entry leads to vibrant coral gardens. Morning visits recommended before afternoon winds.",
           "conditions": "More exposed to wind and surf; conditions are rough with strong currents.",
           "hazards": [
@@ -134,7 +135,8 @@
           ],
           "webcam": "https://www.ozolio.com/explore/TIGL000014BB",
           "hasProvider": true,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "malawharf": {
           "id": "malawharf",
@@ -143,7 +145,7 @@
             -156.6871171536624,
             20.8853424074552
           ],
-          "score": 6.3,
+          "score": 4.3,
           "description": "Historic pier ruins create an artificial reef teeming with marine life. Excellent for spotting turtles, rays, and diverse fish species. Entry from nearby boat ramp. Best in calm conditions.",
           "conditions": "Conditions vary. Check locally before entering.",
           "hazards": [
@@ -153,9 +155,12 @@
           ],
           "webcam": null,
           "hasProvider": false,
-          "derivedScore": true
+          "derivedScore": true,
+          "windAdjusted": true
         }
-      }
+      },
+      "windAdjusted": true,
+      "windCondition": "LIGHT"
     },
     "southshore": {
       "id": "southshore",
@@ -417,19 +422,19 @@
     }
   },
   "windCheck": {
-    "timestamp": "2026-02-18T21:26:27.676Z",
+    "timestamp": "2026-02-19T01:00:49.151Z",
     "adjustments": {
       "northwest": {
-        "originalScore": 3.5,
-        "adjustedScore": 1.5,
+        "originalScore": 1.5,
+        "adjustedScore": 0,
         "condition": "LIGHT",
         "penalty": 2
       },
       "kaanapali": {
         "originalScore": 7,
-        "adjustedScore": 7,
-        "condition": "CALM",
-        "penalty": 0
+        "adjustedScore": 5,
+        "condition": "LIGHT",
+        "penalty": 2
       },
       "southshore": {
         "originalScore": 8.5,
