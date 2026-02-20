@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-02-19T21:21:50.534Z",
+  "lastUpdated": "2026-02-20T00:56:42.068Z",
   "dataQuality": {
     "snorkelStore": "fresh",
     "noaaBuoy": "fresh",
@@ -29,7 +29,7 @@
     "northwest": {
       "id": "northwest",
       "name": "Northwest",
-      "score": 0.5,
+      "score": 0,
       "summary": "Hazardous. Powerful waves & strong currents",
       "details": "Water is warm (75°F). Rough conditions. strong trades winds.",
       "spots": {
@@ -60,7 +60,7 @@
             -156.666723,
             20.999107
           ],
-          "score": 0.5,
+          "score": 0,
           "description": "Small protected cove ideal for beginners and families. Reefs on both sides block swell. Best snorkeling on northeastern side where visibility is better. Very sensitive to winter swells.",
           "conditions": "Partially protected but still rough with strong currents; caution is advised.",
           "hazards": [
@@ -78,7 +78,7 @@
             -156.666922,
             20.994735
           ],
-          "score": 0.5,
+          "score": 0,
           "description": "Sheltered crescent bay popular with families. Sandy bottom with reef on both sides. Good for beginners on calm days. Sea turtles frequently visit.",
           "conditions": "Very rough conditions; not recommended for snorkeling due to strong currents.",
           "hazards": [
@@ -417,11 +417,11 @@
     }
   },
   "windCheck": {
-    "timestamp": "2026-02-19T21:21:50.534Z",
+    "timestamp": "2026-02-20T00:56:42.068Z",
     "adjustments": {
       "northwest": {
-        "originalScore": 2.5,
-        "adjustedScore": 0.5,
+        "originalScore": 0.5,
+        "adjustedScore": 0,
         "condition": "LIGHT",
         "penalty": 2
       },
