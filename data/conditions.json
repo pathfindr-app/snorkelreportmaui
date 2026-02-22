@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-02-21T21:12:38.162Z",
+  "lastUpdated": "2026-02-22T00:59:15.369Z",
   "dataQuality": {
     "snorkelStore": "fresh",
     "noaaBuoy": "fresh",
@@ -29,7 +29,7 @@
     "northwest": {
       "id": "northwest",
       "name": "Northwest",
-      "score": 1.5,
+      "score": 0,
       "summary": "Hazardous. Powerful waves & strong currents",
       "details": "Water is warm (76°F). Rough conditions. strong trades winds.",
       "spots": {
@@ -40,7 +40,7 @@
             -156.638009,
             21.013477
           ],
-          "score": 0.5,
+          "score": 0,
           "description": "Marine Life Conservation District with 50% more fish diversity than other reefs. Best 8am-noon in summer. Check conditions from lookout - water should be blue, not milky. If surfers are present, conditions are too rough.",
           "conditions": "Very rough conditions with elevated surf and strong currents make snorkeling dangerous.",
           "hazards": [
@@ -60,7 +60,7 @@
             -156.666723,
             20.999107
           ],
-          "score": 2.5,
+          "score": 0.5,
           "description": "Small protected cove ideal for beginners and families. Reefs on both sides block swell. Best snorkeling on northeastern side where visibility is better. Very sensitive to winter swells.",
           "conditions": "Kapalua Bay is the calmest in the Northwest zone, but strong currents linger offshore.",
           "hazards": [
@@ -78,7 +78,7 @@
             -156.666922,
             20.994735
           ],
-          "score": 1.5,
+          "score": 0,
           "description": "Sheltered crescent bay popular with families. Sandy bottom with reef on both sides. Good for beginners on calm days. Sea turtles frequently visit.",
           "conditions": "Napili Bay is sheltered but still affected by rough conditions in the Northwest zone.",
           "hazards": [
@@ -417,11 +417,11 @@
     }
   },
   "windCheck": {
-    "timestamp": "2026-02-21T21:12:38.162Z",
+    "timestamp": "2026-02-22T00:59:15.369Z",
     "adjustments": {
       "northwest": {
-        "originalScore": 3.5,
-        "adjustedScore": 1.5,
+        "originalScore": 1.5,
+        "adjustedScore": 0,
         "condition": "LIGHT",
         "penalty": 2
       },
