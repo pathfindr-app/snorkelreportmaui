@@ -9,13 +9,10 @@ function Header({
   return (
     <header className="relative z-50">
       <div className="private-header-frame relative overflow-hidden">
-        <div className="private-header-aurora" />
-        <div className="private-header-aurora private-header-aurora-delay" />
-
-        <div className="relative max-w-7xl mx-auto px-4 py-3">
+        <div className="relative max-w-7xl mx-auto px-4 py-2.5">
           <div className="private-header-card">
             <div className="private-header-grid">
-              <div className="min-w-0">
+              <div className="min-w-0 private-header-copy">
                 <div className="flex items-center gap-3">
                   {showBackButton && (
                     <button
@@ -30,13 +27,11 @@ function Header({
                     </button>
                   )}
 
-                  <h1 className="font-display text-xl sm:text-2xl text-ocean-50 tracking-wide leading-none">
+                  <h1 className="text-xl sm:text-2xl text-ocean-50 tracking-tight leading-none font-semibold">
                     <span className="text-glow-cyan">Snorkel</span>{' '}
                     <span className="text-ocean-100">Report</span>{' '}
                     <span className="text-coral-warm">Maui</span>
                   </h1>
-
-                  <span className="private-header-pill hidden sm:inline-flex">Private Experience</span>
                 </div>
 
                 {lastUpdated && (
@@ -52,30 +47,25 @@ function Header({
                   </>
                 )}
 
-                <h2 className="text-sm sm:text-lg text-ocean-50 mt-2 font-semibold leading-tight">
-                  Private Snorkel and Scuba with Kyle
-                </h2>
-                <p className="text-xs sm:text-sm text-ocean-200/95 leading-snug mt-1 max-w-4xl">
-                  11-year Maui guide, PADI Divemaster, professional underwater photographer, and
-                  the person who built this site.
+                <p className="private-header-title mt-1.5">
+                  Private Maui snorkel and scuba sessions with Kyle.
                 </p>
-
-                <div className="flex flex-wrap gap-2 mt-2.5">
-                  <span className="private-proof-chip">One Group Only</span>
-                  <span className="private-proof-chip">All Photos Shot by Kyle</span>
-                  <span className="private-proof-chip">Beginners to Advanced</span>
+                <div className="private-header-details mt-1">
+                  <span>PADI Divemaster</span>
+                  <span>11 years guiding</span>
+                  <span>One group per session</span>
+                  <span>All photos by Kyle</span>
                 </div>
               </div>
 
               <div className="private-header-cta-box">
-                <p className="text-[11px] uppercase tracking-[0.16em] text-glow-cyan/70">Private Pricing</p>
-                <p className="text-sm text-ocean-100 mt-1.5">South from $135 · West from $160</p>
                 <button
                   onClick={onPrivateExperienceClick}
-                  className="private-header-book-btn mt-3"
+                  className="private-header-book-btn"
                 >
-                  Book Your Private Session
+                  Book a Private Session
                 </button>
+                <p className="private-header-price mt-1.5">From $135 South · $160 West</p>
               </div>
             </div>
           </div>
