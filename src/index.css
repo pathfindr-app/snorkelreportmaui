@@ -182,9 +182,9 @@ body {
 }
 
 .private-brand-logo {
-  height: 38px;
+  height: 110px;
   width: auto;
-  max-width: min(44vw, 350px);
+  max-width: min(68vw, 760px);
   object-fit: contain;
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
 }
@@ -293,8 +293,8 @@ body {
   }
 
   .private-brand-logo {
-    height: 30px;
-    max-width: 230px;
+    height: 82px;
+    max-width: 86vw;
   }
 }
 
