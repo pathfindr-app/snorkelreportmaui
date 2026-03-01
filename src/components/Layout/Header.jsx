@@ -10,17 +10,19 @@ function Header({
 }) {
   return (
     <header className="relative z-50">
-      {/* Main header content */}
+      {/* Unified header + private funnel */}
       <div
-        className="backdrop-blur-xl"
+        className="private-funnel-bar relative overflow-hidden backdrop-blur-xl"
         style={{
           background: 'linear-gradient(180deg, rgba(5, 21, 32, 0.95) 0%, rgba(3, 11, 18, 0.9) 100%)',
         }}
       >
-        <div className="max-w-7xl mx-auto px-4 py-3">
-          <div className="flex items-center justify-between">
-            {/* Left: Back button or Logo */}
-            <div className="flex items-center gap-3">
+        <div className="private-funnel-wave" />
+        <div className="private-funnel-wave private-funnel-wave-delay" />
+
+        <div className="relative max-w-7xl mx-auto px-4 py-3">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3 min-w-0">
               {showBackButton && (
                 <button
                   onClick={onBackClick}
@@ -33,7 +35,7 @@ function Header({
                   </div>
                 </button>
               )}
-              <div>
+              <div className="min-w-0">
                 <h1 className="font-display text-lg sm:text-xl text-ocean-50 tracking-wide">
                   <span className="text-glow-cyan">Snorkel</span>{' '}
                   <span className="text-ocean-100">Report</span>{' '}
@@ -54,15 +56,7 @@ function Header({
               </div>
             </div>
 
-            {/* Right: Action buttons */}
             <div className="flex items-center gap-2">
-              <button
-                onClick={onPrivateExperienceClick}
-                className="glow-btn px-4 py-2 text-sm font-semibold rounded-full"
-              >
-                <span className="hidden sm:inline">Private Session</span>
-                <span className="sm:hidden">Private</span>
-              </button>
               <button
                 onClick={onBookingClick}
                 className="hidden lg:inline-flex glow-btn-outline px-4 py-2 text-sm font-medium rounded-full"
@@ -78,19 +72,11 @@ function Header({
               </button>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Private funnel bar */}
-      <div className="private-funnel-bar relative overflow-hidden border-b border-glow-cyan/20">
-        <div className="private-funnel-wave" />
-        <div className="private-funnel-wave private-funnel-wave-delay" />
-
-        <div className="relative max-w-7xl mx-auto px-4 py-2.5">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <div className="mt-2 pt-2 border-t border-glow-cyan/15 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
             <p className="text-[12px] sm:text-sm text-ocean-100 leading-relaxed">
-              Book a private snorkel or scuba dive with Kyle: 11-year Maui guide, PADI Divemaster,
-              pro underwater photographer, and the builder of this website.
+              Private snorkel or scuba with Kyle: 11-year Maui guide, PADI Divemaster, pro
+              underwater photographer, and the builder of this website.
             </p>
             <button
               onClick={onPrivateExperienceClick}
