@@ -156,24 +156,24 @@ body {
 
 /* Private header experience */
 .private-header-frame {
-  background: linear-gradient(120deg, rgba(21, 47, 58, 0.84) 0%, rgba(14, 35, 48, 0.92) 58%, rgba(48, 37, 40, 0.72) 100%);
+  background: linear-gradient(120deg, rgba(24, 44, 51, 0.9) 0%, rgba(18, 34, 43, 0.94) 60%, rgba(56, 43, 39, 0.72) 100%);
 }
 
 .private-header-card {
   position: relative;
-  border: 1px solid rgba(226, 213, 193, 0.22);
-  background: linear-gradient(130deg, rgba(14, 40, 52, 0.7) 0%, rgba(12, 30, 42, 0.82) 100%);
+  border: 1px solid rgba(212, 192, 165, 0.34);
+  background: linear-gradient(130deg, rgba(18, 35, 44, 0.78) 0%, rgba(14, 29, 37, 0.88) 100%);
   border-radius: 14px;
-  padding: 0.58rem 0.85rem;
+  padding: 0.56rem 0.82rem;
   box-shadow:
-    0 10px 20px rgba(0, 0, 0, 0.22),
-    inset 0 1px 0 rgba(253, 246, 237, 0.12);
+    0 8px 18px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(253, 246, 237, 0.08);
 }
 
 .private-header-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 0.8rem;
+  gap: 0.75rem;
   align-items: center;
 }
 
@@ -182,37 +182,22 @@ body {
 }
 
 .private-brand-logo {
-  height: 34px;
+  height: 38px;
   width: auto;
-  max-width: 280px;
+  max-width: min(44vw, 350px);
   object-fit: contain;
-}
-
-.private-brand-wordmark {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 2rem;
-  font-weight: 700;
-  line-height: 0.95;
-  letter-spacing: 0.01em;
-}
-
-.private-brand-wordmark-main {
-  color: #f2ece2;
-}
-
-.private-brand-wordmark-accent {
-  color: #d9a97e;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
 }
 
 .private-updated {
-  color: rgba(204, 218, 212, 0.82);
-  font-size: 0.68rem;
+  color: rgba(197, 210, 205, 0.8);
+  font-size: 0.66rem;
   letter-spacing: 0.01em;
 }
 
 .private-header-title {
-  color: #f3efe8;
-  font-size: 0.96rem;
+  color: #f6f0e6;
+  font-size: 0.93rem;
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: 0.005em;
@@ -221,44 +206,44 @@ body {
 .private-header-details {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.28rem 0.5rem;
-  color: rgba(211, 224, 219, 0.86);
-  font-size: 0.72rem;
+  gap: 0.25rem 0.45rem;
+  color: rgba(204, 194, 181, 0.86);
+  font-size: 0.7rem;
   line-height: 1.2;
 }
 
 .private-header-details span:not(:first-child)::before {
   content: '•';
   margin-right: 0.4rem;
-  color: rgba(174, 168, 157, 0.82);
+  color: rgba(184, 164, 137, 0.85);
 }
 
 .private-header-cta-box {
-  min-width: 228px;
+  min-width: 220px;
   text-align: right;
 }
 
 .private-header-book-btn {
-  border: 1px solid rgba(242, 222, 198, 0.52);
-  background: linear-gradient(130deg, rgba(233, 209, 182, 0.28) 0%, rgba(198, 173, 146, 0.24) 100%);
-  color: #f8f2e8;
+  border: 1px solid rgba(232, 216, 194, 0.62);
+  background: linear-gradient(130deg, rgba(173, 149, 123, 0.35) 0%, rgba(140, 116, 92, 0.3) 100%);
+  color: #fbf4ea;
   border-radius: 9999px;
-  font-size: 0.79rem;
+  font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.01em;
-  padding: 0.5rem 0.95rem;
+  padding: 0.48rem 0.9rem;
   transition: all 0.2s ease;
 }
 
 .private-header-book-btn:hover {
   transform: translateY(-1px);
-  border-color: rgba(255, 239, 220, 0.72);
-  background: linear-gradient(130deg, rgba(243, 222, 195, 0.42) 0%, rgba(213, 187, 160, 0.36) 100%);
+  border-color: rgba(255, 239, 220, 0.78);
+  background: linear-gradient(130deg, rgba(193, 167, 139, 0.48) 0%, rgba(160, 132, 108, 0.42) 100%);
 }
 
 .private-header-price {
-  color: rgba(214, 199, 179, 0.86);
-  font-size: 0.71rem;
+  color: rgba(207, 184, 154, 0.88);
+  font-size: 0.69rem;
   letter-spacing: 0.02em;
 }
 
@@ -292,11 +277,11 @@ body {
   }
 
   .private-header-title {
-    font-size: 0.84rem;
+    font-size: 0.82rem;
   }
 
   .private-header-details {
-    font-size: 0.67rem;
+    font-size: 0.64rem;
   }
 
   .private-header-book-btn {
@@ -304,16 +289,12 @@ body {
   }
 
   .private-header-price {
-    font-size: 0.64rem;
+    font-size: 0.62rem;
   }
 
   .private-brand-logo {
-    height: 28px;
-    max-width: 220px;
-  }
-
-  .private-brand-wordmark {
-    font-size: 1.65rem;
+    height: 30px;
+    max-width: 230px;
   }
 }
 

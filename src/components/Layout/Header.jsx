@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import { formatLastUpdated, formatShortDate } from '../../utils/formatDate';
-
-const BRAND_LOGO_SRC = '/brand/snorkelreport-logo.svg';
+import brandLogo from '../../../assets/Logo.png';
 
 function Header({
   lastUpdated,
@@ -9,8 +7,6 @@ function Header({
   showBackButton,
   onBackClick,
 }) {
-  const [logoUnavailable, setLogoUnavailable] = useState(false);
-
   return (
     <header className="relative z-50">
       <div className="private-header-frame relative overflow-hidden">
@@ -32,38 +28,30 @@ function Header({
                     </button>
                   )}
 
-                  {!logoUnavailable ? (
-                    <img
-                      src={BRAND_LOGO_SRC}
-                      alt="Snorkel Report Maui"
-                      className="private-brand-logo"
-                      onError={() => setLogoUnavailable(true)}
-                    />
-                  ) : (
-                    <h1 className="private-brand-wordmark">
-                      <span className="private-brand-wordmark-main">Snorkel Report</span>{' '}
-                      <span className="private-brand-wordmark-accent">Maui</span>
-                    </h1>
-                  )}
+                  <img
+                    src={brandLogo}
+                    alt="Snorkel Report Maui"
+                    className="private-brand-logo"
+                  />
                 </div>
 
                 {lastUpdated && (
                   <>
-                    <p className="private-updated hidden sm:flex items-center gap-1.5 mt-1.5">
+                    <p className="private-updated hidden sm:flex items-center gap-1.5 mt-1">
                       <span className="w-1 h-1 rounded-full bg-[#9dcac3]" />
                       Updated: {formatLastUpdated(lastUpdated)}
                     </p>
-                    <p className="private-updated sm:hidden flex items-center gap-1.5 mt-1.5">
+                    <p className="private-updated sm:hidden flex items-center gap-1.5 mt-1">
                       <span className="w-1 h-1 rounded-full bg-[#9dcac3]" />
                       {formatShortDate(lastUpdated)}
                     </p>
                   </>
                 )}
 
-                <p className="private-header-title mt-1.5">
+                <p className="private-header-title mt-1">
                   Private snorkel and scuba photo sessions with Kyle.
                 </p>
-                <div className="private-header-details mt-1">
+                <div className="private-header-details mt-0.5">
                   <span>PADI Divemaster</span>
                   <span>11 years guiding</span>
                   <span>One group per session</span>
@@ -78,7 +66,7 @@ function Header({
                 >
                   Book a Private Session
                 </button>
-                <p className="private-header-price mt-1.5">South from $135 · West from $160</p>
+                <p className="private-header-price mt-1">South from $135 · West from $160</p>
               </div>
             </div>
           </div>
