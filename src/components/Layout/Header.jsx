@@ -10,7 +10,7 @@ function Header({
   return (
     <header className="relative z-50">
       <div className="private-header-frame relative overflow-hidden">
-        <div className="relative max-w-7xl mx-auto px-4 py-2">
+        <div className="relative max-w-7xl mx-auto px-4 py-1.5">
           <div className="private-header-card">
             <div className="private-header-layout">
               <section className="private-panel private-panel-left">
@@ -29,39 +29,13 @@ function Header({
                   )}
 
                   <div>
-                    <p className="private-panel-eyebrow">Private Tours with Kyle</p>
-                    <h2 className="private-panel-title">Private snorkel and scuba photo sessions.</h2>
+                    <p className="private-panel-eyebrow">Snorkel Report Maui</p>
+                    <h2 className="private-panel-title">Daily snorkel conditions updated throughout the day.</h2>
                     <p className="private-panel-copy">
-                      PADI Divemaster, 11 years guiding Maui, one group per session, all photos by Kyle.
+                      Built to help you choose better spots before you head out.
                     </p>
                   </div>
                 </div>
-
-                <div className="private-cta-wrap">
-                  <button
-                    onClick={onPrivateExperienceClick}
-                    className="private-header-book-btn"
-                  >
-                    Book a Private Session
-                  </button>
-                  <p className="private-header-price">South from $135 · West from $160</p>
-                </div>
-              </section>
-
-              <div className="private-logo-center">
-                <img
-                  src={brandLogo}
-                  alt="Snorkel Report Maui"
-                  className="private-brand-logo"
-                />
-              </div>
-
-              <section className="private-panel private-panel-right">
-                <p className="private-panel-eyebrow">Snorkel Report Maui</p>
-                <h2 className="private-panel-title">Daily snorkel conditions updated throughout the day.</h2>
-                <p className="private-panel-copy">
-                  Built to help you choose better spots before you head out.
-                </p>
 
                 {lastUpdated && (
                   <>
@@ -75,6 +49,32 @@ function Header({
                     </p>
                   </>
                 )}
+              </section>
+
+              <div className="private-logo-center">
+                <img
+                  src={brandLogo}
+                  alt="Snorkel Report Maui"
+                  className="private-brand-logo"
+                />
+              </div>
+
+              <section className="private-panel private-panel-right">
+                <p className="private-panel-eyebrow">Private Tours with Kyle</p>
+                <h2 className="private-panel-title">Private snorkel and scuba photo sessions.</h2>
+                <p className="private-panel-copy">
+                  PADI Divemaster, 11 years guiding Maui, one group per session, all photos by Kyle.
+                </p>
+
+                <div className="private-cta-wrap">
+                  <button
+                    onClick={onPrivateExperienceClick}
+                    className="private-header-book-btn"
+                  >
+                    Book a Private Session
+                  </button>
+                  <p className="private-header-price">South from $135 · West from $160</p>
+                </div>
               </section>
             </div>
           </div>
