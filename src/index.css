@@ -164,63 +164,72 @@ body {
   border: 1px solid rgba(212, 192, 165, 0.34);
   background: linear-gradient(130deg, rgba(18, 35, 44, 0.78) 0%, rgba(14, 29, 37, 0.88) 100%);
   border-radius: 14px;
-  padding: 0.56rem 0.82rem;
+  padding: 0.62rem 0.85rem;
   box-shadow:
     0 8px 18px rgba(0, 0, 0, 0.24),
     inset 0 1px 0 rgba(253, 246, 237, 0.08);
 }
 
-.private-header-grid {
+.private-header-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 0.75rem;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 1.15rem;
   align-items: center;
 }
 
-.private-header-copy {
+.private-panel {
+  min-width: 0;
+}
+
+.private-panel-right {
+  text-align: right;
+}
+
+.private-panel-eyebrow {
+  font-size: 0.64rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(196, 211, 206, 0.76);
+  font-weight: 600;
+}
+
+.private-panel-title {
+  color: #f6f0e6;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: 0.005em;
+  margin-top: 0.24rem;
+}
+
+.private-panel-copy {
+  color: rgba(205, 195, 183, 0.9);
+  font-size: 0.71rem;
+  line-height: 1.2;
+  margin-top: 0.32rem;
+}
+
+.private-cta-wrap {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+}
+
+.private-logo-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   min-width: 0;
 }
 
 .private-brand-logo {
-  height: 110px;
+  height: clamp(96px, 12vw, 170px);
   width: auto;
-  max-width: min(68vw, 760px);
+  max-width: min(72vw, 840px);
   object-fit: contain;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
-}
-
-.private-updated {
-  color: rgba(197, 210, 205, 0.8);
-  font-size: 0.66rem;
-  letter-spacing: 0.01em;
-}
-
-.private-header-title {
-  color: #f6f0e6;
-  font-size: 0.93rem;
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: 0.005em;
-}
-
-.private-header-details {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem 0.45rem;
-  color: rgba(204, 194, 181, 0.86);
-  font-size: 0.7rem;
-  line-height: 1.2;
-}
-
-.private-header-details span:not(:first-child)::before {
-  content: '•';
-  margin-right: 0.4rem;
-  color: rgba(184, 164, 137, 0.85);
-}
-
-.private-header-cta-box {
-  min-width: 220px;
-  text-align: right;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.45));
 }
 
 .private-header-book-btn {
@@ -247,6 +256,12 @@ body {
   letter-spacing: 0.02em;
 }
 
+.private-updated {
+  color: rgba(197, 210, 205, 0.8);
+  font-size: 0.66rem;
+  letter-spacing: 0.01em;
+}
+
 .private-back-btn {
   color: rgba(214, 203, 188, 0.8);
 }
@@ -264,28 +279,40 @@ body {
   background: rgba(215, 193, 164, 0.08);
 }
 
+@media (max-width: 1080px) {
+  .private-header-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.55rem;
+  }
+
+  .private-logo-center {
+    order: 1;
+    justify-content: flex-start;
+  }
+
+  .private-panel-left {
+    order: 2;
+  }
+
+  .private-panel-right {
+    order: 3;
+    text-align: left;
+  }
+
+  .private-brand-logo {
+    height: clamp(88px, 16vw, 140px);
+    max-width: min(92vw, 760px);
+  }
+}
+
 @media (max-width: 900px) {
-  .private-header-grid {
+  .private-header-layout {
     grid-template-columns: minmax(0, 1fr);
     gap: 0.45rem;
   }
 
-  .private-header-cta-box {
-    min-width: 0;
-    width: 100%;
-    text-align: left;
-  }
-
-  .private-header-title {
-    font-size: 0.82rem;
-  }
-
-  .private-header-details {
-    font-size: 0.64rem;
-  }
-
   .private-header-book-btn {
-    width: 100%;
+    width: auto;
   }
 
   .private-header-price {
@@ -293,8 +320,16 @@ body {
   }
 
   .private-brand-logo {
-    height: 82px;
-    max-width: 86vw;
+    height: clamp(84px, 23vw, 120px);
+    max-width: 92vw;
+  }
+
+  .private-panel-title {
+    font-size: 0.86rem;
+  }
+
+  .private-panel-copy {
+    font-size: 0.66rem;
   }
 }
 
