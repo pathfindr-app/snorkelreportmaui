@@ -2,8 +2,6 @@ import { formatLastUpdated, formatShortDate } from '../../utils/formatDate';
 
 function Header({
   lastUpdated,
-  onReportClick,
-  onBookingClick,
   onPrivateExperienceClick,
   showBackButton,
   onBackClick,
@@ -20,13 +18,13 @@ function Header({
         <div className="private-funnel-wave" />
         <div className="private-funnel-wave private-funnel-wave-delay" />
 
-        <div className="relative max-w-7xl mx-auto px-4 py-3">
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3 min-w-0">
+        <div className="relative max-w-7xl mx-auto px-4 py-2.5">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5">
+            <div className="flex items-start gap-3 min-w-0">
               {showBackButton && (
                 <button
                   onClick={onBackClick}
-                  className="group flex items-center gap-1.5 text-glow-cyan/70 hover:text-glow-cyan transition-all duration-300"
+                  className="group flex items-center gap-1.5 text-glow-cyan/70 hover:text-glow-cyan transition-all duration-300 mt-1"
                 >
                   <div className="w-7 h-7 rounded-full flex items-center justify-center border border-glow-cyan/20 group-hover:border-glow-cyan/40 group-hover:bg-glow-cyan/5 transition-all duration-300">
                     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -53,31 +51,14 @@ function Header({
                     </p>
                   </>
                 )}
+
+                <p className="text-[12px] sm:text-sm text-ocean-100/95 leading-snug mt-1">
+                  Private snorkel or scuba with Kyle: 11-year Maui guide, PADI Divemaster, pro
+                  underwater photographer, and the builder of this website.
+                </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
-              <button
-                onClick={onBookingClick}
-                className="hidden lg:inline-flex glow-btn-outline px-4 py-2 text-sm font-medium rounded-full"
-              >
-                General Booking
-              </button>
-              <button
-                onClick={onReportClick}
-                className="glow-btn-outline px-4 py-2 text-sm font-medium rounded-full"
-              >
-                <span className="hidden sm:inline">Submit Report</span>
-                <span className="sm:hidden">Report</span>
-              </button>
-            </div>
-          </div>
-
-          <div className="mt-2 pt-2 border-t border-glow-cyan/15 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-            <p className="text-[12px] sm:text-sm text-ocean-100 leading-relaxed">
-              Private snorkel or scuba with Kyle: 11-year Maui guide, PADI Divemaster, pro
-              underwater photographer, and the builder of this website.
-            </p>
             <button
               onClick={onPrivateExperienceClick}
               className="private-funnel-btn shrink-0 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold"
