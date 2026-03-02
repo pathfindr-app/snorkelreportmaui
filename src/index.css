@@ -290,14 +290,18 @@ body {
 }
 
 @media (max-width: 1080px) {
+  .private-header-card {
+    padding: 0.28rem 0.68rem;
+  }
+
   .private-header-layout {
     grid-template-columns: minmax(0, 1fr);
-    gap: 0.55rem;
+    gap: 0.46rem;
   }
 
   .private-logo-center {
     order: 1;
-    justify-content: flex-start;
+    justify-content: center;
   }
 
   .private-panel-left {
@@ -310,9 +314,9 @@ body {
   }
 
   .private-brand-logo {
-    height: clamp(94px, 18vw, 152px);
+    height: clamp(90px, 16vw, 140px);
     max-width: min(92vw, 760px);
-    transform: scale(1.1);
+    transform: scale(1.08);
   }
 
   .private-panel-right .private-cta-wrap {
@@ -321,31 +325,116 @@ body {
 }
 
 @media (max-width: 900px) {
+  .private-header-card {
+    padding: 0.2rem 0.52rem;
+    border-radius: 12px;
+  }
+
   .private-header-layout {
     grid-template-columns: minmax(0, 1fr);
-    gap: 0.45rem;
+    gap: 0.22rem;
+  }
+
+  .private-logo-center {
+    order: 1;
+    justify-content: center;
+    margin: -0.12rem 0 -0.08rem;
+  }
+
+  .private-brand-logo {
+    height: clamp(80px, 23vw, 102px);
+    max-width: min(64vw, 240px);
+    transform: scale(1.05);
+  }
+
+  .private-panel-right {
+    order: 2;
+    text-align: center;
+  }
+
+  .private-panel-left {
+    order: 3;
+    text-align: center;
+  }
+
+  .private-panel-left > .flex {
+    justify-content: center;
+    gap: 0.42rem;
+  }
+
+  .private-panel-right .private-panel-eyebrow,
+  .private-panel-right .private-panel-title,
+  .private-panel-right .private-panel-copy,
+  .private-panel-left .private-panel-copy {
+    display: none;
+  }
+
+  .private-panel-title {
+    font-size: 0.76rem;
+    margin-top: 0;
+  }
+
+  .private-panel-eyebrow {
+    font-size: 0.5rem;
+    letter-spacing: 0.13em;
+  }
+
+  .private-updated {
+    justify-content: center;
+    font-size: 0.56rem;
+    margin-top: 0.12rem !important;
+  }
+
+  .private-cta-wrap,
+  .private-panel-right .private-cta-wrap {
+    margin-top: 0;
+    align-items: center;
+    gap: 0.08rem;
   }
 
   .private-header-book-btn {
     width: auto;
+    font-size: 0.68rem;
+    padding: 0.38rem 0.8rem;
   }
 
   .private-header-price {
-    font-size: 0.62rem;
+    font-size: 0.56rem;
+  }
+
+  .private-back-btn-ring {
+    width: 1.55rem;
+    height: 1.55rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .private-header-card {
+    padding: 0.16rem 0.42rem;
+    border-radius: 11px;
   }
 
   .private-brand-logo {
-    height: clamp(88px, 24vw, 126px);
-    max-width: 92vw;
+    height: clamp(74px, 24vw, 92px);
+    max-width: min(62vw, 212px);
     transform: scale(1.02);
   }
 
-  .private-panel-title {
-    font-size: 0.86rem;
+  .private-panel-left .private-panel-eyebrow {
+    display: none;
   }
 
-  .private-panel-copy {
-    font-size: 0.66rem;
+  .private-panel-title {
+    font-size: 0.71rem;
+    line-height: 1.1;
+  }
+
+  .private-header-book-btn {
+    width: min(90vw, 228px);
+  }
+
+  .private-header-price {
+    font-size: 0.54rem;
   }
 }
 
