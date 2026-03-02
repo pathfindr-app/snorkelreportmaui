@@ -164,7 +164,7 @@ body {
   border: 1px solid rgba(212, 192, 165, 0.34);
   background: linear-gradient(130deg, rgba(18, 35, 44, 0.78) 0%, rgba(14, 29, 37, 0.88) 100%);
   border-radius: 14px;
-  padding: 0.32rem 0.78rem;
+  padding: 0.24rem 0.72rem;
   box-shadow:
     0 8px 18px rgba(0, 0, 0, 0.24),
     inset 0 1px 0 rgba(253, 246, 237, 0.08);
@@ -173,7 +173,7 @@ body {
 .private-header-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  gap: 0.78rem;
+  gap: 0.62rem;
   align-items: center;
 }
 
@@ -181,8 +181,15 @@ body {
   min-width: 0;
 }
 
+.private-panel-left {
+  align-self: start;
+  transform: translateY(-0.3rem);
+}
+
 .private-panel-right {
   text-align: right;
+  align-self: end;
+  transform: translateY(0.3rem);
 }
 
 .private-panel-eyebrow {
@@ -195,22 +202,22 @@ body {
 
 .private-panel-title {
   color: #f6f0e6;
-  font-size: 0.92rem;
+  font-size: 0.89rem;
   font-weight: 600;
   line-height: 1.15;
   letter-spacing: 0.005em;
-  margin-top: 0.2rem;
+  margin-top: 0.16rem;
 }
 
 .private-panel-copy {
   color: rgba(205, 195, 183, 0.9);
-  font-size: 0.69rem;
+  font-size: 0.67rem;
   line-height: 1.2;
-  margin-top: 0.24rem;
+  margin-top: 0.2rem;
 }
 
 .private-cta-wrap {
-  margin-top: 0.34rem;
+  margin-top: 0.26rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -228,13 +235,13 @@ body {
 }
 
 .private-brand-logo {
-  height: clamp(88px, 10.6vw, 156px);
+  height: clamp(82px, 9.6vw, 136px);
   width: auto;
-  max-width: min(70vw, 760px);
+  max-width: min(66vw, 700px);
   object-fit: contain;
-  transform: scale(1.22);
+  transform: scale(1.38);
   transform-origin: center center;
-  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.52));
   will-change: transform;
 }
 
@@ -306,11 +313,15 @@ body {
 
   .private-panel-left {
     order: 2;
+    align-self: auto;
+    transform: none;
   }
 
   .private-panel-right {
     order: 3;
     text-align: left;
+    align-self: auto;
+    transform: none;
   }
 
   .private-brand-logo {

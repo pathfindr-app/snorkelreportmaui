@@ -10,7 +10,7 @@ function Header({
   return (
     <header className="relative z-50">
       <div className="private-header-frame relative overflow-visible">
-        <div className="relative max-w-7xl mx-auto px-4 py-1">
+        <div className="relative max-w-7xl mx-auto px-4 py-0.5">
           <div className="private-header-card">
             <div className="private-header-layout">
               <section className="private-panel private-panel-left">
