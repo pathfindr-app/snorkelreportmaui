@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-01T21:12:41.174Z",
+  "lastUpdated": "2026-03-02T00:57:59.094Z",
   "dataQuality": {
     "snorkelStore": "fresh",
     "noaaBuoy": "fresh",
@@ -428,7 +428,7 @@
     }
   },
   "windCheck": {
-    "timestamp": "2026-03-01T21:12:41.174Z",
+    "timestamp": "2026-03-02T00:57:59.094Z",
     "adjustments": {
       "northwest": {
         "originalScore": 6,
@@ -443,10 +443,10 @@
         "penalty": 0
       },
       "southshore": {
-        "originalScore": 7.5,
+        "originalScore": 5.5,
         "adjustedScore": 5.5,
-        "condition": "LIGHT",
-        "penalty": 2
+        "condition": "CALM",
+        "penalty": 0
       }
     },
     "cameras": [
