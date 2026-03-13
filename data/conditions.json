@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-12T21:06:54.652Z",
+  "lastUpdated": "2026-03-13T00:03:11.596Z",
   "dataQuality": {
     "snorkelStore": "fresh",
     "noaaBuoy": "fresh",
@@ -93,7 +93,7 @@
     "kaanapali": {
       "id": "kaanapali",
       "name": "Ka'anapali",
-      "score": 1,
+      "score": 0,
       "summary": "Moderate conditions. Use caution.",
       "details": "Water is warm (75°F). Moderate conditions. light winds.",
       "spots": {
@@ -114,7 +114,8 @@
           ],
           "webcam": "https://www.youtube.com/watch?v=6c3naP3HZkk",
           "hasProvider": true,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "kahekili": {
           "id": "kahekili",
@@ -131,7 +132,8 @@
           ],
           "webcam": "https://www.ozolio.com/explore/TIGL000014BB",
           "hasProvider": true,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "malawharf": {
           "id": "malawharf",
@@ -140,7 +142,7 @@
             -156.6871171536624,
             20.8853424074552
           ],
-          "score": 0.3,
+          "score": 0,
           "description": "Historic pier ruins create an artificial reef teeming with marine life. Excellent for spotting turtles, rays, and diverse fish species. Entry from nearby boat ramp. Best in calm conditions.",
           "conditions": "Conditions vary. Check locally before entering.",
           "hazards": [
@@ -150,9 +152,12 @@
           ],
           "webcam": null,
           "hasProvider": false,
-          "derivedScore": true
+          "derivedScore": true,
+          "windAdjusted": true
         }
-      }
+      },
+      "windAdjusted": true,
+      "windCondition": "LIGHT"
     },
     "southshore": {
       "id": "southshore",
@@ -426,29 +431,29 @@
         }
       },
       "windAdjusted": true,
-      "windCondition": "MODERATE"
+      "windCondition": "LIGHT"
     }
   },
   "windCheck": {
-    "timestamp": "2026-03-12T21:06:54.652Z",
+    "timestamp": "2026-03-13T00:03:11.596Z",
     "adjustments": {
       "northwest": {
-        "originalScore": 1,
+        "originalScore": 0,
         "adjustedScore": 0,
-        "condition": "MODERATE",
-        "penalty": 3
-      },
-      "kaanapali": {
-        "originalScore": 1,
-        "adjustedScore": 1,
         "condition": "CALM",
         "penalty": 0
       },
-      "southshore": {
+      "kaanapali": {
         "originalScore": 1,
         "adjustedScore": 0,
-        "condition": "MODERATE",
-        "penalty": 3
+        "condition": "LIGHT",
+        "penalty": 2
+      },
+      "southshore": {
+        "originalScore": 0,
+        "adjustedScore": 0,
+        "condition": "LIGHT",
+        "penalty": 2
       }
     },
     "cameras": [
