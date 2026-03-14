@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-13T21:07:13.448Z",
+  "lastUpdated": "2026-03-14T00:04:34.340Z",
   "dataQuality": {
     "snorkelStore": "fresh",
     "noaaBuoy": "fresh",
@@ -88,7 +88,7 @@
         }
       },
       "windAdjusted": true,
-      "windCondition": "MODERATE"
+      "windCondition": "LIGHT"
     },
     "kaanapali": {
       "id": "kaanapali",
@@ -431,17 +431,17 @@
         }
       },
       "windAdjusted": true,
-      "windCondition": "LIGHT"
+      "windCondition": "MODERATE"
     }
   },
   "windCheck": {
-    "timestamp": "2026-03-13T21:07:13.448Z",
+    "timestamp": "2026-03-14T00:04:34.340Z",
     "adjustments": {
       "northwest": {
         "originalScore": 0,
         "adjustedScore": 0,
-        "condition": "MODERATE",
-        "penalty": 3
+        "condition": "LIGHT",
+        "penalty": 2
       },
       "kaanapali": {
         "originalScore": 0,
@@ -452,8 +452,8 @@
       "southshore": {
         "originalScore": 0,
         "adjustedScore": 0,
-        "condition": "LIGHT",
-        "penalty": 2
+        "condition": "MODERATE",
+        "penalty": 3
       }
     },
     "cameras": [
