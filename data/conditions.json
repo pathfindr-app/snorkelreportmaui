@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-18T21:09:01.884Z",
+  "lastUpdated": "2026-03-19T00:04:49.730Z",
   "dataQuality": {
     "snorkelStore": "fresh",
     "noaaBuoy": "fresh",
@@ -29,7 +29,7 @@
     "northwest": {
       "id": "northwest",
       "name": "Northwest",
-      "score": 1,
+      "score": 0,
       "summary": "Hazardous. Powerful waves & strong currents",
       "details": "Water is warm (76°F). Elevated conditions. light winds.",
       "spots": {
@@ -50,7 +50,8 @@
           ],
           "webcam": null,
           "hasProvider": false,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "kapalua": {
           "id": "kapalua",
@@ -59,7 +60,7 @@
             -156.666723,
             20.999107
           ],
-          "score": 1,
+          "score": 0,
           "description": "Small protected cove ideal for beginners and families. Reefs on both sides block swell. Best snorkeling on northeastern side where visibility is better. Very sensitive to winter swells.",
           "conditions": "Partially protected but still facing hazardous conditions due to elevated waves.",
           "hazards": [
@@ -67,7 +68,8 @@
           ],
           "webcam": null,
           "hasProvider": true,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "napili": {
           "id": "napili",
@@ -76,7 +78,7 @@
             -156.666922,
             20.994735
           ],
-          "score": 1,
+          "score": 0,
           "description": "Sheltered crescent bay popular with families. Sandy bottom with reef on both sides. Good for beginners on calm days. Sea turtles frequently visit.",
           "conditions": "Sheltered but still experiencing rough conditions; caution is advised.",
           "hazards": [
@@ -84,9 +86,12 @@
           ],
           "webcam": "https://www.ozolio.com/explore/00000008",
           "hasProvider": false,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         }
-      }
+      },
+      "windAdjusted": true,
+      "windCondition": "LIGHT"
     },
     "kaanapali": {
       "id": "kaanapali",
@@ -428,13 +433,13 @@
     }
   },
   "windCheck": {
-    "timestamp": "2026-03-18T21:09:01.884Z",
+    "timestamp": "2026-03-19T00:04:49.730Z",
     "adjustments": {
       "northwest": {
         "originalScore": 1,
-        "adjustedScore": 1,
-        "condition": "CALM",
-        "penalty": 0
+        "adjustedScore": 0,
+        "condition": "LIGHT",
+        "penalty": 2
       },
       "kaanapali": {
         "originalScore": 3.5,
@@ -443,10 +448,10 @@
         "penalty": 0
       },
       "southshore": {
-        "originalScore": 3,
+        "originalScore": 1,
         "adjustedScore": 1,
-        "condition": "LIGHT",
-        "penalty": 2
+        "condition": "CALM",
+        "penalty": 0
       }
     },
     "cameras": [
