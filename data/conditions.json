@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-21T18:16:14.652Z",
+  "lastUpdated": "2026-03-21T21:03:25.561Z",
   "dataQuality": {
     "snorkelStore": "fresh",
     "noaaBuoy": "fresh",
@@ -50,7 +50,8 @@
           ],
           "webcam": null,
           "hasProvider": false,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "kapalua": {
           "id": "kapalua",
@@ -67,7 +68,8 @@
           ],
           "webcam": null,
           "hasProvider": true,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "napili": {
           "id": "napili",
@@ -84,9 +86,12 @@
           ],
           "webcam": "https://www.ozolio.com/explore/00000008",
           "hasProvider": false,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         }
-      }
+      },
+      "windAdjusted": true,
+      "windCondition": "MODERATE"
     },
     "kaanapali": {
       "id": "kaanapali",
@@ -172,7 +177,8 @@
           "hazards": [],
           "webcam": null,
           "hasProvider": false,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "coralgardens": {
           "id": "coralgardens",
@@ -189,7 +195,8 @@
           ],
           "webcam": null,
           "hasProvider": true,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "kamaole1": {
           "id": "kamaole1",
@@ -207,7 +214,8 @@
           ],
           "webcam": "https://www.mauirealestate.net/video.php?Size=Large",
           "hasProvider": false,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "kamaole2": {
           "id": "kamaole2",
@@ -225,7 +233,8 @@
           ],
           "webcam": "https://www.youtube.com/watch?v=hPvl6IACa2k",
           "hasProvider": false,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "kamaole3": {
           "id": "kamaole3",
@@ -243,7 +252,8 @@
           ],
           "webcam": null,
           "hasProvider": false,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "uluabeach": {
           "id": "uluabeach",
@@ -260,7 +270,8 @@
           ],
           "webcam": "https://marriott.ozolio.com/wailea-beach-resort/",
           "hasProvider": false,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "waileapoint": {
           "id": "waileapoint",
@@ -278,7 +289,8 @@
           ],
           "webcam": "https://www.ozolio.com/explore/XWEE00001592",
           "hasProvider": false,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "changssouth": {
           "id": "changssouth",
@@ -296,7 +308,8 @@
           ],
           "webcam": "https://streamer2.brownrice.com/makenasurf/makenasurf.stream/playlist.m3u8",
           "hasProvider": false,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "fivegraves": {
           "id": "fivegraves",
@@ -315,7 +328,8 @@
           ],
           "webcam": null,
           "hasProvider": true,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "makenalandingnorth": {
           "id": "makenalandingnorth",
@@ -333,7 +347,8 @@
           ],
           "webcam": null,
           "hasProvider": true,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "makenalandingsouth": {
           "id": "makenalandingsouth",
@@ -351,7 +366,8 @@
           ],
           "webcam": null,
           "hasProvider": true,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "maluaka": {
           "id": "maluaka",
@@ -368,7 +384,8 @@
           ],
           "webcam": null,
           "hasProvider": true,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "whiterock": {
           "id": "whiterock",
@@ -387,7 +404,8 @@
           ],
           "webcam": null,
           "hasProvider": false,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "ahihikinau": {
           "id": "ahihikinau",
@@ -406,9 +424,57 @@
           ],
           "webcam": null,
           "hasProvider": false,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         }
-      }
+      },
+      "windAdjusted": true,
+      "windCondition": "LIGHT"
     }
+  },
+  "windCheck": {
+    "timestamp": "2026-03-21T21:03:25.561Z",
+    "adjustments": {
+      "northwest": {
+        "originalScore": 0,
+        "adjustedScore": 0,
+        "condition": "MODERATE",
+        "penalty": 3
+      },
+      "kaanapali": {
+        "originalScore": 0,
+        "adjustedScore": 0,
+        "condition": "CALM",
+        "penalty": 0
+      },
+      "southshore": {
+        "originalScore": 0,
+        "adjustedScore": 0,
+        "condition": "LIGHT",
+        "penalty": 2
+      }
+    },
+    "cameras": [
+      {
+        "id": "napili",
+        "name": "Napili Bay",
+        "zone": "northwest"
+      },
+      {
+        "id": "kahekili",
+        "name": "Airport Beach",
+        "zone": "kaanapali"
+      },
+      {
+        "id": "uluabeach",
+        "name": "Ulua/Wailea Beach",
+        "zone": "southshore"
+      },
+      {
+        "id": "waileapoint",
+        "name": "Polo Beach",
+        "zone": "southshore"
+      }
+    ]
   }
 }
