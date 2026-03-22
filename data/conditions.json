@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-21T21:03:25.561Z",
+  "lastUpdated": "2026-03-22T00:02:53.891Z",
   "dataQuality": {
     "snorkelStore": "fresh",
     "noaaBuoy": "fresh",
@@ -117,7 +117,8 @@
           ],
           "webcam": "https://www.youtube.com/watch?v=6c3naP3HZkk",
           "hasProvider": true,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "kahekili": {
           "id": "kahekili",
@@ -134,7 +135,8 @@
           ],
           "webcam": "https://www.ozolio.com/explore/TIGL000014BB",
           "hasProvider": true,
-          "hasLLMScore": true
+          "hasLLMScore": true,
+          "windAdjusted": true
         },
         "malawharf": {
           "id": "malawharf",
@@ -153,9 +155,12 @@
           ],
           "webcam": null,
           "hasProvider": false,
-          "derivedScore": true
+          "derivedScore": true,
+          "windAdjusted": true
         }
-      }
+      },
+      "windAdjusted": true,
+      "windCondition": "MODERATE"
     },
     "southshore": {
       "id": "southshore",
@@ -433,7 +438,7 @@
     }
   },
   "windCheck": {
-    "timestamp": "2026-03-21T21:03:25.561Z",
+    "timestamp": "2026-03-22T00:02:53.891Z",
     "adjustments": {
       "northwest": {
         "originalScore": 0,
@@ -444,8 +449,8 @@
       "kaanapali": {
         "originalScore": 0,
         "adjustedScore": 0,
-        "condition": "CALM",
-        "penalty": 0
+        "condition": "MODERATE",
+        "penalty": 3
       },
       "southshore": {
         "originalScore": 0,
