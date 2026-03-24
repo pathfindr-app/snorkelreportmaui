@@ -14,7 +14,7 @@ function Header({
           <div className="private-header-card">
             <div className="private-header-layout">
               <section className="private-panel private-panel-left">
-                <div className="flex items-start gap-3">
+                <div className="flex items-center gap-3">
                   {showBackButton && (
                     <button
                       onClick={onBackClick}

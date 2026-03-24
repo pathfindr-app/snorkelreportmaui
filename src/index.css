@@ -179,17 +179,14 @@ body {
 
 .private-panel {
   min-width: 0;
-}
-
-.private-panel-left {
-  align-self: start;
-  transform: translateY(-0.3rem);
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .private-panel-right {
   text-align: right;
-  align-self: end;
-  transform: translateY(0.3rem);
 }
 
 .private-panel-eyebrow {
@@ -314,14 +311,14 @@ body {
   .private-panel-left {
     order: 2;
     align-self: auto;
-    transform: none;
+    display: block;
   }
 
   .private-panel-right {
     order: 3;
     text-align: left;
     align-self: auto;
-    transform: none;
+    display: block;
   }
 
   .private-brand-logo {
