@@ -34,7 +34,6 @@ function LandingView({
   weather,
   onExploreMap,
   onSelectSpot,
-  onPrivateExperienceClick,
 }) {
   const mapContainer = useRef(null);
   const map = useRef(null);
@@ -395,25 +394,25 @@ function LandingView({
 
             <div className="relative">
               <p className="text-[11px] uppercase tracking-[0.2em] text-glow-cyan/70 mb-2">
-                Featured Private Service
+                Daily Maui Snorkel Report
               </p>
               <h3 className="text-lg sm:text-xl text-ocean-50 font-semibold leading-tight">
-                Kyle&apos;s Private Ocean Sessions
+                One map for today&apos;s best snorkel decisions.
               </h3>
               <p className="text-sm text-ocean-200 mt-1.5">
-                Every website photo is shot by Kyle. 11-year Maui guide, PADI Divemaster, one group
-                per session, never mixed bookings.
+                Track {zones.length} Maui zones and {allSpots.length} top snorkel spots with daily scores,
+                webcams, directions, and detailed spot breakdowns.
               </p>
 
               <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div className="text-xs text-ocean-300">
-                  South Side from $135/person · West Side from $160/person
+                  Updated throughout the day to help visitors choose cleaner, calmer water faster.
                 </div>
                 <button
-                  onClick={onPrivateExperienceClick}
+                  onClick={onExploreMap}
                   className="glow-btn px-4 py-2.5 rounded-full text-sm font-semibold"
                 >
-                  Book Your Private Session
+                  Explore Today&apos;s Map
                 </button>
               </div>
             </div>

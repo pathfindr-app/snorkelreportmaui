@@ -3,7 +3,6 @@ import brandLogo from '../../../assets/Logo.png';
 
 function Header({
   lastUpdated,
-  onPrivateExperienceClick,
   showBackButton,
   onBackClick,
 }) {
@@ -60,21 +59,11 @@ function Header({
               </div>
 
               <section className="private-panel private-panel-right">
-                <p className="private-panel-eyebrow">Private Tours with Kyle</p>
-                <h2 className="private-panel-title">Private snorkel and scuba photo sessions.</h2>
+                <p className="private-panel-eyebrow">Interactive Maui Snorkel Map</p>
+                <h2 className="private-panel-title">Spot scores, webcams, directions, and local details.</h2>
                 <p className="private-panel-copy">
-                  PADI Divemaster, 11 years guiding Maui, one group per session, all photos by Kyle.
+                  Compare Maui&apos;s top snorkel zones quickly and open the best spots for full conditions.
                 </p>
-
-                <div className="private-cta-wrap">
-                  <button
-                    onClick={onPrivateExperienceClick}
-                    className="private-header-book-btn"
-                  >
-                    Book a Private Session
-                  </button>
-                  <p className="private-header-price">South from $135 · West from $160</p>
-                </div>
               </section>
             </div>
           </div>
