@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-14T21:40:44.527Z",
+  "lastUpdated": "2026-04-15T01:12:28.318Z",
   "dataQuality": {
     "snorkelStore": "fresh",
     "noaaBuoy": "fresh",
@@ -412,7 +412,7 @@
     }
   },
   "windCheck": {
-    "timestamp": "2026-04-14T21:40:44.527Z",
+    "timestamp": "2026-04-15T01:12:28.318Z",
     "adjustments": {
       "northwest": {
         "originalScore": 7,
