@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-16T19:21:37.176Z",
+  "lastUpdated": "2026-04-16T21:33:22.279Z",
   "dataQuality": {
     "snorkelStore": "fresh",
     "noaaBuoy": "fresh",
@@ -410,5 +410,50 @@
         }
       }
     }
+  },
+  "windCheck": {
+    "timestamp": "2026-04-16T21:33:22.279Z",
+    "adjustments": {
+      "northwest": {
+        "originalScore": 8.5,
+        "adjustedScore": 8.5,
+        "condition": "CALM",
+        "penalty": 0
+      },
+      "kaanapali": {
+        "originalScore": 7.5,
+        "adjustedScore": 7.5,
+        "condition": "CALM",
+        "penalty": 0
+      },
+      "southshore": {
+        "originalScore": 7,
+        "adjustedScore": 7,
+        "condition": "CALM",
+        "penalty": 0
+      }
+    },
+    "cameras": [
+      {
+        "id": "napili",
+        "name": "Napili Bay",
+        "zone": "northwest"
+      },
+      {
+        "id": "kahekili",
+        "name": "Airport Beach",
+        "zone": "kaanapali"
+      },
+      {
+        "id": "uluabeach",
+        "name": "Ulua/Wailea Beach",
+        "zone": "southshore"
+      },
+      {
+        "id": "waileapoint",
+        "name": "Polo Beach",
+        "zone": "southshore"
+      }
+    ]
   }
 }
