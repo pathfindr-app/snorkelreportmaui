@@ -21,7 +21,7 @@ const BUSINESS_ICONS = {
   boat: { image: '/aqua-adventures-logo.png' },
 };
 
-function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSelectSpot, onSelectBusiness, onBackToLanding }) {
+function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSelectSpot, onSelectBusiness }) {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const markersRef = useRef([]);
@@ -31,7 +31,6 @@ function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSel
   const userMarkerRef = useRef(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [userLocation, setUserLocation] = useState(null);
-  const [watchId, setWatchId] = useState(null);
 
   // Watch user's geolocation
   useEffect(() => {
@@ -49,7 +48,6 @@ function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSel
         },
         { enableHighAccuracy: true, timeout: 10000, maximumAge: 5000 }
       );
-      setWatchId(id);
 
       return () => {
         navigator.geolocation.clearWatch(id);
@@ -174,7 +172,7 @@ function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSel
     businessMarkersRef.current = [];
 
     // Add business markers (skip animated ones - they're handled separately)
-    businesses.filter(b => !b.animated).forEach((business, index) => {
+    businesses.filter(b => !b.animated).forEach((business) => {
       const iconConfig = BUSINESS_ICONS[business.icon] || { image: null };
 
       // Subtle, understated marker - secondary to main content
@@ -382,20 +380,10 @@ function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSel
     return (
       <div
         className="h-full w-full relative flex items-center justify-center px-6 text-center"
-        style={{
-          background:
-            'radial-gradient(circle at 20% 20%, rgba(0, 229, 204, 0.08) 0%, transparent 45%), radial-gradient(circle at 80% 80%, rgba(255, 126, 103, 0.08) 0%, transparent 45%), linear-gradient(180deg, #051520 0%, #030b12 100%)',
-        }}
       >
-        <div
-          className="max-w-md rounded-2xl p-5"
-          style={{
-            background: 'linear-gradient(135deg, rgba(10, 34, 53, 0.8) 0%, rgba(5, 21, 32, 0.9) 100%)',
-            border: '1px solid rgba(0, 229, 204, 0.18)',
-          }}
-        >
-          <p className="text-sm text-ocean-100 font-semibold">Map View Disabled in Local Dev</p>
-          <p className="text-xs text-ocean-400 mt-2">
+        <div className="info-panel max-w-md rounded-[1.75rem] p-5">
+          <p className="text-sm font-semibold text-[#f2f4ef]">Map view disabled in local dev</p>
+          <p className="mt-2 text-xs text-[#9eb0ab]">
             Add <code className="text-glow-cyan/80">VITE_MAPBOX_TOKEN</code> in
             <code className="text-glow-cyan/80"> .env.local</code> and restart the dev server.
           </p>
@@ -406,26 +394,19 @@ function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSel
 
   return (
     <div className="h-full w-full relative">
-      {/* Map container */}
       <div ref={mapContainer} className="absolute inset-0" style={{ width: '100%', height: '100%' }} />
+      <div className="map-film absolute inset-0 pointer-events-none" />
 
-      {/* Weather overlay */}
       {weather && <WeatherOverlay weather={weather} userWeather={userWeather} />}
 
-      {/* Map controls */}
       <div
-        className="absolute bottom-6 right-3 z-10 flex flex-col rounded-xl overflow-hidden"
-        style={{
-          background: 'rgba(5, 21, 32, 0.9)',
-          border: '1px solid rgba(0, 229, 204, 0.1)',
-          backdropFilter: 'blur(12px)',
-        }}
+        className="absolute bottom-6 right-3 z-10 flex flex-col overflow-hidden rounded-[1.25rem] map-controls"
       >
         <button
           onClick={() => map.current?.zoomIn()}
-          className="w-9 h-9 flex items-center justify-center text-ocean-400 hover:text-glow-cyan hover:bg-glow-cyan/5 transition-all duration-200"
+          className="flex h-11 w-11 items-center justify-center text-[#9fb2ad] transition-all duration-200 hover:bg-white/[0.04] hover:text-[#eef4ef]"
           title="Zoom in"
-          style={{ borderBottom: '1px solid rgba(0, 229, 204, 0.08)' }}
+          style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
@@ -433,9 +414,9 @@ function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSel
         </button>
         <button
           onClick={() => map.current?.zoomOut()}
-          className="w-9 h-9 flex items-center justify-center text-ocean-400 hover:text-glow-cyan hover:bg-glow-cyan/5 transition-all duration-200"
+          className="flex h-11 w-11 items-center justify-center text-[#9fb2ad] transition-all duration-200 hover:bg-white/[0.04] hover:text-[#eef4ef]"
           title="Zoom out"
-          style={{ borderBottom: '1px solid rgba(0, 229, 204, 0.08)' }}
+          style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M18 12H6" />
@@ -444,9 +425,9 @@ function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSel
         {userLocation && (
           <button
             onClick={handleFlyToUser}
-            className="w-9 h-9 flex items-center justify-center text-ocean-400 hover:text-glow-cyan hover:bg-glow-cyan/5 transition-all duration-200"
+            className="flex h-11 w-11 items-center justify-center text-[#9fb2ad] transition-all duration-200 hover:bg-white/[0.04] hover:text-[#eef4ef]"
             title="My location"
-            style={{ borderBottom: '1px solid rgba(0, 229, 204, 0.08)' }}
+            style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="3" />
@@ -456,7 +437,7 @@ function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSel
         )}
         <button
           onClick={handleResetView}
-          className="w-9 h-9 flex items-center justify-center text-ocean-400 hover:text-glow-cyan hover:bg-glow-cyan/5 transition-all duration-200"
+          className="flex h-11 w-11 items-center justify-center text-[#9fb2ad] transition-all duration-200 hover:bg-white/[0.04] hover:text-[#eef4ef]"
           title="Reset view"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -465,16 +446,10 @@ function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSel
         </button>
       </div>
 
-      {/* Legend */}
       <div
-        className="absolute bottom-4 left-3 z-10 px-3 py-2 rounded-xl"
-        style={{
-          background: 'rgba(5, 21, 32, 0.9)',
-          border: '1px solid rgba(0, 229, 204, 0.1)',
-          backdropFilter: 'blur(12px)',
-        }}
+        className="absolute bottom-4 left-3 z-10 rounded-[1.25rem] map-legend px-3 py-2.5"
       >
-        <div className="flex items-center gap-3 text-[11px] text-ocean-400">
+        <div className="flex items-center gap-3 text-[11px] text-[#a7b6b1]">
           <div className="flex items-center gap-1.5">
             <div className="w-2.5 h-2.5 rounded-full bg-score-green" />
             <span>Good</span>
