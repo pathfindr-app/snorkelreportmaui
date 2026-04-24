@@ -39,7 +39,7 @@ function App() {
   if (loading) {
     return (
       <div
-        className="min-h-[100dvh] flex items-center justify-center site-shell"
+        className="h-[100dvh] min-h-[100dvh] flex items-center justify-center site-shell"
       >
         <div className="text-center px-6">
           <div className="relative w-16 h-16 mx-auto mb-6">
@@ -66,7 +66,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-[100dvh] flex flex-col overflow-hidden site-shell">
+    <div className="h-[100dvh] min-h-[100dvh] flex flex-col overflow-hidden site-shell">
       <Header
         lastUpdated={lastUpdated}
         onReportClick={handleOpenReport}
@@ -75,7 +75,7 @@ function App() {
         onBackClick={handleBackToLanding}
       />
 
-      <main className="flex-1 overflow-hidden">
+      <main className="flex flex-1 min-h-0 overflow-hidden">
         {currentView === 'landing' ? (
           <LandingView
             zones={zones}
