@@ -6,6 +6,13 @@ function Header({
   showBackButton,
   onBackClick,
 }) {
+  const title = showBackButton
+    ? 'Daily Maui snorkel map'
+    : 'Daily Maui snorkel conditions';
+  const subtitle = showBackButton
+    ? 'Scores, spot details, and local context in one map.'
+    : 'Updated throughout the day so you can choose cleaner water faster.';
+
   return (
     <header className="relative z-50">
       <div className="relative overflow-visible px-4 pt-4 md:px-6 md:pt-5">
@@ -30,9 +37,9 @@ function Header({
 
                   <div>
                     <p className="header-eyebrow">Snorkel Report Maui</p>
-                    <h1 className="header-title">Maui shoreline conditions, scored for fast decisions.</h1>
+                    <h1 className="header-title">{title}</h1>
                     <p className="header-body">
-                      Built for mornings when you need one clear read on where the cleanest water is.
+                      {subtitle}
                     </p>
                   </div>
                 </div>
@@ -67,11 +74,11 @@ function Header({
                 <div className="header-chip-row">
                   <div className="header-chip">
                     <span className="header-chip-label">Coverage</span>
-                    <span className="header-chip-value">West, South, North</span>
+                    <span className="header-chip-value">West, South, North shores</span>
                   </div>
                   <div className="header-chip">
-                    <span className="header-chip-label">Use</span>
-                    <span className="header-chip-value">Check map, open spot, compare coast</span>
+                    <span className="header-chip-label">Today</span>
+                    <span className="header-chip-value">Compare coasts and open the best spots</span>
                   </div>
                 </div>
               </section>
