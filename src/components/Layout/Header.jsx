@@ -4,13 +4,14 @@ const brandLogo = '/android-chrome-192x192.png';
 
 function Header({
   lastUpdated,
+  isMapView = false,
   showBackButton,
   onBackClick,
 }) {
-  const title = showBackButton
+  const title = isMapView || showBackButton
     ? 'Daily Maui Snorkel Map'
     : 'Daily Maui snorkel conditions';
-  const subtitle = showBackButton
+  const subtitle = isMapView || showBackButton
     ? 'Scores, spot details, and local context in one map.'
     : 'Updated throughout the day so you can choose cleaner water faster.';
 

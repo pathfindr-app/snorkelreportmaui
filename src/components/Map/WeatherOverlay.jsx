@@ -54,7 +54,7 @@ function WeatherOverlay({ weather, userWeather }) {
                 viewBox="0 0 24 24"
                 style={{ transform: `rotate(${windRotation}deg)` }}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14m-4-4l4 4-4 4" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19V5m-4 4l4-4 4 4" />
               </svg>
               <span>{weather.wind?.speed} mph {weather.wind?.direction}</span>
             </div>

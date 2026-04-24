@@ -2,7 +2,6 @@ import { useState, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { Analytics } from '@vercel/analytics/react';
 import Header from './components/Layout/Header';
-import LandingView from './components/Landing/LandingView';
 import MapView from './components/Map/MapView';
 import SpotModal from './components/Modals/SpotModal';
 import ReportModal from './components/Modals/ReportModal';
@@ -13,21 +12,14 @@ import { useWeather } from './hooks/useWeather';
 import businessesData from './data/businesses.json';
 
 function App() {
-  const [currentView, setCurrentView] = useState('landing');
   const [selectedSpot, setSelectedSpot] = useState(null);
   const [selectedBusiness, setSelectedBusiness] = useState(null);
   const [activeModal, setActiveModal] = useState(null);
 
-  const { zones, allSpots, loading, lastUpdated, alerts } = useConditions();
+  const { zones, allSpots, loading, lastUpdated } = useConditions();
   const { weather, userWeather } = useWeather();
   const businesses = businessesData.businesses;
 
-  const handleExploreMap = useCallback(() => setCurrentView('map'), []);
-  const handleBackToLanding = useCallback(() => {
-    setCurrentView('landing');
-    setSelectedSpot(null);
-    setSelectedBusiness(null);
-  }, []);
   const handleSelectSpot = useCallback((spot) => setSelectedSpot(spot), []);
   const handleCloseSpotModal = useCallback(() => setSelectedSpot(null), []);
   const handleSelectBusiness = useCallback((business) => setSelectedBusiness(business), []);
@@ -66,37 +58,25 @@ function App() {
   }
 
   return (
-    <div className="h-[100dvh] min-h-[100dvh] flex flex-col overflow-hidden site-shell">
-      <Header
-        lastUpdated={lastUpdated}
-        onReportClick={handleOpenReport}
-        onBookingClick={handleOpenBooking}
-        showBackButton={currentView === 'map'}
-        onBackClick={handleBackToLanding}
-      />
+    <div className="relative h-[100dvh] min-h-[100dvh] overflow-hidden site-shell">
+      <div className="absolute inset-x-0 top-0 z-50">
+        <Header
+          lastUpdated={lastUpdated}
+          isMapView
+          showBackButton={false}
+        />
+      </div>
 
-      <main className="flex flex-1 min-h-0 overflow-hidden">
-        {currentView === 'landing' ? (
-          <LandingView
-            zones={zones}
-            allSpots={allSpots}
-            alerts={alerts}
-            weather={weather}
-            userWeather={userWeather}
-            onExploreMap={handleExploreMap}
-            onSelectSpot={handleSelectSpot}
-          />
-        ) : (
-          <MapView
-            zones={zones}
-            allSpots={allSpots}
-            businesses={businesses}
-            weather={weather}
-            userWeather={userWeather}
-            onSelectSpot={handleSelectSpot}
-            onSelectBusiness={handleSelectBusiness}
-          />
-        )}
+      <main className="flex h-full min-h-0 overflow-hidden">
+        <MapView
+          zones={zones}
+          allSpots={allSpots}
+          businesses={businesses}
+          weather={weather}
+          userWeather={userWeather}
+          onSelectSpot={handleSelectSpot}
+          onSelectBusiness={handleSelectBusiness}
+        />
       </main>
 
       {/* Modals rendered via portal */}

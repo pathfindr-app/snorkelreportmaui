@@ -283,7 +283,7 @@ function LandingView({
             <div className="px-3 py-2.5 grid grid-cols-2 gap-x-4 gap-y-2">
               <div className="flex items-center gap-2">
                 <svg className="w-3.5 h-3.5 text-[#7fa7a0]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" style={{ transform: `rotate(${weather.wind?.deg || 0}deg)` }}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-4-4l4 4-4 4" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 19V5m-4 4l4-4 4 4" />
                 </svg>
                 <span className="text-xs text-[#cad4cf]">{weather.wind?.speed} mph {weather.wind?.direction}</span>
               </div>
@@ -331,7 +331,7 @@ function LandingView({
           <div className="absolute top-14 left-3 right-3 md:right-auto md:max-w-sm">
             <button
               onClick={() => setAlertsExpanded(!alertsExpanded)}
-              className="w-full rounded-[1.2rem] border border-[rgba(169,95,76,0.45)] bg-[rgba(97,38,28,0.9)] px-4 py-2.5 text-sm text-white shadow-[0_18px_40px_rgba(18,8,6,0.35)] backdrop-blur-lg flex items-center justify-between"
+              className="landing-advisory-toggle w-full rounded-[1.2rem] px-4 py-2.5 text-sm text-white flex items-center justify-between"
             >
               <span className="flex items-center gap-2 font-medium">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -413,7 +413,7 @@ function LandingView({
           </div>
         </div>
 
-        <div className="flex items-center justify-between border-b border-white/6 px-4 py-3">
+        <div className="landing-section-header flex items-center justify-between px-4 py-3">
           <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-[#9eb0ab]">Today&apos;s Conditions</h2>
           <div className="flex items-center gap-1.5 text-xs text-[#7d918c]">
             <div className="h-1.5 w-1.5 rounded-full bg-[#7fd4c8]" />
@@ -421,17 +421,17 @@ function LandingView({
           </div>
         </div>
 
-        <div className="max-h-[35vh] overflow-y-auto">
+        <div className="landing-zone-list max-h-[35vh] overflow-y-auto">
           {zones.map(zone => {
             const spots = getZoneSpots(zone.id);
             const badgeClass = getScoreBadgeClass(zone.score);
             const isExpanded = expandedZone === zone.id;
 
             return (
-              <div key={zone.id} className="border-b border-white/6">
+              <div key={zone.id} className="landing-zone-row">
                 <button
                   onClick={() => toggleZone(zone.id)}
-                  className="group flex w-full items-center justify-between px-4 py-4 transition-all duration-200 hover:bg-white/[0.025]"
+                  className="landing-zone-button group flex w-full items-center justify-between px-4 py-4 transition-all duration-200"
                 >
                   <div className="flex items-center gap-4">
                     <div className={`score-badge ${badgeClass} text-lg min-w-[56px] text-center`}>
@@ -453,8 +453,8 @@ function LandingView({
                 </button>
 
                 {isExpanded && (
-                  <div className="overflow-hidden bg-[rgba(255,255,255,0.025)]">
-                    <div className="border-b border-white/6 px-4 py-3 text-sm text-[#c4cfcb]">{zone.summary}</div>
+                  <div className="landing-zone-expanded overflow-hidden">
+                    <div className="landing-zone-summary px-4 py-3 text-sm text-[#c4cfcb]">{zone.summary}</div>
                     {spots.map((spot) => {
                       const spotScore = spot.effectiveScore;
                       const spotBadgeClass = getScoreBadgeClass(spotScore);
@@ -463,7 +463,7 @@ function LandingView({
                         <button
                           key={spot.id}
                           onClick={() => onSelectSpot(spot)}
-                          className="group flex w-full items-center justify-between border-t border-white/6 px-4 py-3.5 transition-all duration-200 hover:bg-white/[0.03]"
+                          className="landing-spot-button group flex w-full items-center justify-between px-4 py-3.5 transition-all duration-200"
                         >
                           <div className="flex-1 min-w-0 text-left">
                             <span className="text-sm font-medium text-[#e7ece8] transition-colors group-hover:text-[#9ed7cf]">{spot.name}</span>
