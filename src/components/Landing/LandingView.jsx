@@ -10,6 +10,30 @@ if (HAS_MAPBOX_TOKEN) {
 }
 
 const MAUI_CENTER = [-156.3319, 20.7984];
+const LOCAL_RASTER_STYLE = {
+  version: 8,
+  sources: {
+    osm: {
+      type: 'raster',
+      tiles: [
+        'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        'https://b.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      ],
+      tileSize: 256,
+      attribution: '© OpenStreetMap contributors',
+    },
+  },
+  layers: [
+    {
+      id: 'osm',
+      type: 'raster',
+      source: 'osm',
+      minzoom: 0,
+      maxzoom: 19,
+    },
+  ],
+};
 
 // Helper to get score badge class
 const getScoreBadgeClass = (score) => {
@@ -68,11 +92,11 @@ function LandingView({
 
   // Initialize map
   useEffect(() => {
-    if (!HAS_MAPBOX_TOKEN || map.current || !mapContainer.current) return;
+    if (map.current || !mapContainer.current) return;
 
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/satellite-streets-v12',
+      style: HAS_MAPBOX_TOKEN ? 'mapbox://styles/mapbox/satellite-streets-v12' : LOCAL_RASTER_STYLE,
       center: MAUI_CENTER,
       zoom: 8.25,
       pitch: 0,
@@ -81,25 +105,27 @@ function LandingView({
     });
 
     map.current.on('load', () => {
-      // Add terrain
-      map.current.addSource('mapbox-dem', {
-        type: 'raster-dem',
-        url: 'mapbox://mapbox.mapbox-terrain-dem-v1',
-        tileSize: 512,
-        maxzoom: 14,
-      });
-      map.current.setTerrain({ source: 'mapbox-dem', exaggeration: 1.5 });
+      if (HAS_MAPBOX_TOKEN) {
+        // Add terrain
+        map.current.addSource('mapbox-dem', {
+          type: 'raster-dem',
+          url: 'mapbox://mapbox.mapbox-terrain-dem-v1',
+          tileSize: 512,
+          maxzoom: 14,
+        });
+        map.current.setTerrain({ source: 'mapbox-dem', exaggeration: 1.5 });
 
-      // Add sky
-      map.current.addLayer({
-        id: 'sky',
-        type: 'sky',
-        paint: {
-          'sky-type': 'atmosphere',
-          'sky-atmosphere-sun': [0.0, 90.0],
-          'sky-atmosphere-sun-intensity': 15,
-        },
-      });
+        // Add sky
+        map.current.addLayer({
+          id: 'sky',
+          type: 'sky',
+          paint: {
+            'sky-type': 'atmosphere',
+            'sky-atmosphere-sun': [0.0, 90.0],
+            'sky-atmosphere-sun-intensity': 15,
+          },
+        });
+      }
 
       // Add zone boundaries
       map.current.addSource('zones', { type: 'geojson', data: zoneBoundaries });
@@ -217,25 +243,11 @@ function LandingView({
   return (
     <div className="page-shell flex min-h-0 flex-1 flex-col">
       <div className="relative flex-1 min-h-[55vh]">
-        {HAS_MAPBOX_TOKEN ? (
-          <div
-            ref={mapContainer}
-            className="absolute inset-0"
-            style={{ width: '100%', height: '100%' }}
-          />
-        ) : (
-          <div
-            className="absolute inset-0 flex items-center justify-center px-6 text-center"
-          >
-            <div className="info-panel max-w-md rounded-[1.75rem] p-5">
-              <p className="text-sm font-semibold text-[#f2f4ef]">Map preview disabled in local dev</p>
-              <p className="mt-2 text-xs text-[#9eb0ab]">
-                Add <code className="text-glow-cyan/80">VITE_MAPBOX_TOKEN</code> to
-                <code className="text-glow-cyan/80"> .env.local</code> to render the interactive map.
-              </p>
-            </div>
-          </div>
-        )}
+        <div
+          ref={mapContainer}
+          className="absolute inset-0"
+          style={{ width: '100%', height: '100%' }}
+        />
 
         <div className="caustics-overlay absolute inset-0" />
         <div className="map-film absolute inset-0" />

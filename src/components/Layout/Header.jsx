@@ -1,5 +1,6 @@
 import { formatLastUpdated, formatShortDate } from '../../utils/formatDate';
-import brandLogo from '../../../assets/Logo.png';
+
+const brandLogo = '/android-chrome-192x192.png';
 
 function Header({
   lastUpdated,

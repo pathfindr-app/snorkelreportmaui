@@ -9,21 +9,24 @@ function WeatherOverlay({ weather, userWeather }) {
   };
 
   return (
-    <div className="absolute left-0 right-0 top-0 z-10 px-3 pt-3 md:px-4">
+    <div className="weather-dock-wrap">
       <div className="weather-ribbon">
         <div className="weather-ribbon-inner">
           <div className="weather-primary">
             <div className="flex items-baseline">
-              <span className="font-display text-3xl font-semibold text-[#f2f4ef]">
+              <span className="weather-temp">
                 {weather.temp}
               </span>
-              <span className="ml-0.5 text-sm text-[#8fd3ca]/60">°</span>
+              <span className="weather-degree">°</span>
             </div>
-            {weather.description && (
-              <span className="text-sm capitalize text-[#d4ddd9]">
-                {weather.description}
-              </span>
-            )}
+            <div className="weather-copy">
+              {weather.description && (
+                <span className="weather-condition">
+                  {weather.description}
+                </span>
+              )}
+              <span className="weather-location">{weather.locationName || 'Maui, HI'}</span>
+            </div>
           </div>
 
           <div className="weather-stats">

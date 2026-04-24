@@ -5,6 +5,23 @@ const MAALAEA_HARBOR = { lat: 20.7903, lon: -156.5089, name: 'Maalaea Harbor' };
 const CACHE_DURATION = 30 * 60 * 1000; // 30 minutes
 const CACHE_KEY = 'maui_weather_cache';
 const USER_LOCATION_CACHE_KEY = 'maui_user_weather_cache';
+const LOCAL_MAUI_WEATHER = {
+  temp: 81,
+  feelsLike: 82,
+  humidity: 78,
+  wind: {
+    speed: 17,
+    deg: 0,
+    direction: 'N',
+  },
+  description: 'scattered clouds',
+  icon: '',
+  visibility: 6,
+  sunrise: '6:00 AM',
+  sunset: '6:47 PM',
+  locationName: 'Maui, HI',
+  isLocalFallback: true,
+};
 
 /**
  * Hook to fetch and cache OpenWeatherMap data
@@ -21,7 +38,7 @@ export function useWeather() {
   const fetchWeatherForCoords = async (coords, cacheKey) => {
     const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
     if (!apiKey) {
-      throw new Error('Weather API key not configured');
+      return LOCAL_MAUI_WEATHER;
     }
 
     // Check cache first (also verify locationName exists to handle old cache format)

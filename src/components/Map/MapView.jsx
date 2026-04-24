@@ -14,6 +14,30 @@ const MAUI_CENTER = [-156.3319, 20.7984];
 const INITIAL_ZOOM = 9;
 const INITIAL_PITCH = 0;
 const INITIAL_BEARING = 0;
+const LOCAL_RASTER_STYLE = {
+  version: 8,
+  sources: {
+    osm: {
+      type: 'raster',
+      tiles: [
+        'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        'https://b.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      ],
+      tileSize: 256,
+      attribution: '© OpenStreetMap contributors',
+    },
+  },
+  layers: [
+    {
+      id: 'osm',
+      type: 'raster',
+      source: 'osm',
+      minzoom: 0,
+      maxzoom: 19,
+    },
+  ],
+};
 
 const BUSINESS_ICONS = {
   pizza: { image: '/outrigger-logo.png' },
@@ -61,7 +85,7 @@ function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSel
 
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/satellite-streets-v12',
+      style: HAS_MAPBOX_TOKEN ? 'mapbox://styles/mapbox/satellite-streets-v12' : LOCAL_RASTER_STYLE,
       center: MAUI_CENTER,
       zoom: INITIAL_ZOOM,
       pitch: INITIAL_PITCH,
@@ -69,6 +93,14 @@ function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSel
     });
 
     map.current.on('load', () => {
+      if (!HAS_MAPBOX_TOKEN) {
+        setMapLoaded(true);
+        requestAnimationFrame(() => {
+          map.current?.resize();
+        });
+        return;
+      }
+
       // Add terrain for 3D effect
       map.current.addSource('mapbox-dem', {
         type: 'raster-dem',
@@ -394,22 +426,6 @@ function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSel
       });
     }
   };
-
-  if (!HAS_MAPBOX_TOKEN) {
-    return (
-      <div
-        className="h-full w-full relative flex items-center justify-center px-6 text-center"
-      >
-        <div className="info-panel max-w-md rounded-[1.75rem] p-5">
-          <p className="text-sm font-semibold text-[#f2f4ef]">Map view disabled in local dev</p>
-          <p className="mt-2 text-xs text-[#9eb0ab]">
-            Add <code className="text-glow-cyan/80">VITE_MAPBOX_TOKEN</code> in
-            <code className="text-glow-cyan/80"> .env.local</code> and restart the dev server.
-          </p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="relative flex-1 min-h-0 w-full">
