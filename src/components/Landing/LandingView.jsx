@@ -5,30 +5,26 @@ import { scoreToColor, scoreToDescription } from '../../utils/scoreToColor';
 import zoneBoundaries from '../../data/zoneBoundaries.json';
 
 const HAS_MAPBOX_TOKEN = Boolean(import.meta.env.VITE_MAPBOX_TOKEN);
-if (HAS_MAPBOX_TOKEN) {
-  mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
-}
+mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN || 'pk.local-dev-token';
 
 const MAUI_CENTER = [-156.3319, 20.7984];
 const LOCAL_RASTER_STYLE = {
   version: 8,
   sources: {
-    osm: {
+    satellite: {
       type: 'raster',
       tiles: [
-        'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        'https://b.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
       ],
       tileSize: 256,
-      attribution: '© OpenStreetMap contributors',
+      attribution: 'Tiles © Esri',
     },
   },
   layers: [
     {
-      id: 'osm',
+      id: 'satellite',
       type: 'raster',
-      source: 'osm',
+      source: 'satellite',
       minzoom: 0,
       maxzoom: 19,
     },
@@ -103,6 +99,11 @@ function LandingView({
       bearing: 0,
       interactive: false,
     });
+
+    if (!HAS_MAPBOX_TOKEN) {
+      map.current._authenticate = () => {};
+      map.current._silenceAuthErrors = true;
+    }
 
     map.current.on('load', () => {
       if (HAS_MAPBOX_TOKEN) {

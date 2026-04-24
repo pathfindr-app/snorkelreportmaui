@@ -2,6 +2,9 @@ function WeatherOverlay({ weather, userWeather }) {
   if (!weather) return null;
 
   const windRotation = weather.wind?.deg || 0;
+  const description = weather.description?.toLowerCase() || '';
+  const isClear = description.includes('clear');
+  const isRain = description.includes('rain') || description.includes('shower');
 
   const formatShortTime = (time) => {
     if (!time) return '';
@@ -19,12 +22,25 @@ function WeatherOverlay({ weather, userWeather }) {
               </span>
               <span className="weather-degree">°</span>
             </div>
-            <div className="weather-copy">
-              {weather.description && (
-                <span className="weather-condition">
-                  {weather.description}
-                </span>
+            <span className="weather-condition-icon" aria-label={weather.description || 'Current conditions'} title={weather.description || 'Current conditions'}>
+              {isRain ? (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M7 16.5a4.5 4.5 0 01.8-8.93A6 6 0 0119 10.5a3.5 3.5 0 01-.5 6.96" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M8.5 19.5l-1 1.75M13 18.75l-1.2 2.1M17.5 19.5l-1 1.75" strokeWidth="1.8" strokeLinecap="round" />
+                </svg>
+              ) : isClear ? (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <circle cx="12" cy="12" r="4.4" strokeWidth="1.8" />
+                  <path d="M12 2.8v2M12 19.2v2M21.2 12h-2M4.8 12h-2M18.5 5.5l-1.4 1.4M6.9 17.1l-1.4 1.4M18.5 18.5l-1.4-1.4M6.9 6.9L5.5 5.5" strokeWidth="1.8" strokeLinecap="round" />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M7.2 17.5h9.2a4 4 0 00.3-7.99A5.8 5.8 0 005.4 10.9 3.45 3.45 0 007.2 17.5z" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M16.4 7.7A4.4 4.4 0 0012.3 5a4.6 4.6 0 00-4.2 2.6" strokeWidth="1.8" strokeLinecap="round" />
+                </svg>
               )}
+            </span>
+            <div className="weather-copy">
               <span className="weather-location">{weather.locationName || 'Maui, HI'}</span>
             </div>
           </div>

@@ -8,7 +8,7 @@ function Header({
   onBackClick,
 }) {
   const title = showBackButton
-    ? 'Daily Maui snorkel map'
+    ? 'Daily Maui Snorkel Map'
     : 'Daily Maui snorkel conditions';
   const subtitle = showBackButton
     ? 'Scores, spot details, and local context in one map.'
@@ -47,11 +47,11 @@ function Header({
 
                 {lastUpdated && (
                   <>
-                    <p className="header-updated mt-5 hidden items-center gap-2 sm:flex">
+                    <p className="header-updated mt-4 hidden items-center gap-2 sm:flex">
                       <span className="header-status-dot" />
                       Updated: {formatLastUpdated(lastUpdated)}
                     </p>
-                    <p className="header-updated mt-5 flex items-center gap-2 sm:hidden">
+                    <p className="header-updated mt-4 flex items-center gap-2 sm:hidden">
                       <span className="header-status-dot" />
                       {formatShortDate(lastUpdated)}
                     </p>
@@ -69,18 +69,8 @@ function Header({
 
               <section className="header-aside">
                 <div className="header-note">
-                  <p className="header-eyebrow">Interactive field map</p>
+                  <p className="header-eyebrow">Interactive snorkel and dive map</p>
                   <p className="header-note-title">Spot scores, directions, webcams, and local details.</p>
-                </div>
-                <div className="header-chip-row">
-                  <div className="header-chip">
-                    <span className="header-chip-label">Coverage</span>
-                    <span className="header-chip-value">West, South, North shores</span>
-                  </div>
-                  <div className="header-chip">
-                    <span className="header-chip-label">Today</span>
-                    <span className="header-chip-value">Compare coasts and open the best spots</span>
-                  </div>
                 </div>
               </section>
             </div>
