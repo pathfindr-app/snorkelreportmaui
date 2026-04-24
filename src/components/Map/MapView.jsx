@@ -91,6 +91,9 @@ function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSel
       });
 
       setMapLoaded(true);
+      requestAnimationFrame(() => {
+        map.current?.resize();
+      });
     });
 
     return () => {
@@ -100,6 +103,22 @@ function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSel
       }
     };
   }, [zones]);
+
+  useEffect(() => {
+    if (!map.current || !mapContainer.current) return undefined;
+
+    const resizeMap = () => map.current?.resize();
+    const resizeObserver = new ResizeObserver(resizeMap);
+    resizeObserver.observe(mapContainer.current);
+    window.addEventListener('resize', resizeMap);
+
+    requestAnimationFrame(resizeMap);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', resizeMap);
+    };
+  }, [mapLoaded]);
 
   // Add spot markers when map is loaded
   useEffect(() => {
@@ -393,7 +412,7 @@ function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSel
   }
 
   return (
-    <div className="h-full w-full relative">
+    <div className="relative flex-1 min-h-0 w-full">
       <div ref={mapContainer} className="absolute inset-0" style={{ width: '100%', height: '100%' }} />
       <div className="map-film absolute inset-0 pointer-events-none" />
 
