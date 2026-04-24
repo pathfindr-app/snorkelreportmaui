@@ -133,6 +133,9 @@ function LandingView({
       });
 
       setMapLoaded(true);
+      requestAnimationFrame(() => {
+        map.current?.resize();
+      });
     });
 
     return () => {
@@ -142,6 +145,22 @@ function LandingView({
       }
     };
   }, [zones]);
+
+  useEffect(() => {
+    if (!map.current || !mapContainer.current) return undefined;
+
+    const resizeMap = () => map.current?.resize();
+    const resizeObserver = new ResizeObserver(resizeMap);
+    resizeObserver.observe(mapContainer.current);
+    window.addEventListener('resize', resizeMap);
+
+    requestAnimationFrame(resizeMap);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', resizeMap);
+    };
+  }, [mapLoaded]);
 
   // Add zone markers after map loads
   useEffect(() => {
@@ -196,8 +215,8 @@ function LandingView({
   };
 
   return (
-    <div className="page-shell flex h-full flex-col">
-      <div className="relative flex-1 min-h-0" style={{ minHeight: '55vh' }}>
+    <div className="page-shell flex min-h-0 flex-1 flex-col">
+      <div className="relative flex-1 min-h-[55vh]">
         {HAS_MAPBOX_TOKEN ? (
           <div
             ref={mapContainer}
