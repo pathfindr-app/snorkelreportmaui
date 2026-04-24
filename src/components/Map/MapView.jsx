@@ -4,7 +4,6 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { scoreToColor } from '../../utils/scoreToColor';
 import WeatherOverlay from './WeatherOverlay';
 
-const HAS_MAPBOX_TOKEN = Boolean(import.meta.env.VITE_MAPBOX_TOKEN);
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN || 'pk.local-dev-token';
 
 // Maui center coordinates and initial view
@@ -81,48 +80,17 @@ function MapView({ zones, allSpots, businesses = [], weather, userWeather, onSel
 
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
-      style: HAS_MAPBOX_TOKEN ? 'mapbox://styles/mapbox/satellite-streets-v12' : LOCAL_RASTER_STYLE,
+      style: LOCAL_RASTER_STYLE,
       center: MAUI_CENTER,
       zoom: INITIAL_ZOOM,
       pitch: INITIAL_PITCH,
       bearing: INITIAL_BEARING,
     });
 
-    if (!HAS_MAPBOX_TOKEN) {
-      map.current._authenticate = () => {};
-      map.current._silenceAuthErrors = true;
-    }
+    map.current._authenticate = () => {};
+    map.current._silenceAuthErrors = true;
 
     map.current.on('load', () => {
-      if (!HAS_MAPBOX_TOKEN) {
-        setMapLoaded(true);
-        requestAnimationFrame(() => {
-          map.current?.resize();
-        });
-        return;
-      }
-
-      // Add terrain for 3D effect
-      map.current.addSource('mapbox-dem', {
-        type: 'raster-dem',
-        url: 'mapbox://mapbox.mapbox-terrain-dem-v1',
-        tileSize: 512,
-        maxzoom: 14,
-      });
-
-      map.current.setTerrain({ source: 'mapbox-dem', exaggeration: 1.5 });
-
-      // Add sky layer for atmosphere
-      map.current.addLayer({
-        id: 'sky',
-        type: 'sky',
-        paint: {
-          'sky-type': 'atmosphere',
-          'sky-atmosphere-sun': [0.0, 90.0],
-          'sky-atmosphere-sun-intensity': 15,
-        },
-      });
-
       setMapLoaded(true);
       requestAnimationFrame(() => {
         map.current?.resize();

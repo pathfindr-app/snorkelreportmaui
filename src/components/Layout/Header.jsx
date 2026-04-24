@@ -54,7 +54,7 @@ function Header({
                     </p>
                     <p className="header-updated mt-4 flex items-center gap-2 sm:hidden">
                       <span className="header-status-dot" />
-                      {formatShortDate(lastUpdated)}
+                      Last updated {formatShortDate(lastUpdated)}
                     </p>
                   </>
                 )}

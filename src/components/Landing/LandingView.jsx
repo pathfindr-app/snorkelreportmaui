@@ -4,7 +4,6 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { scoreToColor, scoreToDescription } from '../../utils/scoreToColor';
 import zoneBoundaries from '../../data/zoneBoundaries.json';
 
-const HAS_MAPBOX_TOKEN = Boolean(import.meta.env.VITE_MAPBOX_TOKEN);
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN || 'pk.local-dev-token';
 
 const MAUI_CENTER = [-156.3319, 20.7984];
@@ -92,7 +91,7 @@ function LandingView({
 
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
-      style: HAS_MAPBOX_TOKEN ? 'mapbox://styles/mapbox/satellite-streets-v12' : LOCAL_RASTER_STYLE,
+      style: LOCAL_RASTER_STYLE,
       center: MAUI_CENTER,
       zoom: 8.25,
       pitch: 0,
@@ -100,34 +99,10 @@ function LandingView({
       interactive: false,
     });
 
-    if (!HAS_MAPBOX_TOKEN) {
-      map.current._authenticate = () => {};
-      map.current._silenceAuthErrors = true;
-    }
+    map.current._authenticate = () => {};
+    map.current._silenceAuthErrors = true;
 
     map.current.on('load', () => {
-      if (HAS_MAPBOX_TOKEN) {
-        // Add terrain
-        map.current.addSource('mapbox-dem', {
-          type: 'raster-dem',
-          url: 'mapbox://mapbox.mapbox-terrain-dem-v1',
-          tileSize: 512,
-          maxzoom: 14,
-        });
-        map.current.setTerrain({ source: 'mapbox-dem', exaggeration: 1.5 });
-
-        // Add sky
-        map.current.addLayer({
-          id: 'sky',
-          type: 'sky',
-          paint: {
-            'sky-type': 'atmosphere',
-            'sky-atmosphere-sun': [0.0, 90.0],
-            'sky-atmosphere-sun-intensity': 15,
-          },
-        });
-      }
-
       // Add zone boundaries
       map.current.addSource('zones', { type: 'geojson', data: zoneBoundaries });
 
