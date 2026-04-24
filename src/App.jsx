@@ -39,37 +39,34 @@ function App() {
   if (loading) {
     return (
       <div
-        className="h-screen flex items-center justify-center"
-        style={{ background: 'linear-gradient(180deg, #030b12 0%, #051520 100%)' }}
+        className="min-h-[100dvh] flex items-center justify-center site-shell"
       >
-        <div className="text-center">
+        <div className="text-center px-6">
           <div className="relative w-16 h-16 mx-auto mb-6">
-            {/* Outer ring */}
             <div
               className="absolute inset-0 rounded-full animate-spin"
               style={{
                 border: '2px solid transparent',
-                borderTopColor: '#00e5cc',
-                animationDuration: '1.5s',
+                borderTopColor: '#7fd4c8',
+                animationDuration: '1.6s',
               }}
             />
-            {/* Inner glow */}
             <div
               className="absolute inset-2 rounded-full animate-breathe"
               style={{
-                background: 'radial-gradient(circle, rgba(0, 229, 204, 0.3) 0%, transparent 70%)',
+                background: 'radial-gradient(circle, rgba(127, 212, 200, 0.24) 0%, transparent 70%)',
               }}
             />
           </div>
-          <p className="text-glow-cyan text-lg font-medium">Loading conditions...</p>
-          <p className="text-ocean-500 text-sm mt-2">Checking Maui waters</p>
+          <p className="text-lg font-medium text-[#f2f4ef]">Loading today&apos;s reef report...</p>
+          <p className="text-sm mt-2 text-[#9db1ad]">Checking Maui shoreline conditions</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden" style={{ background: 'linear-gradient(180deg, #030b12 0%, #051520 100%)' }}>
+    <div className="min-h-[100dvh] flex flex-col overflow-hidden site-shell">
       <Header
         lastUpdated={lastUpdated}
         onReportClick={handleOpenReport}
